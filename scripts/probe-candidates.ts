@@ -6,7 +6,7 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { assemblePrompt } from '../src/prompt/assemble.ts';
 
-const CANDIDATES = ['openai/gpt-4.1-mini', 'google/gemini-2.5-flash', 'anthropic/claude-sonnet-4.5'];
+const CANDIDATES = (process.env.PROBE_MODELS ?? 'moonshotai/kimi-k2:free,z-ai/glm-4.5-air:free,openai/gpt-4.1-mini').split(',');
 const key = process.env.OPENROUTER_API_KEY;
 if (!key) throw new Error('OPENROUTER_API_KEY not set');
 
@@ -34,7 +34,7 @@ async function one(model: string, p: (typeof prompts)[number]): Promise<Result> 
       method: 'POST',
       headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model, temperature: 0, messages: [{ role: 'user', content: p.text }],
+        model, temperature: 0, max_tokens: 4096, messages: [{ role: 'user', content: p.text }],
         provider: { allow_fallbacks: false }, usage: { include: true },
       }),
     });
@@ -59,5 +59,6 @@ const out: Result[] = [];
 for (const m of CANDIDATES) for (const p of prompts) { const r = await one(m, p); out.push(r);
   console.log(`${m} ${p.role_id}: status=${r.status} served=${r.served} ms=${r.ms} in=${r.tokens_in} out=${r.tokens_out} cost=${r.cost_usd} clean=${r.clean_object} notes=[${r.notes.join('; ')}] ${r.error ?? ''}`); }
 mkdirSync(join(root, 'docs/04-turns/probe'), { recursive: true });
-writeFileSync(join(root, 'docs/04-turns/probe/turn-01-candidates.json'), JSON.stringify(out, null, 2));
-console.log('written docs/04-turns/probe/turn-01-candidates.json');
+const outPath = join(root, 'docs/04-turns/probe', `turn-01-candidates-${Date.now()}.json`);
+writeFileSync(outPath, JSON.stringify(out, null, 2));
+console.log('written', outPath);

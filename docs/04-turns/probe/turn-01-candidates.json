@@ -1,0 +1,56 @@
+[
+  {
+    "model_requested": "openai/gpt-4.1-mini",
+    "role_id": "daenerys",
+    "ms": 297,
+    "clean_object": false,
+    "notes": [],
+    "status": 402,
+    "error": "{\"error\":{\"message\":\"This request requires more credits, or fewer max_tokens. You requested up to 32768 tokens, but can only afford 25000. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account\",\"code\":402,\"metadata\":{\"limit_source\":\"openrouter_credits\",\"remedy_hint\":\"Add credits at https://openrouter.ai/settings/credits, or lower max_tokens / prompt size to fit your remaining balance.\",\"provider_name\":null}},\"user_id\":\"user_3IblBU4zhygl5yrf29XbcyoFuHI\"}"
+  },
+  {
+    "model_requested": "openai/gpt-4.1-mini",
+    "role_id": "judge-1",
+    "ms": 58,
+    "clean_object": false,
+    "notes": [],
+    "status": 402,
+    "error": "{\"error\":{\"message\":\"This request requires more credits, or fewer max_tokens. You requested up to 32768 tokens, but can only afford 25000. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account\",\"code\":402,\"metadata\":{\"limit_source\":\"openrouter_credits\",\"remedy_hint\":\"Add credits at https://openrouter.ai/settings/credits, or lower max_tokens / prompt size to fit your remaining balance.\",\"provider_name\":null}},\"user_id\":\"user_3IblBU4zhygl5yrf29XbcyoFuHI\"}"
+  },
+  {
+    "model_requested": "google/gemini-2.5-flash",
+    "role_id": "daenerys",
+    "ms": 39,
+    "clean_object": false,
+    "notes": [],
+    "status": 402,
+    "error": "{\"error\":{\"message\":\"This request requires more credits, or fewer max_tokens. You requested up to 65535 tokens, but can only afford 16000. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account\",\"code\":402,\"metadata\":{\"limit_source\":\"openrouter_credits\",\"remedy_hint\":\"Add credits at https://openrouter.ai/settings/credits, or lower max_tokens / prompt size to fit your remaining balance.\",\"provider_name\":null}},\"user_id\":\"user_3IblBU4zhygl5yrf29XbcyoFuHI\"}"
+  },
+  {
+    "model_requested": "google/gemini-2.5-flash",
+    "role_id": "judge-1",
+    "ms": 24,
+    "clean_object": false,
+    "notes": [],
+    "status": 402,
+    "error": "{\"error\":{\"message\":\"This request requires more credits, or fewer max_tokens. You requested up to 65535 tokens, but can only afford 16000. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account\",\"code\":402,\"metadata\":{\"limit_source\":\"openrouter_credits\",\"remedy_hint\":\"Add credits at https://openrouter.ai/settings/credits, or lower max_tokens / prompt size to fit your remaining balance.\",\"provider_name\":null}},\"user_id\":\"user_3IblBU4zhygl5yrf29XbcyoFuHI\"}"
+  },
+  {
+    "model_requested": "anthropic/claude-sonnet-4.5",
+    "role_id": "daenerys",
+    "ms": 39,
+    "clean_object": false,
+    "notes": [],
+    "status": 402,
+    "error": "{\"error\":{\"message\":\"This request requires more credits, or fewer max_tokens. You requested up to 64000 tokens, but can only afford 2666. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account\",\"code\":402,\"metadata\":{\"limit_source\":\"openrouter_credits\",\"remedy_hint\":\"Add credits at https://openrouter.ai/settings/credits, or lower max_tokens / prompt size to fit your remaining balance.\",\"provider_name\":null}},\"user_id\":\"user_3IblBU4zhygl5yrf29XbcyoFuHI\"}"
+  },
+  {
+    "model_requested": "anthropic/claude-sonnet-4.5",
+    "role_id": "judge-1",
+    "ms": 31,
+    "clean_object": false,
+    "notes": [],
+    "status": 402,
+    "error": "{\"error\":{\"message\":\"This request requires more credits, or fewer max_tokens. You requested up to 64000 tokens, but can only afford 2666. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account\",\"code\":402,\"metadata\":{\"limit_source\":\"openrouter_credits\",\"remedy_hint\":\"Add credits at https://openrouter.ai/settings/credits, or lower max_tokens / prompt size to fit your remaining balance.\",\"provider_name\":null}},\"user_id\":\"user_3IblBU4zhygl5yrf29XbcyoFuHI\"}"
+  }
+]

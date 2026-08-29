@@ -4,7 +4,7 @@ import type { Transport } from './model-client.ts';
 const REFUSAL_FINISH = new Set(['content_filter']);
 
 export function openRouterTransport(apiKey: string, fetchImpl: typeof fetch = fetch): Transport {
-  return async ({ model, prompt, temperature, timeout_ms }) => {
+  return async ({ model, prompt, temperature, timeout_ms, max_tokens }) => {
     const ctl = new AbortController();
     const timer = setTimeout(() => ctl.abort(), timeout_ms);
     try {
@@ -13,7 +13,7 @@ export function openRouterTransport(apiKey: string, fetchImpl: typeof fetch = fe
         signal: ctl.signal,
         headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model, temperature, messages: [{ role: 'user', content: prompt }],
+          model, temperature, max_tokens, messages: [{ role: 'user', content: prompt }],
           provider: { allow_fallbacks: false }, usage: { include: true },
         }),
       });

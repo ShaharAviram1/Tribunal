@@ -4,5 +4,7 @@
   "max_attempts_per_role": 4,
   "transport_retries_per_call": 2,
   "call_timeout_ms": 60000,
-  "temperature": 0
+  "temperature": 0,
+  "max_output_tokens": 4096,
+  "transport_backoff_base_ms": 15000
 }

@@ -1,0 +1,66 @@
+[
+  {
+    "model_requested": "moonshotai/kimi-k2:free",
+    "role_id": "daenerys",
+    "ms": 275,
+    "clean_object": false,
+    "notes": [],
+    "status": 404,
+    "error": "{\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: moonshotai/kimi-k2\",\"code\":404},\"user_id\":\"user_3IblBU4zhygl5yrf29XbcyoFuHI\"}"
+  },
+  {
+    "model_requested": "moonshotai/kimi-k2:free",
+    "role_id": "judge-1",
+    "ms": 22,
+    "clean_object": false,
+    "notes": [],
+    "status": 404,
+    "error": "{\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: moonshotai/kimi-k2\",\"code\":404},\"user_id\":\"user_3IblBU4zhygl5yrf29XbcyoFuHI\"}"
+  },
+  {
+    "model_requested": "z-ai/glm-4.5-air:free",
+    "role_id": "daenerys",
+    "ms": 17,
+    "clean_object": false,
+    "notes": [],
+    "status": 404,
+    "error": "{\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: z-ai/glm-4.5-air\",\"code\":404},\"user_id\":\"user_3IblBU4zhygl5yrf29XbcyoFuHI\"}"
+  },
+  {
+    "model_requested": "z-ai/glm-4.5-air:free",
+    "role_id": "judge-1",
+    "ms": 20,
+    "clean_object": false,
+    "notes": [],
+    "status": 404,
+    "error": "{\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: z-ai/glm-4.5-air\",\"code\":404},\"user_id\":\"user_3IblBU4zhygl5yrf29XbcyoFuHI\"}"
+  },
+  {
+    "model_requested": "openai/gpt-4.1-mini",
+    "role_id": "daenerys",
+    "ms": 517,
+    "clean_object": true,
+    "notes": [],
+    "status": 200,
+    "served": "openai/gpt-4.1-mini",
+    "finish": "stop",
+    "tokens_in": 1110,
+    "tokens_out": 458,
+    "cost_usd": 0.0011768,
+    "text": "{\n  \"position\": \"not_justified\",\n  \"points\": [\n    {\n      \"claim\": \"Jon Snow killed me without any formal authority or attempt at lawful process.\",\n      \"support\": \"The record shows Jon did not convene a council, seek a public surrender of power, or attempt to detain me lawfully before killing me. He used our intimacy to get close enough to strike, acting in secret and betrayal rather than open judgment or lawful means. This undermines any claim to justified defense of the realm through proper channels.\"\n    },\n    {\n      \"claim\": \"I was unarmed and not attacking Jon when he killed me, so the killing was not an act of immediate self-defense.\",\n      \"support\": \"The agreed record states clearly that I was unarmed and not attacking Jon at the time of my death. Jon’s act was premeditated and executed during a private meeting, not in response to an immediate threat to his life or others present.\"\n    },\n    {\n      \"claim\": \"The record does not show that Jon exhausted safer alternatives to prevent the threatened harm.\",\n      \"support\": \"Jon did not attempt to detain me, convene a council, or seek a peaceful transfer of power. The record is silent on any effort to pursue less violent means before resorting to killing, which is a critical factor in judging necessity and justification.\"\n    },\n    {\n      \"claim\": \"The scale of threatened harm is acknowledged but does not justify extrajudicial killing without due process.\",\n      \"support\": \"While the record confirms I caused destruction after the city’s surrender and planned further campaigns, Jon’s response bypassed any legal or political mechanisms. The threat to the realm, though grave, does not excuse killing without authority or attempt at lawful restraint.\"\n    },\n    {\n      \"claim\": \"Jon’s loyalty and pledge to me were betrayed by his secret killing, undermining trust and lawful governance.\",\n      \"support\": \"Jon had pledged loyalty to me and was aware of my intentions and actions. Instead of confronting me openly or seeking counsel, he chose betrayal through a private, lethal act. This breach of trust damages the legitimacy of his claim to act in defense of others or the realm.\"\n    }\n  ]\n}"
+  },
+  {
+    "model_requested": "openai/gpt-4.1-mini",
+    "role_id": "judge-1",
+    "ms": 521,
+    "clean_object": true,
+    "notes": [],
+    "status": 200,
+    "served": "openai/gpt-4.1-mini",
+    "finish": "stop",
+    "tokens_in": 2391,
+    "tokens_out": 411,
+    "cost_usd": 0.001614,
+    "text": "{\n  \"verdict\": \"justified\",\n  \"reasons\": [\n    {\n      \"text\": \"Daenerys had already committed large-scale destruction against a surrendered city, killing civilians and burning streets, demonstrating a willingness to use extreme violence beyond military necessity, which posed an immediate and grave threat to the realm and its people.\",\n      \"relies_on\": [\"jon.p3\", \"tyrion.p3\", \"daenerys.p3\", \"greyworm.p3\"]\n    },\n    {\n      \"text\": \"Daenerys explicitly declared her intention to continue campaigns of 'liberation' by force, signaling ongoing and future harm to other cities and populations, which Jon reasonably perceived as a continuing threat justifying preemptive action to protect others.\",\n      \"relies_on\": [\"jon.p3\", \"tyrion.p3\", \"daenerys.p3\", \"greyworm.p3\"]\n    },\n    {\n      \"text\": \"Jon lacked formal authority to convene a council or detain Daenerys, and the urgency of the threat combined with her refusal to show mercy or share judgment left no safer alternatives to prevent further harm, making his act a last resort to defend others and the realm.\",\n      \"relies_on\": [\"jon.p2\", \"tyrion.p2\", \"daenerys.p2\", \"greyworm.p2\"]\n    }\n  ],\n  \"against\": {\n    \"text\": \"Daenerys was unarmed and embraced Jon when he killed her, and Jon did not attempt less harmful means such as demanding her surrender or convening a council, which suggests the killing was a betrayal of trust and premature given that the threatened harm was still prospective rather than actual.\",\n    \"relies_on\": [\"jon.p1\", \"tyrion.p1\", \"daenerys.p1\", \"greyworm.p1\", \"jon.p2\", \"tyrion.p2\", \"daenerys.p2\", \"greyworm.p2\"]\n  }\n}"
+  }
+]

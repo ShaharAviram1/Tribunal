@@ -13,6 +13,8 @@ export type Caps = {
   transport_retries_per_call: number;
   call_timeout_ms: number;
   temperature: number;
+  max_output_tokens: number;
+  transport_backoff_base_ms: number;
 };
 
 export type LogRow = {
@@ -50,7 +52,7 @@ export type Budget = {
 };
 
 export type Transport = (req: {
-  model: string; prompt: string; temperature: number; timeout_ms: number;
+  model: string; prompt: string; temperature: number; timeout_ms: number; max_tokens: number;
 }) => Promise<
   | { kind: 'ok'; text: string; model_served: string | null; tokens_in: number | null; tokens_out: number | null; cost_usd: number | null; http_status: number; temperature_honoured: boolean | null; finish_reason: string | null }
   | { kind: 'refusal'; model_served: string | null; http_status: number; detail: string }
@@ -113,7 +115,7 @@ export class ModelClient {
       const gate = await this.#gate(req, model);
       if (gate) return gate;
       const started = this.#now();
-      const res = await this.#transport({ model, prompt: req.prompt, temperature: this.#caps.temperature, timeout_ms: this.#caps.call_timeout_ms });
+      const res = await this.#transport({ model, prompt: req.prompt, temperature: this.#caps.temperature, timeout_ms: this.#caps.call_timeout_ms, max_tokens: this.#caps.max_output_tokens });
       const latency_ms = this.#now() - started;
       const base = this.#row(req, model, latency_ms, started);
       if (res.kind === 'ok') {
@@ -165,7 +167,8 @@ export class ModelClient {
   }
 
   #backoff(n: number): number {
-    const base = 1000 * 2 ** (n - 1);
+    // Base is long enough that two retries span a free-tier per-minute window (15 s, 30 s + jitter).
+    const base = this.#caps.transport_backoff_base_ms * 2 ** (n - 1);
     return base + Math.floor(this.#random() * base);
   }
 }
