@@ -42,14 +42,17 @@ Retry rules are those of spec.md, part two, criterion 6.
 
 | Condition | Retry rule |
 |---|---|
-| Response is not a parseable JSON object | malformed: one corrective retry naming what failed |
+| Provider signals a refusal (finish or stop reason) | refusal: zero retries, recorded as failed |
+| Provider reports the response cut off at the output ceiling (`finish_reason: length`) | truncated: one retry of the same prompt at a raised ceiling, no corrective text; a second truncation fails the role |
+| Response is not a parseable JSON object, whatever it says | malformed: one corrective retry restating the format and naming what failed |
 | A required field is missing, or an extra field is present | malformed |
 | `position` outside the two values | malformed |
 | `points` count outside 3–5 | malformed |
 | A `claim` or `support` empty or over its word bound | malformed |
-| Model refuses to answer | refusal: zero retries, recorded as failed |
 
 Every condition maps to a rule. A stance has no ids to resolve, so the unresolvable-id rule does not apply to it.
+
+The validator never classifies prose. A refusal written in words rather than signalled by the provider is, to the validator, a non-object response: it gets the corrective retry, and if the model refuses again the role fails with both raw texts stored on the failure record, where a reader sees the refusal for themselves. This is the detection the code actually has, and the document claims no more.
 
 When a stance fails after its retries are exhausted, or immediately on refusal, the deliberation stops before the judge stage (spec.md, part two, criterion 14). No judge is called on fewer than four stances.
 
@@ -126,8 +129,8 @@ Malformed retry: 2 points, minimum 3.
 ```
 Malformed retry: 59 words, bound 40.
 
-**Refusal**
+**Refusal in prose, no provider signal**
 ```
 I can't role-play a character arguing for a killing.
 ```
-Refusal: zero retries, failed.
+Malformed retry: not a JSON object. If the second attempt is the same, the role fails and both texts are stored. Only a provider-signalled refusal is classified as a refusal.

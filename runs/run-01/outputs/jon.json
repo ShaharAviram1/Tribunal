@@ -1,0 +1,28 @@
+{
+  "role_id": "jon",
+  "seat": "defense",
+  "deliberation_id": "run-01",
+  "position": "not_justified",
+  "points": [
+    {
+      "id": "jon.p1",
+      "claim": "I killed Daenerys because I believed it was the only way to stop the mass killings I had witnessed and the further campaigns she announced.",
+      "support": "The record shows she burned King's Landing after surrender and declared the campaign would continue. I saw the destruction and feared more death."
+    },
+    {
+      "id": "jon.p2",
+      "claim": "I did not attempt any formal process to remove or detain her before the act.",
+      "support": "The agreed facts state no council, no detention, no public surrender was convened. I acted without exhausting lawful options."
+    },
+    {
+      "id": "jon.p3",
+      "claim": "I had no lawful authority to execute her and used our intimacy to get close rather than a legitimate command.",
+      "support": "I was not appointed ruler, judge, or officer; my action was personal and lacked institutional standing."
+    },
+    {
+      "id": "jon.p4",
+      "claim": "I accept full responsibility, but responsibility alone does not satisfy the requirement of necessity and last resort.",
+      "support": "The law demands that no safer alternative existed. I failed to demonstrate I had no other means, so my killing cannot be deemed justified."
+    }
+  ]
+}

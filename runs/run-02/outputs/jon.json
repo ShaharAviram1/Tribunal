@@ -1,0 +1,33 @@
+{
+  "role_id": "jon",
+  "seat": "defense",
+  "deliberation_id": "run-02",
+  "position": "not_justified",
+  "points": [
+    {
+      "id": "jon.p1",
+      "claim": "Daenerys posed a future, not an immediate, threat, and defense of others requires imminent danger.",
+      "support": "The agreed record shows King's Landing had surrendered, the bells had rung and organized resistance had ceased. Daenerys then gave a speech promising further campaigns, but no attack was under way at the moment of the killing. A necessity defense requires an imminent, ongoing threat, not a speculative future one."
+    },
+    {
+      "id": "jon.p2",
+      "claim": "Safer, lawful alternatives existed that I did not attempt.",
+      "support": "The record notes that Jon did not convene a council, did not seek to detain Daenerys through loyal soldiers, and did not request her abdication or exile. Other leaders such as Grey Worm or the remaining nobles could have been asked to intervene. By failing to pursue any of those steps, he bypassed available, less‑violent options."
+    },
+    {
+      "id": "jon.p3",
+      "claim": "I lacked the authority to be judge and executioner.",
+      "support": "Jon held no formal role that entitled him to execute a ruler. The kingdom's law reserves the right to depose or punish a sovereign to a council or a trial. Acting on personal judgment alone, without that authority, makes the act extrajudicial."
+    },
+    {
+      "id": "jon.p4",
+      "claim": "Using intimacy to approach her circumvented proper procedure.",
+      "support": "The record states Jon used the intimacy of their embrace to get close enough to strike. This method bypassed any lawful arrest or detention, relying on deception rather than official process."
+    },
+    {
+      "id": "jon.p5",
+      "claim": "My moral conviction does not equate to legal justification.",
+      "support": "While Jon acted out of horror at the destruction he witnessed, the law requires more than good intentions. Moral urgency, without imminent threat and without proper authority, does not satisfy the conditions for a justified homicide."
+    }
+  ]
+}

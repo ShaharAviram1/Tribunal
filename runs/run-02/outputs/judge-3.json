@@ -1,0 +1,38 @@
+{
+  "role_id": "judge-3",
+  "label": "Shamgar model",
+  "deliberation_id": "run-02",
+  "verdict": "not_justified",
+  "reasons": [
+    {
+      "text": "The killing lacked the required imminence of threat. Daenerys was unarmed and not engaged in a present act of violence at the moment Jon struck; the agreed record shows the immediate attack on King’s Landing had ceased and her subsequent speech announced future campaigns rather than an ongoing assault. A necessity defence demands a current, ongoing danger, which is absent here.",
+      "relies_on": [
+        "jon.p1",
+        "tyrion.p1",
+        "daenerys.p1",
+        "greyworm.p1"
+      ]
+    },
+    {
+      "text": "Jon failed to pursue lawful alternatives and acted without formal authority. He did not convene a council, attempt detention through the chain of command, or obtain any official sanction before the killing, thereby assuming a power that the legal order reserves for an institution rather than a private individual. This bypass of established procedures defeats any claim of justified homicide.",
+      "relies_on": [
+        "jon.p2",
+        "tyrion.p2",
+        "daenerys.p2",
+        "greyworm.p3"
+      ]
+    },
+    {
+      "text": "Jon used the intimacy of their relationship to approach Daenerys, bypassing any lawful arrest or detention. The method of approach shows a premeditated, strategic act rather than a spontaneous protective response, further undermining the defence of others.",
+      "relies_on": [
+        "jon.p4",
+        "daenerys.p4",
+        "greyworm.p2"
+      ]
+    }
+  ],
+  "against": {
+    "text": "The strongest counter‑consideration is the immense scale of the harm Daenerys had already inflicted and the likelihood of further mass casualties if she remained in power. The urgency of preventing such widespread destruction might be thought to outweigh the procedural deficiencies, yet this moral urgency does not satisfy the legal requirement for imminence and lawful authority.",
+    "relies_on": []
+  }
+}

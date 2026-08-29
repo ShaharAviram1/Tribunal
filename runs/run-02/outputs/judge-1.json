@@ -1,0 +1,51 @@
+{
+  "role_id": "judge-1",
+  "label": "Barak model",
+  "deliberation_id": "run-02",
+  "verdict": "not_justified",
+  "reasons": [
+    {
+      "text": "The record shows Daenerys was unarmed and not in the act of attacking when Jon killed her, and the immediate assault on King's Landing had ended with the surrender and the ringing of the bells. The necessity defence requires a present, ongoing threat; a merely prospective danger, however grave, does not satisfy that requirement.",
+      "relies_on": [
+        "daenerys.p1",
+        "greyworm.p1",
+        "tyrion.p1",
+        "jon.p1"
+      ]
+    },
+    {
+      "text": "Jon did not pursue any of the lawful alternatives available to him before resorting to lethal force. He neither convened a council, nor sought to detain Daenerys through the chain of command, nor demanded her abdication or exile. The record contains no evidence that such steps were attempted or that they would have been futile, so the condition that no reasonable, less‑harmful means existed is not met.",
+      "relies_on": [
+        "jon.p2",
+        "tyrion.p2",
+        "greyworm.p3",
+        "daenerys.p2"
+      ]
+    },
+    {
+      "text": "Jon possessed no formal authority to execute a sovereign. The power to depose or punish a monarch belongs to institutional bodies such as a council of lords or a trial, not to a private individual acting on personal judgment. Without that authority, the killing is an extrajudicial execution, not a lawful act of necessary defence.",
+      "relies_on": [
+        "jon.p3",
+        "tyrion.p3",
+        "greyworm.p5",
+        "daenerys.p5"
+      ]
+    },
+    {
+      "text": "Jon deliberately used the intimacy of their relationship to approach Daenerys and struck without warning or any attempt at restraint, revealing a premeditated plan rather than a spontaneous defensive reaction. The necessity defence presupposes an instinctive response to an immediate danger; the planned nature of the act severs that link.",
+      "relies_on": [
+        "jon.p4",
+        "tyrion.p4",
+        "daenerys.p4"
+      ]
+    }
+  ],
+  "against": {
+    "text": "Daenerys had just destroyed a surrendered city and declared that her campaign of liberation would continue beyond King's Landing, signalling a credible and imminent threat of further mass casualties. Given the scale of the harm already inflicted and her absolute power over a dragon and loyal army, no realistic non‑lethal remedy may have been available, and the only means to prevent further atrocities could have been to eliminate her.",
+    "relies_on": [
+      "greyworm.p4",
+      "daenerys.p3",
+      "jon.p1"
+    ]
+  }
+}

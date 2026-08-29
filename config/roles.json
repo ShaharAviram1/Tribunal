@@ -1,0 +1,23 @@
+{
+  "jon": {
+    "seat": "defense"
+  },
+  "tyrion": {
+    "seat": "defense"
+  },
+  "daenerys": {
+    "seat": "prosecution"
+  },
+  "greyworm": {
+    "seat": "prosecution"
+  },
+  "judge-1": {
+    "label": "Barak model"
+  },
+  "judge-2": {
+    "label": "Elon model"
+  },
+  "judge-3": {
+    "label": "Shamgar model"
+  }
+}

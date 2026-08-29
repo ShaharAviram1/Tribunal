@@ -1,0 +1,33 @@
+{
+  "role_id": "daenerys",
+  "seat": "prosecution",
+  "deliberation_id": "run-01",
+  "position": "not_justified",
+  "points": [
+    {
+      "id": "daenerys.p1",
+      "claim": "Jon Snow had no lawful authority to execute Daenerys Targaryen, as he held no formal position that endowed him with judicial or executive power over her.",
+      "support": "The record states that Jon \"had not convened a council, attempted detention, or sought a public surrender of power.\" He was not appointed, elected, or otherwise authorized by any institution to act as judge or executioner. The silence of the record on any grant of authority confirms his lack of legal standing."
+    },
+    {
+      "id": "daenerys.p2",
+      "claim": "Safer, less lethal alternatives were available to Jon before resorting to lethal force, and he made no attempt to use them.",
+      "support": "The record shows Jon could have detained Daenerys, convened a council, or sought her surrender of power, yet he \"had not convened a council, attempted detention, or sought a public surrender of power.\" No effort to employ these alternatives is recorded, indicating they were practicable and ignored."
+    },
+    {
+      "id": "daenerys.p3",
+      "claim": "Daenerys was unarmed and not actively attacking anyone at the moment Jon killed her, so the killing was not a response to an immediate threat.",
+      "support": "The agreed record explicitly states: \"Daenerys was unarmed and was not attacking Jon when he killed her.\" This fact eliminates any claim of imminent danger requiring instantaneous lethal response."
+    },
+    {
+      "id": "daenerys.p4",
+      "claim": "Jon exploited the intimacy of their relationship to approach Daenerys covertly, using trust rather than open confrontation, which undermines a claim of necessary self‑defense.",
+      "support": "The record notes that \"Jon used their intimacy to get close enough to strike.\" By relying on closeness and trust rather than a direct, transparent challenge, Jon did not act in a manner consistent with defensive necessity."
+    },
+    {
+      "id": "daenerys.p5",
+      "claim": "The threat Jon cited – Daenerys's intention to continue liberation beyond King's Landing – was speculative and not an imminent, concrete danger to specific persons.",
+      "support": "The record states Daenerys told her forces the campaign would continue, but it contains no evidence of a specific, imminent plan to harm identifiable individuals. The lack of a concrete, imminent threat undermines the justification of preemptive lethal action."
+    }
+  ]
+}

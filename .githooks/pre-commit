@@ -19,9 +19,12 @@ if git diff --cached --name-only | grep -E '(^|/)\.env(\..*)?$' | grep -Evq '\.e
 fi
 
 # G3: no combined-verdict vocabulary in source, prompts, or the page.
+# Patterns come from config/forbidden-vocabulary.json, shared with tests/protocol/no-aggregation.test.ts.
+# Only that config file is exempt: it must name the words to define them.
+vocab=$(node -e 'const v=require("./config/forbidden-vocabulary.json");process.stdout.write(v.source_patterns.join("|"))')
 if git diff --cached --name-only -- src tests netlify prompts public | grep -q .; then
   hits=$(git diff --cached -U0 -- src tests netlify prompts public | grep -E '^\+' | grep -Ev '^\+\+\+' \
-    | grep -inE 'final verdict|majority|consensus|combined verdict|aggregate' || true)
+    | grep -inE "$vocab" || true)
   if [ -n "$hits" ]; then
     echo "GATE G3 REFUSED: staged source uses combined-verdict vocabulary." >&2
     echo "$hits" >&2

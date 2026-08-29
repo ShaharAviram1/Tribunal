@@ -49,6 +49,7 @@ Each rule names the concrete failure it prevents. A rule that could not name one
 | CS-02 | `accused` and `deceased` are 1–80 characters; `act_alleged` is at most 100 words; `base_premises` is 200–300 words. | Header fields grow into a speech that seven prompts each carry, breaching the per-run spend cap before the judges are called, and pushing the advocates' own arguments out of the prompt budget. Neutrality of the act is not enforceable by rule: a slanted `act_alleged` in twelve words passes, and this document does not claim otherwise. |
 | CS-03 | `agreed_record` has 2–8 items, each 1–120 words. | Single-item record: no fact is separately referable, so opinions cite "the record" as a whole and the reader cannot see which fact a reason rests on. Oversized record: same prompt-budget failure as CS-02. |
 | CS-04 | `question` is 1–120 words and contains exactly one `?`. | Zero question marks: the agents receive a statement and treat it as a finding to confirm. Two or more: the three judges answer different sub-questions and their verdicts are not comparable. |
+| CS-06 | The submitted value is a JSON object, and every filer field has the type declared in 1a: strings are strings, `agreed_record` is an array of strings. | A string where an array is expected passes a non-empty check and renders as one record item, or crashes the renderer; a number where a name is expected renders as a name. CS-01 asks whether a field is present, not whether it is what it claims to be; that is this rule's job. |
 | CS-05 | The submitted object contains no field outside 1a. This includes the three system-stamped fields. | A filer adds `note_to_judges`: if rendered, it reaches all seven agents as part of the sheet; if silently dropped, the filer believes it was read. A filer sends `verdict_values` or `scope_note`: the tribunal's mandate is overwritten by input. A filer sends `case_id`: a past case is overwritten. Rejecting is the only honest outcome. |
 
 ## 4. Rejection behaviour
@@ -131,6 +132,12 @@ Fails CS-05: `note_to_judges` is not a filer field.
 { "verdict_values": ["justified", "not_justified", "mitigated"] }
 ```
 Fails CS-05: `verdict_values` is system-stamped, not filer input. The same applies to `scope_note` and `case_id`.
+
+**CS-06, wrong type**
+```json
+{ "agreed_record": "King's Landing surrendered and Daenerys burned it anyway." }
+```
+Fails CS-06: `agreed_record` is a string, not an array of strings. A non-object submission (an array, a string, null) fails CS-06 on the whole value with field `$`.
 
 **Multiple failures reported together**
 

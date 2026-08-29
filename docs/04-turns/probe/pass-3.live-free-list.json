@@ -1,0 +1,66 @@
+[
+  {
+    "model_requested": "z-ai/glm-5.2:free",
+    "role_id": "daenerys",
+    "ms": 1443,
+    "clean_object": false,
+    "notes": [],
+    "status": 429,
+    "error": "{\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"z-ai/glm-5.2:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations\",\"provider_name\":\"Decart\",\"is_byok\":false,\"provider_error_code\":\"upstream_429\",\"limit_source\":\"upstream_provider_shared_pool\",\"remedy_hint\":\"Retry shortly, add your own provider key (https://openrouter.ai/settings/integrations), or route to another p"
+  },
+  {
+    "model_requested": "z-ai/glm-5.2:free",
+    "role_id": "judge-1",
+    "ms": 354,
+    "clean_object": false,
+    "notes": [],
+    "status": 429,
+    "error": "{\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"z-ai/glm-5.2:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations\",\"provider_name\":\"Decart\",\"is_byok\":false,\"provider_error_code\":\"upstream_429\",\"limit_source\":\"upstream_provider_shared_pool\",\"remedy_hint\":\"Retry shortly, add your own provider key (https://openrouter.ai/settings/integrations), or route to another p"
+  },
+  {
+    "model_requested": "minimax/minimax-m2.7:free",
+    "role_id": "daenerys",
+    "ms": 2469,
+    "clean_object": true,
+    "notes": [],
+    "status": 200,
+    "served": "minimax/minimax-m2.7:free",
+    "finish": "stop",
+    "tokens_in": 1120,
+    "tokens_out": 1321,
+    "cost_usd": 0,
+    "text": "\n{\"position\":\"not_justified\",\"points\":[{\"claim\":\"Jon used our intimacy as a weapon to approach me unguarded, a betrayal that cannot be framed as defense.\",\"support\":\"The record states Jon used their intimacy to get close enough to strike and that Daenerys was unarmed and not attacking when killed. This was premeditated deception, not a spontaneous act of protection. A person who trusts and embraces you does not expect a blade.\"},{\"claim\":\"Jon bypassed every legitimate means of addressing the threat he claimed to fear, proving his act was not necessary.\",\"support\":\"The record specifies Jon had not convened a council, had not attempted detention, and had not sought a public surrender of power. If the threat was so imminent that only killing would suffice, why did he not first attempt any of these established remedies? The absence of such attempts demonstrates the killing was not a last resort.\"},{\"claim\":\"I was not actively harming anyone at the moment Jon struck, so this was not defense but execution.\",\"support\":\"The record confirms Daenerys was unarmed and was not attacking Jon when he killed her. The threatened harm Jon feared was future action. Killing a person in that moment, when no immediate violence is occurring, cannot be characterized as defense of an ongoing attack. It is the prevention of a hypothetical.\"},{\"claim\":\"Jon claimed to want shared moral judgment, then made the most unilateral judgment of all.\",\"support\":\"The record states Jon asked Daenerys to show mercy and share moral judgment with others, and she refused. Jon himself advocated for collective moral reasoning. Yet he acted entirely alone, with no consultation, no warning, no process. He became the very absolute arbiter he criticized.\"},{\"claim\":\"The record offers no evidence that a safer alternative would have failed; it only shows Jon did not try them.\",\"support\":\"The record is silent on any attempt by Jon to detain me, to remove me from power through council, to present my threats publicly, or to give me opportunity to surrender authority. Where the record is silent on safer alternatives being attempted, this tribunal cannot assume such alternatives would have failed.\"}]}"
+  },
+  {
+    "model_requested": "minimax/minimax-m2.7:free",
+    "role_id": "judge-1",
+    "ms": 5715,
+    "clean_object": true,
+    "notes": [],
+    "status": 200,
+    "served": "minimax/minimax-m2.7:free",
+    "finish": "stop",
+    "tokens_in": 2398,
+    "tokens_out": 2303,
+    "cost_usd": 0,
+    "text": "{\"verdict\":\"not_justified\",\"reasons\":[{\"text\":\"The killing fails the requirement of necessity because Daenerys was not then engaged in an imminent attack; she was unarmed and embracing Jon, so the immediate threat required to justify lethal force was absent, as emphasized by the factual record that no blade, guard, or dragon was present at the moment of the act.\",\"relies_on\":[\"jon.p1\",\"tyrion.p1\",\"daenerys.p1\",\"greyworm.p1\"]},{\"text\":\"Jon bypassed all lawful alternatives before resorting to deadly force; he neither convened a council, demanded her resignation before the army, nor attempted any form of detention or political resolution, thereby violating the principle that a less harmful means must be exhausted before a killing can be justified.\",\"relies_on\":[\"jon.p2\",\"tyrion.p2\",\"daenerys.p2\",\"greyworm.p2\"]}],\"against\":{\"text\":\"The strongest argument for justification, which no advocate raised, is that Daenerys had just demonstrated a willingness to inflict mass civilian casualties and declared an intention to continue such campaigns, creating a looming threat of further widespread harm that could have been prevented only by removing her immediately; however, even this consideration does not overcome the lack of an immediate, unavoidable danger at the moment of the killing and the availability of other courses of action.\",\"relies_on\":[]}}"
+  },
+  {
+    "model_requested": "google/gemma-4-31b-it:free",
+    "role_id": "daenerys",
+    "ms": 182,
+    "clean_object": false,
+    "notes": [],
+    "status": 429,
+    "error": "{\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations\",\"provider_name\":\"Google AI Studio\",\"is_byok\":false,\"provider_error_code\":\"429\",\"limit_source\":\"upstream_provider_shared_pool\",\"remedy_hint\":\"Retry shortly, add your own provider key (https://openrouter.ai/settings/integrations), or route to"
+  },
+  {
+    "model_requested": "google/gemma-4-31b-it:free",
+    "role_id": "judge-1",
+    "ms": 257,
+    "clean_object": false,
+    "notes": [],
+    "status": 429,
+    "error": "{\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations\",\"provider_name\":\"Google AI Studio\",\"is_byok\":false,\"provider_error_code\":\"429\",\"limit_source\":\"upstream_provider_shared_pool\",\"remedy_hint\":\"Retry shortly, add your own provider key (https://openrouter.ai/settings/integrations), or route to"
+  }
+]

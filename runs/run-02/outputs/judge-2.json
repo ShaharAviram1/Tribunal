@@ -1,0 +1,46 @@
+{
+  "role_id": "judge-2",
+  "label": "Elon model",
+  "deliberation_id": "run-02",
+  "verdict": "not_justified",
+  "reasons": [
+    {
+      "text": "The killing fails the requirement of imminence, because Daenerys was not engaged in an active, immediate assault at the moment Jon struck; the agreed record shows the attack on King's Landing had ceased, the city had surrendered, and the bells had rung, indicating the cessation of organized resistance. A defense of others premised on necessity must address a present danger, not a merely prospective one, and the record does not establish that Daenerys was then pursuing any individual or continuing an ongoing act of violence. This aligns with the principle that a pursuer must be in the act of pursuit to justify lethal preventive action.",
+      "relies_on": [
+        "jon.p1",
+        "tyrion.p1",
+        "daenerys.p1",
+        "greyworm.p1"
+      ]
+    },
+    {
+      "text": "Jon lacked the formal authority to execute a ruler and bypassed lawful alternatives that were available to him. The record shows he did not convene a council, did not attempt to detain Daenerys through the chain of command, and did not seek a public surrender of power. The legal order reserves the power to depose or punish a sovereign to a council or a trial, and a private individual acting on personal judgment cannot assume that authority. Moreover, the use of intimacy to approach her circumvented proper procedure, undermining the legitimacy of the act. This reflects the duty placed on the one who acts alone to defer to communal institutions when they exist.",
+      "relies_on": [
+        "jon.p3",
+        "jon.p4",
+        "tyrion.p2",
+        "tyrion.p3",
+        "daenerys.p2",
+        "daenerys.p5",
+        "greyworm.p2",
+        "greyworm.p3"
+      ]
+    },
+    {
+      "text": "The act was premeditated rather than a spontaneous reaction to an immediate threat, which further undermines the defense of others. Jon deliberately used the intimacy of their relationship to get close enough to strike, indicating a calculated decision rather than an instinctive protective response. The defense of necessity presupposes a reflexive response to an imminent danger; premeditation severs the link between the threat and the lethal response.",
+      "relies_on": [
+        "tyrion.p4",
+        "daenerys.p4",
+        "greyworm.p2"
+      ]
+    }
+  ],
+  "against": {
+    "text": "The strongest argument for justification is that Daenerys had just inflicted massive destruction on a surrendered city and announced further campaigns, creating a credible and ongoing threat to the realm. In the absence of any reliable institutional mechanism to restrain her, given the loyalty of her forces and the immediacy of the danger, Jon may have had no reasonable alternative but to act swiftly to prevent further bloodshed. This perspective rests on the notion that the duty to protect others can override formal procedural requirements when the threat is grave and imminent in a broader sense.",
+    "relies_on": [
+      "jon.p1",
+      "jon.p2",
+      "jon.p3"
+    ]
+  }
+}

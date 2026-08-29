@@ -1,0 +1,33 @@
+{
+  "role_id": "daenerys",
+  "seat": "prosecution",
+  "deliberation_id": "run-02",
+  "position": "not_justified",
+  "points": [
+    {
+      "id": "daenerys.p1",
+      "claim": "Jon killed an unarmed, non‑attacking Daenerys, contradicting any claim of imminent self‑defence, as the record shows no active threat at the moment of the stabbing.",
+      "support": "Fact 5 states Daenerys was unarmed and not attacking Jon when he killed her. Fact 4 records that Jon used their intimacy to get close enough to strike. No fact indicates Daenerys was engaged in a present, imminent act of violence at that instant, making the killing a non‑defensive act."
+    },
+    {
+      "id": "daenerys.p2",
+      "claim": "Jon bypassed available legal channels, failing to convene a council, seek detention, or obtain formal authority, which the record confirms he did not do, making his action extra‑legal.",
+      "support": "Fact 5 notes Jon had not convened a council, attempted detention, or sought a public surrender of power. Fact 3 shows Tyrion warned Jon of Daenerys’s intentions, but there is no record of Jon using these warnings to pursue a lawful remedy. The record therefore shows he ignored institutional alternatives."
+    },
+    {
+      "id": "daenerys.p3",
+      "claim": "Daenerys’s speech about future liberation was a political declaration, not an immediate violent act, so it cannot justify lethal preemptive force under the doctrine of necessary defence.",
+      "support": "Fact 2 records Daenerys told her assembled forces that the campaign of liberation would continue beyond King’s Landing. Fact 1 shows the city had surrendered and organized resistance ceased. The speech is a forward‑looking statement, not an ongoing assault, and does not create an imminent threat that would excuse preemptive lethal action."
+    },
+    {
+      "id": "daenerys.p4",
+      "claim": "Jon used his personal intimacy to approach Daenerys, exploiting trust rather than lawful authority, and the record does not show any attempt to protect others through less lethal means.",
+      "support": "Fact 5 states Jon used intimacy to get close enough to strike, and Fact 4 records he asked Daenerys to show mercy, not that he attempted to restrain or remove her. There is no evidence in the agreed record that Jon tried any non‑lethal method to protect his sisters or the realm."
+    },
+    {
+      "id": "daenerys.p5",
+      "claim": "The lack of formal authority means Jon acted as a private individual executing a ruler, which the record indicates, and such unilateral lethal action is not recognized as justified defence.",
+      "support": "Fact 5 confirms Jon had not convened a council or obtained formal authority. Fact 3 shows Tyrion warned Jon, but Jon never secured any official sanction. As a private individual, his killing of Daenerys cannot be classified as a lawful exercise of necessary defence under any recognized legal standard."
+    }
+  ]
+}
