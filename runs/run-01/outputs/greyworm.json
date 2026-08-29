@@ -1,0 +1,33 @@
+{
+  "role_id": "greyworm",
+  "seat": "prosecution",
+  "deliberation_id": "run-01",
+  "position": "not_justified",
+  "points": [
+    {
+      "id": "greyworm.p1",
+      "claim": "Daenerys had already caused massive civilian destruction and announced continued campaigns, indicating a future threat rather than an imminent attack.",
+      "support": "The record states she burned the city after surrender and told assembled forces that the liberation would continue. This establishes a credible future threat, not an immediate one."
+    },
+    {
+      "id": "greyworm.p2",
+      "claim": "Jon lacked formal authority to execute her and did not convene any council, attempt detention, or seek public surrender.",
+      "support": "The record says he had not convened a council, attempted detention, or sought a public surrender of power. He acted without legal standing."
+    },
+    {
+      "id": "greyworm.p3",
+      "claim": "Safer alternatives were available; Jon could have warned others, detained her, or used political mechanisms before resorting to lethal force.",
+      "support": "The record is silent on any attempt to use such alternatives. No evidence shows he considered or tried them."
+    },
+    {
+      "id": "greyworm.p4",
+      "claim": "Daenerys was unarmed and not attacking Jon at the moment of the killing, indicating no immediate threat to his safety.",
+      "support": "The record states she was unarmed and not attacking when Jon struck. This removes the justification of self‑defence."
+    },
+    {
+      "id": "greyworm.p5",
+      "claim": "Jon used their intimacy to get close enough to strike, a tactic that circumvented any chance of de‑escalation or surrender.",
+      "support": "He exploited personal trust to approach her, eliminating any opportunity for her to surrender or for others to intervene."
+    }
+  ]
+}

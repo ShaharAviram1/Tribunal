@@ -1,0 +1,20 @@
+{
+  "failed": true,
+  "role_id": "tyrion",
+  "deliberation_id": "run-01",
+  "reason": "malformed on both attempts",
+  "attempts": [
+    {
+      "hash": "ae68b2afe0dffa781653e8f81d159971dcb815bd9a838181e09a7566c97f7df3",
+      "text": "{\"position\":\"justified\",\"points\":[{\"claim\":\"Daenerys's announced continuation of the 'liberation' campaign, together with her demonstrated willingness to use Drogon against civilians, created an imminent threat of further mass murder.\",\"support\":\"Daenerys told her assembled forces that the campaign of “liberation” would continue beyond King’s Landing (fact 2). Moments earlier she had used D",
+      "outcome": "ok",
+      "detail": "malformed: response is not a parseable JSON object; return one JSON object and nothing else"
+    },
+    {
+      "hash": "8296f646cf6823525672b6c4f906d41c0ea21520d86ee6aeb6a7a1aa5148c6c4",
+      "text": "{\"position\":\"not_justified\",\"points\":[{\"claim\":\"Jon Snow's act was not immediate self-defense because Daenerys was not attacking when he stabbed her.\",\"support\":\"The record states Daenerys was unarmed and not engaged in any attack at the moment of the killing. Necessary defense of others requires an imminent threat, not a speculative future one. The absence of an immediate threat undermines the claim that the stabbing was a defensive act.\"},{\"claim\":\"Jon had alternatives to lethal force that he did not pursue, including convening a council, attempting detention, or seeking her surrender of power.\",\"support\":\"The agreed record notes that Jon did not convene a council, attempt detention, or seek a public surrender of power. These alternatives could have removed Daenerys's ability to harm others without killing her. The record does not indicate that these options were impossible or that attempting them would have caused greater harm.\"},{\"claim\":\"The method of killing—using intimacy to approach her—reveals premeditation rather than a desperate response to an immediate threat.\",\"support\":\"Jon used their personal intimacy to get close enough to strike, suggesting the act was planned. A necessary defense is typically a reactive response to an immediate danger, not a calculated assassination. The deliberate approach indicates Jon chose the moment and method, not that he was forced into the killing by an urgent threat.\"},{\"claim\":\"Daenerys's announced future campaigns, while threatening, do not alone justify lethal action without attempting less lethal measures first.\",\"support\":\"Daenerys declared she would continue her campaign, but the record shows Jon did not try negotiation, exile, or imprisonment before killing her. Threats of future violence, even by a ruler, do not automatically justify lethal force when less harmful interventions remain available and untried.\"},{\"claim\":\"Permitting individual assassination of rulers for perceived future threats undermines the rule of law and sets a dangerous precedent.\",\"support\":\"The defense of the realm should be a collective, institutional action, not a private judgment. Allowing individuals to kill rulers because they fear future harm erodes legal standards and invites chaos. Jon acted without formal authority, and his act could be seen as personal vengeance rather",
+      "outcome": "ok",
+      "detail": "malformed: response is not a parseable JSON object; return one JSON object and nothing else"
+    }
+  ]
+}

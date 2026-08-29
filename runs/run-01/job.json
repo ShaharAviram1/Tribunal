@@ -1,0 +1,33 @@
+{
+  "deliberation_id": "run-01",
+  "case_id": "T-001",
+  "status": "incomplete",
+  "stage": "advocates",
+  "terminal_reason": "fewer than four stances succeeded in the advocates stage (3 of 4); judges not called",
+  "calls": 7,
+  "spend_usd": 0,
+  "attempts_by_role": {
+    "jon": 1,
+    "tyrion": 2,
+    "daenerys": 2,
+    "greyworm": 1
+  },
+  "claimed_at": "2026-08-29T22:47:18.452Z",
+  "completed_roles": [
+    "jon",
+    "greyworm",
+    "daenerys"
+  ],
+  "failed_roles": [
+    "tyrion"
+  ],
+  "models": {
+    "jon": "minimax/minimax-m2.7:free",
+    "tyrion": "minimax/minimax-m2.7:free",
+    "daenerys": "minimax/minimax-m2.7:free",
+    "greyworm": "minimax/minimax-m2.7:free",
+    "judge-1": "minimax/minimax-m2.7:free",
+    "judge-2": "minimax/minimax-m2.7:free",
+    "judge-3": "minimax/minimax-m2.7:free"
+  }
+}
