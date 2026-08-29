@@ -36,11 +36,11 @@ GATE G2 REFUSED: a .env file is staged.
 
 ## G3: no combined-verdict vocabulary in source
 
-**Checks.** Added lines under `src/`, `tests/`, `netlify/`, `prompts/`, and `public/` for `final verdict`, `majority`, `consensus`, `combined verdict`, or `aggregate`, case-insensitively.
+**Checks.** Added lines under `src/`, `tests/`, `netlify/`, `prompts/`, and `public/` for the patterns in `config/forbidden-vocabulary.json`, case-insensitively. The same file supplies the key fragments `tests/protocol/no-aggregation.test.ts` asserts against, so adding a word updates the gate and its test at once.
 
 **Catches.** The rule at the top and bottom of CLAUDE.md, which is not a pitfall in part five because it is the project's premise. A field, label, or helper named for a combined result is how the tally arrives.
 
-**Runs.** Pre-commit, on the staged diff of those directories only. The documents under `docs/` and the root are exempt: they discuss the rule and must be allowed to name it. One test file is exempt by path, `tests/protocol/no-aggregation.test.ts`, because it exists to name these words and assert their absence; it was the first source file G3 refused, on 2026-08-30, and the refusal was correct.
+**Runs.** Pre-commit, on the staged diff of those directories only. The documents under `docs/` and the root are exempt: they discuss the rule and must be allowed to name it. The config file is the only place outside `docs/` that names the words, and it is not under a scanned directory. The test that asserts their absence reads them from the config and names none itself. An earlier path exemption for that test file, added when G3 first refused it on 2026-08-30, was replaced by this shared definition: a path exemption is a hole, a shared definition is not.
 
 **On failure.**
 ```

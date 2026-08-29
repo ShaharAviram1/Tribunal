@@ -1,0 +1,5 @@
+{
+  "purpose": "Words that name a combined result. Read by .githooks/pre-commit (G3) and tests/protocol/no-aggregation.test.ts. Adding a word here updates the gate and its test at once.",
+  "source_patterns": ["final verdict", "majority", "consensus", "combined verdict", "aggregate"],
+  "key_fragments": ["majority", "consensus", "final", "combined", "aggregate", "tally", "count"]
+}

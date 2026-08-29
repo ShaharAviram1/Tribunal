@@ -1,13 +1,15 @@
 // The three opinions are never combined, and advocate positions are never summed
 // (problem.md section 3 item 4 and section 4; CLAUDE.md; judicial-opinion.schema.md section 3).
-// Nothing in the stored outputs or the job row may carry an aggregate under any name.
+// Nothing in the stored outputs or the job row may carry a combined result under any name.
 import { test } from 'node:test';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import assert from 'node:assert/strict';
 import { runDeliberation } from '../../src/protocol/run.ts';
 import { readJson, readText, ADVOCATE_IDS, JUDGE_IDS } from './_fixtures.ts';
 import { makeClient, makeStore, allKeys, type ScriptedResponse } from './_fakes.ts';
 
-const FORBIDDEN = ['majority', 'consensus', 'final', 'combined', 'aggregate', 'tally', 'count'];
+const FORBIDDEN: string[] = JSON.parse(readFileSync(join(process.cwd(), 'config/forbidden-vocabulary.json'), 'utf8')).key_fragments;
 // Names in ids, keys, or labels that would impersonate a real jurist (the dossier adapts, it does not impersonate).
 const JURISTS = ['barak', 'elon', 'shamgar'];
 
@@ -34,18 +36,18 @@ async function completed() {
 const offending = (keys: string[]) =>
   keys.filter((k) => FORBIDDEN.some((w) => k.toLowerCase().includes(w)));
 
-test('the job row has no field whose name suggests an aggregate of verdicts or positions', async () => {
+test('the job row has no field whose name suggests a combined result of verdicts or positions', async () => {
   const { store } = await completed();
   const job = store.getJob();
   assert.ok(job !== undefined);
-  assert.deepEqual(offending(allKeys(job)), [], `job carries aggregate-looking fields: ${JSON.stringify(job)}`);
-  for (const j of store.jobs) assert.deepEqual(offending(allKeys(j)), [], 'an intermediate job write carries an aggregate-looking field');
+  assert.deepEqual(offending(allKeys(job)), [], `job carries forbidden fields: ${JSON.stringify(job)}`);
+  for (const j of store.jobs) assert.deepEqual(offending(allKeys(j)), [], 'an intermediate job write carries an forbidden field');
 });
 
-test('no stored output has a field whose name suggests an aggregate, and none refers to another judge', async () => {
+test('no stored output has a field whose name suggests a combined result, and none refers to another judge', async () => {
   const { store } = await completed();
   for (const [role_id, out] of store.outputs) {
-    assert.deepEqual(offending(allKeys(out)), [], `${role_id} carries an aggregate-looking field`);
+    assert.deepEqual(offending(allKeys(out)), [], `${role_id} carries an forbidden field`);
     const keys = allKeys(out);
     for (const other of JUDGE_IDS.filter((j) => j !== role_id)) {
       assert.ok(!keys.includes(other), `${role_id} has a key naming ${other}`);
@@ -53,7 +55,7 @@ test('no stored output has a field whose name suggests an aggregate, and none re
   }
 });
 
-test('whatever runDeliberation returns carries no aggregate-looking field either', async () => {
+test('whatever runDeliberation returns carries no forbidden field either', async () => {
   const { returned } = await completed();
   if (returned instanceof Error) return;
   assert.deepEqual(offending(allKeys(returned)), [], JSON.stringify(returned));
