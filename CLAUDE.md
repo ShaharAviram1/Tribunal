@@ -10,7 +10,7 @@ Four advocates and three judges deliberate one charge sheet, T-001, in seven sep
 
 - `problem.md`: the situation that needs to change, who it is for, what done looks like, what is excluded and why. Read first.
 - `spec.md`: the contract the build is held to. Goal and reason, numbered criteria, boundaries, how correctness is checked, known pitfalls. Where it is silent, its part one says how to resolve the silence.
-- `docs/charge-sheet.spec.md`: what a filer may submit, what the system stamps, and the five rules with the failure each prevents.
+- `docs/charge-sheet.spec.md`: what a filer may submit, what the system stamps, and the six rules with the failure each prevents.
 - `docs/advocate-stance.schema.md`: what an advocate call returns, what the system adds at ingest, and which retry each rejection triggers.
 - `docs/judicial-opinion.schema.md`: the same for a judge, plus what an opinion must never contain.
 - `INTERVIEW-QUESTIONS.md`, `INTERVIEW-ASSUMPTIONS.md`: how the decisions were reached, and which are still owed.

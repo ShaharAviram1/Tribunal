@@ -25,9 +25,9 @@ test('T-001 as stored adds exactly the three stamped fields', () => {
   assert.deepEqual(stored.verdict_values, ['justified', 'not_justified']);
 });
 
-test('one invalid charge sheet fixture per rule CS-01 to CS-05', () => {
+test('one invalid charge sheet fixture per rule CS-01 to CS-06', () => {
   const names = listJson('charge-sheets/invalid');
-  for (const code of ['CS-01', 'CS-02', 'CS-03', 'CS-04', 'CS-05']) {
+  for (const code of ['CS-01', 'CS-02', 'CS-03', 'CS-04', 'CS-05', 'CS-06']) {
     assert.ok(names.some((n) => n.startsWith(code)), `missing fixture for ${code}`);
   }
 });

@@ -20,7 +20,8 @@ fi
 
 # G3: no combined-verdict vocabulary in source, prompts, or the page.
 if git diff --cached --name-only -- src tests netlify prompts public | grep -q .; then
-  hits=$(git diff --cached -U0 -- src tests netlify prompts public | grep -E '^\+' | grep -Ev '^\+\+\+' \
+  # tests/protocol/no-aggregation.test.ts is exempt: it exists to name these words and forbid them.
+  hits=$(git diff --cached -U0 -- src tests netlify prompts public ':(exclude)tests/protocol/no-aggregation.test.ts' | grep -E '^\+' | grep -Ev '^\+\+\+' \
     | grep -inE 'final verdict|majority|consensus|combined verdict|aggregate' || true)
   if [ -n "$hits" ]; then
     echo "GATE G3 REFUSED: staged source uses combined-verdict vocabulary." >&2

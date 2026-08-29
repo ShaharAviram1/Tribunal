@@ -40,7 +40,7 @@ GATE G2 REFUSED: a .env file is staged.
 
 **Catches.** The rule at the top and bottom of CLAUDE.md, which is not a pitfall in part five because it is the project's premise. A field, label, or helper named for a combined result is how the tally arrives.
 
-**Runs.** Pre-commit, on the staged diff of those directories only. The documents under `docs/` and the root are exempt: they discuss the rule and must be allowed to name it.
+**Runs.** Pre-commit, on the staged diff of those directories only. The documents under `docs/` and the root are exempt: they discuss the rule and must be allowed to name it. One test file is exempt by path, `tests/protocol/no-aggregation.test.ts`, because it exists to name these words and assert their absence; it was the first source file G3 refused, on 2026-08-30, and the refusal was correct.
 
 **On failure.**
 ```

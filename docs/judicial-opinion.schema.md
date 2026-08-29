@@ -46,18 +46,18 @@ Retry rules are those of spec.md, part two, criterion 6.
 
 | Condition | Retry rule |
 |---|---|
-| Response is not a parseable JSON object | malformed: one corrective retry naming what failed |
+| Provider signals a refusal (finish or stop reason) | refusal: zero retries, recorded as failed |
+| Response is not a parseable JSON object, whatever it says | malformed: one corrective retry restating the format and naming what failed |
 | A required field is missing, or an extra field is present | malformed |
 | `verdict` outside the two values | malformed |
 | `reasons` has fewer than 2 items | malformed |
 | A `reasons[].relies_on` is empty | malformed |
 | Any `text` empty | malformed |
 | Any id in `relies_on` does not resolve | unresolvable id: one corrective retry including the list of valid ids |
-| Model refuses to answer | refusal: zero retries, recorded as failed |
 
-Every condition maps to a rule. Where an object fails on both a malformed condition and an unresolvable id, the malformed rule applies and the corrective prompt names both.
+Every condition maps to a rule. Where an object fails on both a malformed condition and an unresolvable id, the malformed rule applies and the corrective prompt names both. The validator never classifies prose; see the advocate schema, section 3, which applies here unchanged.
 
-A judge is only called when all four advocate stances succeeded (spec.md, part two, criterion 14). A judge that fails after its retries, or on refusal, leaves its column rendered as a failure; the other two opinions stand, since each is independent.
+A judge is only called when all four advocate stances succeeded (spec.md, part two, criterion 14). A judge that fails after its retries, or on refusal, leaves its column rendered as a failure from the failure record stored under its role id (criterion 17); the other two opinions stand, since each is independent, and the job ends `incomplete` (criterion 16).
 
 ## 5. Valid instance
 
@@ -136,8 +136,8 @@ Malformed retry.
 ```
 Unresolvable-id retry, if Tyrion's stance has five points or fewer. `Tyrion.p2` and `tyrion.P2` are likewise unresolvable.
 
-**Refusal**
+**Refusal in prose, no provider signal**
 ```
 I'm not able to write an opinion in the voice of a real judge.
 ```
-Refusal: zero retries, failed.
+Malformed retry: not a JSON object. A second non-object response fails the role with both texts stored.
