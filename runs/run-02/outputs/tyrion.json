@@ -1,0 +1,33 @@
+{
+  "role_id": "tyrion",
+  "seat": "defense",
+  "deliberation_id": "run-02",
+  "position": "not_justified",
+  "points": [
+    {
+      "id": "tyrion.p1",
+      "claim": "The killing lacked an imminent threat, because Daenerys was not actively attacking at the moment of the stabbing.",
+      "support": "The accepted legal notion of necessary defence requires a present, ongoing danger. At the moment Jon drove the blade, Daenerys was unarmed, not in the act of harming anyone, and no fire was being unleashed. The record notes that the immediate attack had ceased; the bells had rung and resistance had stopped. While she later declared continued campaigns, future intent does not meet the immediacy standard. A merely prospective threat, however grave, cannot justify a lethal response that is not instantaneous. Hence the defence of others fails for lack of imminence."
+    },
+    {
+      "id": "tyrion.p2",
+      "claim": "Safer, lawful alternatives existed that Jon did not attempt.",
+      "support": "The record shows that Jon did not convene a council, nor did he attempt to detain Daenerys through the chain of command. At the time, the surviving lords, the Unsullied, and the Dothraki were present; a formal gathering could have been called to demand her abdication or imprisonment. The absence of such steps means we cannot know whether a less lethal solution was viable. The defence of necessity requires that the actor had no reasonable alternative; the silence of the record on this point weakens the claim that none existed."
+    },
+    {
+      "id": "tyrion.p3",
+      "claim": "Jon lacked the formal authority required to lawfully execute a ruler.",
+      "support": "Westerosi law reserves the power to punish a monarch to bodies such as a council of lords, a trial, or a legitimate succession process. Jon, though a legitimized Targaryen, held no formal office that conferred judicial authority over Daenerys. Acting as a private citizen, he assumed a power that the legal order reserves for an institution. Without that authority, his act is an execution, not a lawful execution, and cannot be justified under the realm’s legal norms."
+    },
+    {
+      "id": "tyrion.p4",
+      "claim": "The act was premeditated and strategic, not a reflex of self‑defence, which undermines the “defence of others” justification.",
+      "support": "Jon did not act in the heat of the moment; he deliberately used the intimacy of their relationship to approach Daenerys and strike. The record notes that he did not call for a halt, did not issue a warning, and did not attempt any other measure before the stabbing. This level of planning signals a calculated political decision rather than an instinctive protective act. The defence of others is predicated on a spontaneous reaction to an immediate danger; premeditation severs that link."
+    },
+    {
+      "id": "tyrion.p5",
+      "claim": "Accepting this killing as justified would set a dangerous precedent for extrajudicial murders of rulers.",
+      "support": "If we accept that a single individual may justifiably kill a ruler on the basis of moral judgment and future threat, we open the door to any disgruntled subject claiming the same right. The precedent would destabilize any monarchy, making every ruler a potential target of private vengeance. The rule of law depends on centralized, transparent processes for removing a sovereign; bypassing them for the sake of expediency risks plunging the realm into cycles of assassination and counter‑assassination. The long‑term harm outweighs the immediate benefit of removing Daenerys."
+    }
+  ]
+}

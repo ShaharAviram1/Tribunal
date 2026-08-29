@@ -29,3 +29,24 @@ What it changed: `max_output_tokens` 4,096 → 16,384 (reasoning counts toward t
 The one-dollar backstop is not replaced from this run: it cost zero because the model is free, so it measures nothing about cost. It waits for a paid run, or for an estimate from these token counts against run two's models, labelled as an estimate.
 
 **Observation to watch, not to fix.** All three successful advocates concluded `not_justified`, and Tyrion's truncated second attempt was also `not_justified`; Jon, defending himself, did the same. The simulation rule allows it. If the defense seats never make a defense case, the judges read a one-sided record. Run two decides whether this is the model or the prompts; the prompts are not touched before then.
+
+## Run two of this turn (`runs/run-02/`): complete
+
+Seven calls, seven outputs, zero retries, $0, 127 s wall clock. Advocate stage 60 s (longest call, Tyrion, 59.6 s; sum of the four latencies 164 s, so criterion 13's concurrency evidence holds), judge stage 68 s. Output tokens 1,717 to 6,287 per call under the 16,384 ceiling; every finish reason `stop`. `model_served` equals `model_requested` on all seven rows. This is the committed single-model deliberation that problem.md item 8 requires, and the seed for the fresh-clone criterion.
+
+**What it taught.**
+- Reasoning output is large and variable: judge-2 spent 6,287 tokens, judge-3 1,717, on the same stances. The 4,096 ceiling would have cut four of these seven.
+- Latency tracks reasoning: 23 to 68 s. The 90 s timeout held with 22 s to spare on the slowest call. Timeout is the binding constraint on a free reasoning model, not cost.
+- All four advocates, both defense seats included, concluded `not_justified`, for the second run in a row. All three judges then found `not_justified` on near-identical grounds (imminence, alternatives, authority, method), each citing the same four points. This is the pitfall spec.md part five names: three judges on one model agreeing because they share it. Run one demonstrates the pipeline and licenses no conclusion about the judges; this run shows exactly why that sentence is in the spec.
+- The three opinions differ in manner more than in matter: judge-1 builds four sequential tests, judge-2 cites eight ids in one reason and reaches for precedent language, judge-3 stays with chronology and offices and leaves `against.relies_on` empty, saying the counter-consideration is one no advocate raised. The prompts are distinguishing manner; whether they can distinguish matter on one model is the question turn four exists to answer.
+
+**Observation carried forward, unchanged.** The defense seats made no defense case in either run. Not touched before the multi-model run.
+
+## Locked
+- Model for the single-model run: `minimax/minimax-m2.7:free`, chosen by probe; served model recorded on every row.
+- `max_output_tokens` 16,384; timeout 90 s; truncation as its own condition.
+- Refusal is the provider's signal only; failure records store raw text; the run resolves, never throws.
+- The twenty gaps from the blind test-writer and how each closed: see the section below.
+
+## The blind test-writer's twenty gaps and how each closed
+1. Job row fields and statuses: decided, criterion 16. 2. Prose refusal heuristic: rejected, refusal is provider signal only, criterion 6. 3. Corrective block wording: literal reading, restates format and names field. 4. `unresolved` contents: every id once, encounter order. 5. Throw or resolve: resolves, criterion 18. 6. Transport failure terminal for the role: yes. 7. Cap mid-stage: await in-flight, store, terminate, criterion 1. 8. Failed role storage: failure record, criterion 17. 9. Judge labels: `config/roles.json`, not `models.json`. 10. Absent output: `undefined`. 11. Log rows: client writes them; protocol syncs totals to the job. 12. Concurrency evidence: log timestamps now exist; the fake measures in-flight count. 13. Block layout blank lines: fixed by the renderer, asserted by test. 14. Stances order: jon, tyrion, daenerys, greyworm. 15. Failures unordered. 16. Type errors: CS-06 added. 17. Missing field is CS-01 only. 18. Judge failure: job `incomplete`. 19. Staleness: ceiling plus margin. 20. Re-entry trusts stored objects.

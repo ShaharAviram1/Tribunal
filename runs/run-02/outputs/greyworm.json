@@ -1,0 +1,33 @@
+{
+  "role_id": "greyworm",
+  "seat": "prosecution",
+  "deliberation_id": "run-02",
+  "position": "not_justified",
+  "points": [
+    {
+      "id": "greyworm.p1",
+      "claim": "Daenerys had just burned a surrendered city; she was not attacking anyone at the moment Jon struck.",
+      "support": "The record states that after the bells rang and organized resistance ceased, Daenerys used Drogon against streets and civilians. This shows the immediate attack had ended and she posed no ongoing threat at the time of the killing."
+    },
+    {
+      "id": "greyworm.p2",
+      "claim": "Jon used intimacy to approach an unarmed woman and killed her without warning or attempt at detention.",
+      "support": "Point 5 records that Daenerys was unarmed and not attacking Jon when he stabbed her, and that Jon used their intimacy to get close enough to strike. He made no attempt to restrain or arrest her, indicating a non‑lethal option was available."
+    },
+    {
+      "id": "greyworm.p3",
+      "claim": "The record shows Jon did not call a council, did not order arrest, and did not demand public surrender of power.",
+      "support": "Point 5 also notes that Jon had not convened a council, attempted detention, or sought a public surrender of power. These are lawful steps that could have been taken before resorting to lethal action, and their absence shows he bypassed safer alternatives."
+    },
+    {
+      "id": "greyworm.p4",
+      "claim": "Jon knew Daenerys intended to continue the campaign, but that intent was future, not immediate.",
+      "support": "Points 2 and 3 indicate Daenerys announced the campaign would continue beyond King’s Landing and Tyrion warned of future threats. This knowledge pertains to a future danger, not an imminent attack requiring immediate lethal force."
+    },
+    {
+      "id": "greyworm.p5",
+      "claim": "Jon had no formal authority to execute the queen; only a council or proper trial could lawfully remove her.",
+      "support": "The agreed record contains no provision granting Jon authority to execute Daenerys. The only lawful process for removing a monarch would involve a council or trial, as shown by the lack of any formal order or process in the record."
+    }
+  ]
+}
