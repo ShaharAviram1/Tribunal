@@ -1,0 +1,18 @@
+{
+  "position": "not_justified",
+  "confidence": 0.9,
+  "points": [
+    {
+      "claim": "The queen was unarmed and embraced him when he struck.",
+      "support": "I stood at the door. She had no blade, no guard, no dragon in the room. He came as a friend and killed her as a friend. That is the whole of it."
+    },
+    {
+      "claim": "He tried nothing else first.",
+      "support": "No council. No chains. No demand that she step down before the army. A soldier who thinks his commander wrong says so, or he leaves. He does not put a knife in her."
+    },
+    {
+      "claim": "What she said she would do had not been done.",
+      "support": "The city burned; that was done. The rest was words. He killed her for words about cities she had not yet reached."
+    }
+  ]
+}

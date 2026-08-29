@@ -1,0 +1,9 @@
+{
+  "name": "tribunal",
+  "private": true,
+  "type": "module",
+  "engines": { "node": "24.11.1" },
+  "scripts": {
+    "test": "node --import ./tests/_guard.ts --test 'tests/**/*.test.ts'"
+  }
+}
