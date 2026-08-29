@@ -9,7 +9,7 @@ What the seven prompt files share. This file is a document about assembly and ou
 
 ## Headers
 
-Every prompt file begins with an HTML comment carrying its role id, version, and either its seat or its profile. The comment is stripped at assembly. The model never sees a role id, a version, or a seat label.
+Every prompt file begins with an HTML comment carrying its role id, version, and either its seat or its profile. The comment is stripped at assembly. A model never sees its own role id, version, seat, or profile label. Judges do see the advocates' role ids and seats, because the stances block carries each stance as stored and the point ids a judge must cite are built from role ids.
 
 ## Assembly order
 

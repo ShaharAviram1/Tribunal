@@ -1,0 +1,23 @@
+{
+  "verdict": "not_justified",
+  "reasons": [
+    {
+      "text": "The record establishes that no lesser means was attempted. Detention, council, and public demand were each available and each untried; a defence of others that skips every alternative fails at the necessity step.",
+      "relies_on": [
+        "Tyrion.p2"
+      ]
+    },
+    {
+      "text": "The threatened harm, however grave, lay in announced intention rather than imminent act. Necessity requires that the danger be present, and the record places it in the future.",
+      "relies_on": [
+        "greyworm.p3"
+      ]
+    }
+  ],
+  "against": {
+    "text": "The scale of what had already been done at King's Landing, and the announced continuation, gives the strongest ground for treating the danger as present rather than prospective.",
+    "relies_on": [
+      "jon.p1"
+    ]
+  }
+}
