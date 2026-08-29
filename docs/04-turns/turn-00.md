@@ -36,3 +36,5 @@ Decisions taken during the plan: TypeScript on Node, pinned; no dev dependency, 
 
 - Whether Netlify's function runtime accepts the pinned Node 24; the first deploy answers it.
 - Per-call cost at the chosen single model, which sets whether the 1.00 USD backstop is far or near.
+
+Amended after review: the version guard matches major.minor and lets the patch float; exact-patch matching was a rule wider than the failure it prevents. Netlify's default runtime is Node 24, so the pin needs no deploy check.

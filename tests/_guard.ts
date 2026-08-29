@@ -2,8 +2,10 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
+// Match major.minor and let the patch float: a patch difference is not the failure this guards against.
 const pinned = readFileSync(join(process.cwd(), '.nvmrc'), 'utf8').trim();
-if (process.version !== `v${pinned}`) {
+const majorMinor = (v: string) => v.replace(/^v/, '').split('.').slice(0, 2).join('.');
+if (majorMinor(process.version) !== majorMinor(pinned)) {
   throw new Error(`offline suite: running on Node ${process.version}, pinned version is ${pinned} (.nvmrc)`);
 }
 if (process.env.OPENROUTER_API_KEY) {
