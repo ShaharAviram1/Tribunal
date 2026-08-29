@@ -2,6 +2,23 @@
 
 Branch `turn-1`. Bound: all seven roles on one model; no page beyond what proves the run.
 
+## Intent
+
+Make one deliberation of T-001 happen end to end, on one model, with every failure path written before the first success, so that the first complete run proves the protocol and not the model's good mood.
+
+## Plan as it stood before the work
+
+As proposed and amended on 2026-08-30, before any code in this turn:
+
+1. Probe: send the real assembled `judge-1` and `daenerys` prompts once each to three candidates at temperature 0, fallbacks off, no JSON mode; keep the first clean object; record cost and latency per candidate as the first input to replacing the one-dollar backstop; record all results including failures.
+2. Client module: the only code knowing the key, caps, temperature, transport retry, log row; caps from config at construction; row per attempt with requested and served model, temperature, tokens, cost, latency, hash, outcome.
+3. Validation and protocol: CS-01 to CS-05 with every failing rule named; stance and opinion validators per the schemas; two concurrent stages; corrective retry per criterion 6; stop before judges on fewer than four stances.
+4. Local file store under `runs/<id>/`, behind a storage interface, committed as the seed for the fresh-clone criterion; Supabase and the background function in the next turn.
+5. Offline drills from fixtures plus recorded responses. The test-writing agent dispatched at the start of the turn, in parallel with step 2, shown the documents and never the implementation; whatever it cannot write from the documents is a hole in them.
+6. One live run on the chosen model, seven outputs and full log committed, turn note written.
+
+What the plan did not contain, and the turn added: an output ceiling on every call; truncation as its own condition; a sixth charge sheet rule; three job-row criteria; a 90-second timeout; a second live run because the first stopped short; free candidates alongside paid ones. Each is recorded below at the point it arose. The plan's six steps were all done; the drift is in what they turned out to require.
+
 ## Model for run one, chosen by probe
 
 The probe (`scripts/probe-candidates.ts`) sent the real assembled `daenerys` and `judge-1` prompts once each, temperature 0, `max_tokens` 4,096, fallbacks off, no JSON mode. Raw records: `docs/04-turns/probe/`.
@@ -40,7 +57,7 @@ Seven calls, seven outputs, zero retries, $0, 127 s wall clock. Advocate stage 6
 - All four advocates, both defense seats included, concluded `not_justified`, for the second run in a row. All three judges then found `not_justified` on near-identical grounds (imminence, alternatives, authority, method), each citing the same four points. This is the pitfall spec.md part five names: three judges on one model agreeing because they share it. Run one demonstrates the pipeline and licenses no conclusion about the judges; this run shows exactly why that sentence is in the spec.
 - The three opinions differ in manner more than in matter: judge-1 builds four sequential tests, judge-2 cites eight ids in one reason and reaches for precedent language, judge-3 stays with chronology and offices and leaves `against.relies_on` empty, saying the counter-consideration is one no advocate raised. The prompts are distinguishing manner; whether they can distinguish matter on one model is the question turn four exists to answer.
 
-**Observation carried forward, unchanged.** The defense seats made no defense case in either run. Not touched before the multi-model run.
+**Carried into turn three and beyond, as a note, not an action.** The panel was unanimous because the record it read was one-sided: all four advocates argued against the killing. If several models reproduce it, the thing to examine is the advocate stage. Judge prompts are not adjusted to produce disagreement.
 
 ## Locked
 - Model for the single-model run: `minimax/minimax-m2.7:free`, chosen by probe; served model recorded on every row.
