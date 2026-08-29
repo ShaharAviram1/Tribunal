@@ -32,6 +32,8 @@ The definition of done in problem.md, section 3, is incorporated by reference; i
 
 Boundaries only. The interior is left to the builder.
 
+The panel reasons and the interface renders in English. Prompts, outputs, the charge sheet, and the case page are English throughout.
+
 The API key lives in the server environment on Netlify and nowhere else. The browser holds no key, no orchestration, and no protocol state that the server does not also hold; it files a charge sheet, polls for progress, and renders what is stored. All model access goes through one client module, which is the only code that knows the key, the caps, the temperature, the transport retry policy, and the log format. The seven prompts are versioned files loaded at runtime, never strings in code, and the shared charge sheet block is rendered once and placed first in each of them. The protocol, meaning the order of calls, the assignment of point ids, the validation of outputs, and the decision to retry or fail, is deterministic code with no model call of its own. The protocol has two stages: the four advocates are called concurrently, and when all four have resolved, the three judges are called concurrently. Concurrency within a stage is required, not optional; the timeout derivation in criterion 12 depends on it, and sequential execution does not fit inside the function ceiling.
 
 The database holds three things: charge sheets as stored after stamping, agent outputs as they land, and the call log with one row per attempt. Nothing else is stored server-side that is not derivable from those three.
