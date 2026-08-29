@@ -15,6 +15,7 @@ export type Caps = {
   temperature: number;
   max_output_tokens: number;
   transport_backoff_base_ms: number;
+  truncation_retry_ceiling_multiplier: number;
 };
 
 export type LogRow = {
@@ -32,14 +33,16 @@ export type LogRow = {
   cost_usd: number | null;
   latency_ms: number;
   outcome: 'ok' | 'refusal' | 'transport_error' | 'cap_exceeded' | 'timeout';
+  max_output_tokens: number;
+  finish_reason: string | null;
   http_status: number | null;
   detail: string | null;
   started_at: string;
 };
 
-export type CallRequest = { role_id: string; prompt: string; hash: string; attempt: number };
+export type CallRequest = { role_id: string; prompt: string; hash: string; attempt: number; max_output_tokens?: number };
 export type CallResult =
-  | { outcome: 'ok'; text: string; row: LogRow }
+  | { outcome: 'ok'; text: string; truncated: boolean; row: LogRow }
   | { outcome: 'refusal'; row: LogRow }
   | { outcome: 'transport_error'; row: LogRow }
   | { outcome: 'cap_exceeded'; row: LogRow };
@@ -115,15 +118,16 @@ export class ModelClient {
       const gate = await this.#gate(req, model);
       if (gate) return gate;
       const started = this.#now();
-      const res = await this.#transport({ model, prompt: req.prompt, temperature: this.#caps.temperature, timeout_ms: this.#caps.call_timeout_ms, max_tokens: this.#caps.max_output_tokens });
+      const ceiling = req.max_output_tokens ?? this.#caps.max_output_tokens;
+      const res = await this.#transport({ model, prompt: req.prompt, temperature: this.#caps.temperature, timeout_ms: this.#caps.call_timeout_ms, max_tokens: ceiling });
       const latency_ms = this.#now() - started;
-      const base = this.#row(req, model, latency_ms, started);
+      const base = { ...this.#row(req, model, latency_ms, started), max_output_tokens: ceiling };
       if (res.kind === 'ok') {
         const row: LogRow = { ...base, outcome: 'ok', model_served: res.model_served, model_mismatch: res.model_served !== null && res.model_served !== model,
           tokens_in: res.tokens_in, tokens_out: res.tokens_out, cost_usd: res.cost_usd, http_status: res.http_status, temperature_honoured: res.temperature_honoured,
-          detail: res.finish_reason };
+          finish_reason: res.finish_reason, detail: null };
         await this.#record(row);
-        return { outcome: 'ok', text: res.text, row };
+        return { outcome: 'ok', text: res.text, truncated: res.finish_reason === 'length', row };
       }
       if (res.kind === 'refusal') {
         const row: LogRow = { ...base, outcome: 'refusal', model_served: res.model_served, model_mismatch: res.model_served !== null && res.model_served !== model, http_status: res.http_status, detail: res.detail };
@@ -158,6 +162,7 @@ export class ModelClient {
       temperature: this.#caps.temperature, temperature_honoured: null,
       tokens_in: null, tokens_out: null, cost_usd: null, latency_ms,
       outcome: 'ok', http_status: null, detail: null, started_at: new Date(started).toISOString(),
+      max_output_tokens: req.max_output_tokens ?? this.#caps.max_output_tokens, finish_reason: null,
     };
   }
 

@@ -14,7 +14,7 @@ function memBudget(): Budget & { rows: LogRow[] } {
     add: async (r) => { rows.push(r); },
   };
 }
-const ok = (text = '{}', served = 'test/model-a'): Transport => async () => ({ kind: 'ok', text, model_served: served, tokens_in: 10, tokens_out: 5, cost_usd: 0.01, http_status: 200, temperature_honoured: null, finish_reason: 'stop' });
+const ok = (text = '{}', served = 'test/model-a', finish = 'stop'): Transport => async () => ({ kind: 'ok', text, model_served: served, tokens_in: 10, tokens_out: 5, cost_usd: 0.01, http_status: 200, temperature_honoured: null, finish_reason: finish });
 const script = (kinds: Array<'ok' | 'transport_error' | 'refusal' | 'timeout'>): Transport => {
   let i = 0;
   return async () => {
@@ -106,4 +106,12 @@ test('caps cannot be changed after construction', () => {
   const { client } = mk(ok());
   assert.throws(() => { (client.caps as any).max_calls_per_deliberation = 999; });
   assert.equal(client.caps.max_calls_per_deliberation, 20);
+});
+
+test('the row carries the ceiling sent and the finish reason; a length finish is reported as truncated', async () => {
+  const { client } = mk(ok('{"a":', 'test/model-a', 'length'));
+  const r = await client.call({ ...req(), max_output_tokens: 777 });
+  assert.equal(r.outcome, 'ok'); if (r.outcome === 'ok') assert.equal(r.truncated, true);
+  assert.equal(client.log[0]!.max_output_tokens, 777);
+  assert.equal(client.log[0]!.finish_reason, 'length');
 });

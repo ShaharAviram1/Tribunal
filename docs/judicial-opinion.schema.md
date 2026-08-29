@@ -47,6 +47,7 @@ Retry rules are those of spec.md, part two, criterion 6.
 | Condition | Retry rule |
 |---|---|
 | Provider signals a refusal (finish or stop reason) | refusal: zero retries, recorded as failed |
+| Provider reports the response cut off at the output ceiling (`finish_reason: length`) | truncated: one retry of the same prompt at a raised ceiling, no corrective text; a second truncation fails the role |
 | Response is not a parseable JSON object, whatever it says | malformed: one corrective retry restating the format and naming what failed |
 | A required field is missing, or an extra field is present | malformed |
 | `verdict` outside the two values | malformed |

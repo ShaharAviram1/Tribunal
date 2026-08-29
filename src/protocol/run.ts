@@ -11,12 +11,12 @@ import { validateOpinion } from './validate-opinion.ts';
 import type { StoredChargeSheet, StoredStance, StoredOpinion, FailureRecord } from './types.ts';
 
 export type CallOutcome =
-  | { outcome: 'ok'; text: string }
+  | { outcome: 'ok'; text: string; truncated?: boolean }
   | { outcome: 'refusal' }
   | { outcome: 'transport_error' }
   | { outcome: 'cap_exceeded' };
 export type ModelClient = {
-  call(req: { role_id: string; prompt: string; hash: string; attempt: number }): Promise<CallOutcome>;
+  call(req: { role_id: string; prompt: string; hash: string; attempt: number; max_output_tokens?: number }): Promise<CallOutcome>;
   log: unknown[];
 };
 type MaybePromise<T> = T | Promise<T>;
@@ -49,6 +49,7 @@ export type RunDeps = {
   models?: Record<string, string>;
   promptsDir?: string;
   rolesConfigPath?: string;
+  caps?: { max_output_tokens: number; truncation_retry_ceiling_multiplier: number };
   now?: () => Date;
 };
 
@@ -58,6 +59,7 @@ export async function runDeliberation(deps: RunDeps): Promise<Job> {
   const { client, store, chargeSheet, deliberation_id } = deps;
   const now = deps.now ?? (() => new Date());
   const roles: RoleConfig = JSON.parse(readFileSync(deps.rolesConfigPath ?? join(process.cwd(), 'config/roles.json'), 'utf8'));
+  const caps = deps.caps ?? (JSON.parse(readFileSync(join(process.cwd(), 'config/caps.json'), 'utf8')) as { max_output_tokens: number; truncation_retry_ceiling_multiplier: number });
 
   const existing = (await store.getJob()) as Job | undefined;
   if (!(await store.claim())) return existing ?? blankJob(deliberation_id, chargeSheet.case_id, deps.models ?? {});
@@ -94,12 +96,13 @@ export async function runDeliberation(deps: RunDeps): Promise<Job> {
     const validIds = stances ? stances.flatMap((s) => s.points.map((p) => p.id)) : [];
     const attempts: FailureRecord['attempts'] = [];
     let corrective: string | undefined;
+    let ceiling = caps.max_output_tokens;
     for (let round = 0; round < 2; round++) {
       if (capHit) { await fail(role, `not dispatched: ${capHit}`, attempts); return; }
       const attempt = (job.attempts_by_role[role] ?? 0) + 1;
       job.attempts_by_role[role] = attempt;
       const p = assemblePrompt({ role_id: role, chargeSheet, stances, corrective, promptsDir: deps.promptsDir });
-      const res = await client.call({ role_id: role, prompt: p.text, hash: p.hash, attempt });
+      const res = await client.call({ role_id: role, prompt: p.text, hash: p.hash, attempt, max_output_tokens: ceiling });
       syncBudget();
       if (res.outcome === 'cap_exceeded') {
         capHit = capHit ?? `cap exceeded at ${job.calls} calls, ${job.spend_usd.toFixed(4)} USD`;
@@ -108,6 +111,14 @@ export async function runDeliberation(deps: RunDeps): Promise<Job> {
       }
       if (res.outcome === 'refusal') { attempts.push({ hash: p.hash, text: null, outcome: 'refusal', detail: 'provider signalled a refusal' }); await fail(role, 'refusal', attempts); return; }
       if (res.outcome === 'transport_error') { attempts.push({ hash: p.hash, text: null, outcome: 'transport_error', detail: 'transport retries exhausted' }); await fail(role, 'transport_error', attempts); return; }
+      if (res.truncated) {
+        // Truncation is the ceiling's failure, not the text's: one retry at a raised ceiling, same prompt,
+        // no corrective text. A second truncation fails the role as truncated (spec.md criterion 6).
+        attempts.push({ hash: p.hash, text: res.text, outcome: 'ok', detail: `truncated at ${ceiling} output tokens` });
+        if (round === 1) { await fail(role, 'truncated on both attempts', attempts); return; }
+        ceiling = ceiling * caps.truncation_retry_ceiling_multiplier;
+        continue;
+      }
       const v = isJudge ? validateOpinion(res.text, validIds) : validateStance(res.text);
       if (v.ok) {
         const out: StoredStance | StoredOpinion = isJudge
