@@ -25,6 +25,7 @@ The definition of done in problem.md, section 3, is incorporated by reference; i
 11. The refusal path for each cap is covered by an offline test that constructs the client module with a low cap, drives it past the cap with fixtures, and asserts that the call is refused and the deliberation is marked failed.
 12. Each call has a timeout of 60 seconds. Derivation: the protocol has two concurrent stages, advocates then judges; the worst case is 2 stages times 60 seconds times 4 attempts per role, which is 480 seconds, inside a 15-minute background function ceiling with margin. Run sequentially, the same worst case is 7 roles times 60 seconds times 4 attempts, 1680 seconds, which does not fit.
 13. The advocate stage's wall clock, as recorded in the log, is less than the sum of the four advocates' latencies in the log. This is the observable evidence that the four calls ran concurrently.
+14. If fewer than four advocate stances succeed, the deliberation stops before the judge stage. No judge call is made. A panel that heard three advocates is a different panel, and proceeding would produce something that looks complete and is not. The job row records how far the deliberation got, the case page renders it as incomplete with each failed stance shown as a failure, and no partial deliberation is presented as a result. Because a refusal gets zero retries, this is reached the first time a model declines the case.
 
 ## Part three: architectural guidance
 
@@ -59,4 +60,5 @@ One live run is made per spiral turn and its full log is committed alongside the
 - A retry that resends the identical prompt at temperature 0 will most likely return the identical failure; the corrective retry must differ from the first prompt or it is wasted.
 - The per-run spend cap of 1.00 USD was set before any measurement; a model whose pricing is far above the panel's average can hit it on a normal run, which will look like a loop and is not.
 - The background function has a ceiling too; a deliberation that crosses it must leave the job row in a state the page can render as incomplete, not as pending forever.
+- If every judge returns an empty `against.relies_on` in run one, that is a prompt failure to fix in the prompt, not a reason to make the field mandatory.
 - Supabase writes made per output are the progress signal; a write that fails leaves the page showing less than happened, so write the log row before the output row, never after.

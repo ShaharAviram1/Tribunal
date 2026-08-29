@@ -39,7 +39,7 @@ Item not written because it cannot be made argument-free: whether an advocate or
 
 Each entry is something a reasonable person could expect, with the reason it is excluded.
 
-- **A combined, majority, or aggregate verdict.** The course rule and the problem statement: collapsing the readings into one conclusion is the situation the project exists to change. A tally is a single answer in a different form.
+- **A combined, majority, or aggregate verdict.** The course rule and the problem statement: collapsing the readings into one conclusion is the situation the project exists to change. A tally is a single answer in a different form. This extends to the advocates: positions are shown per advocate and never summed or counted, because a count of advocate positions is the same aggregate arriving through a side door.
 - **An agreement metric between judges.** Deciding whether two sets of grounds are "the same" is a judgment the system does not have; shipping a number for it would be a claim that cannot be defended.
 - **A meta-judge that reads the three opinions and reports where they agree.** Sounds like rigour, is synthesis with extra steps.
 - **A follow-up chat on a case.** A follow-up turn carries the prior output in its context, so the second answer continues the first: the single conversation the project replaces, reintroduced through a text box. It also lets a reader keep asking until they get the answer they wanted. Asking again means filing a new charge sheet.
