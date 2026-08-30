@@ -1,0 +1,43 @@
+{
+  "label": "Shamgar model",
+  "against": {
+    "text": "The strongest counter‑consideration is that Daenerys had already caused catastrophic civilian casualties and announced further campaigns of ‘liberation’, creating an ongoing and massive threat that might, in some views, justify pre‑emptive lethal action to protect the realm.",
+    "relies_on": [
+      "tyrion.p4",
+      "daenerys.p3",
+      "greyworm.p3"
+    ]
+  },
+  "reasons": [
+    {
+      "text": "The record shows that Daenerys was unarmed and was not attacking Jon at the moment he stabbed her, so there was no imminent threat to justify lethal force under a necessity defence.",
+      "relies_on": [
+        "jon.p1",
+        "tyrion.p1",
+        "daenerys.p1",
+        "greyworm.p1"
+      ]
+    },
+    {
+      "text": "Jon did not convene a council, attempt detention, or seek a public surrender of power before killing Daenerys; recognized, less‑lethal alternatives existed and were not exhausted, defeating the claim that the killing was necessary.",
+      "relies_on": [
+        "jon.p2",
+        "tyrion.p2",
+        "daenerys.p2",
+        "greyworm.p2"
+      ]
+    },
+    {
+      "text": "Jon held no formal legal authority to execute a sovereign, and no lawful body sanctioned the act, making the killing an unauthorized exercise of power rather than lawful enforcement.",
+      "relies_on": [
+        "jon.p3",
+        "tyrion.p5",
+        "greyworm.p4",
+        "daenerys.p4"
+      ]
+    }
+  ],
+  "role_id": "judge-3",
+  "verdict": "not_justified",
+  "deliberation_id": "d-T-001-1788124601994"
+}

@@ -1,0 +1,33 @@
+{
+  "seat": "prosecution",
+  "points": [
+    {
+      "id": "greyworm.p1",
+      "claim": "Daenerys was unarmed and not attacking when Jon killed her, removing any immediate threat that would justify lethal self‑defence.",
+      "support": "The agreed record states Daenerys was unarmed and was not attacking Jon at the moment he stabbed her. A claim of necessary defense requires an imminent threat; an unarmed, non‑aggressive target cannot supply that necessity."
+    },
+    {
+      "id": "greyworm.p2",
+      "claim": "Jon had not convened a council, attempted detention, or sought a public surrender of power before killing Daenerys, leaving lawful alternatives untested.",
+      "support": "The record explicitly notes that Jon did not convene a council, did not attempt detention, and did not seek a public surrender of power. These are recognized, less‑lethal means of stopping a ruler; their absence undermines the assertion that no safer option existed."
+    },
+    {
+      "id": "greyworm.p3",
+      "claim": "The threat Daenerys posed was future and not immediate at the moment Jon acted, undermining a claim of imminent necessity.",
+      "support": "While Daenerys announced further campaigns, the record contains no evidence she was about to carry out an immediate attack at the time of the killing. Necessity defense depends on imminent harm; a speculative future threat does not satisfy that requirement."
+    },
+    {
+      "id": "greyworm.p4",
+      "claim": "Jon possessed no formal legal authority to execute a sovereign; his killing was an act of unauthorized vengeance rather than lawful enforcement.",
+      "support": "No law, order, or recognized body granted Jon the right to put Daenerys to death. Execution of a ruler is a function of lawful authority, not of personal judgment; without that authority, the act is unauthorized vengeance."
+    },
+    {
+      "id": "greyworm.p5",
+      "claim": "The record does not demonstrate that safer alternatives were impossible, because Jon never attempted detention, council, or surrender.",
+      "support": "Because the record shows Jon did not try detention, council, or surrender, we cannot conclude those options were unavailable. The failure to exhaust known, less‑lethal alternatives defeats the necessity claim."
+    }
+  ],
+  "role_id": "greyworm",
+  "position": "not_justified",
+  "deliberation_id": "d-T-001-1788124601994"
+}

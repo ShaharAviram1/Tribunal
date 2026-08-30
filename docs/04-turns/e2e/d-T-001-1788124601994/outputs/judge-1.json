@@ -1,0 +1,37 @@
+{
+  "label": "Barak model",
+  "against": {
+    "text": "The strongest argument for justification is that Daenerys had just devastated King’s Landing, commanded a dragon, and announced continued campaigns of liberation, presenting an ongoing and massive threat to the realm. The scale of potential future casualties from her actions could be so great that preemptively removing her might be seen as necessary to protect countless lives.",
+    "relies_on": [
+      "jon.p1"
+    ]
+  },
+  "reasons": [
+    {
+      "text": "The killing failed the necessity test because Daenerys was unarmed and not attacking at the moment Jon struck, and Jon possessed no formal legal authority to execute a ruler. The record shows he did not convene a council, attempt detention, or seek a public surrender of power, leaving less‑harmful alternatives unexplored. This absence of an imminent threat, combined with his lack of lawful mandate, defeats any claim that lethal force was required.",
+      "relies_on": [
+        "daenerys.p1",
+        "jon.p3",
+        "jon.p2"
+      ]
+    },
+    {
+      "text": "Jon’s use of his intimate relationship to approach Daenerys demonstrates premeditation and a breach of trust, indicating that he had the opportunity to choose a non‑lethal response. The failure to employ recognized, less‑lethal means—such as convening a council or detaining her—undermines the assertion that no safer option existed and shows the act was not a last resort.",
+      "relies_on": [
+        "jon.p4",
+        "greyworm.p2",
+        "jon.p2"
+      ]
+    },
+    {
+      "text": "The proportionality requirement is not satisfied because the harm Jon prevented—future, speculative acts of violence—was not certain or immediate, whereas the harm he inflicted—Daenerys’s death—was definite and irreversible. The availability of lawful alternatives makes the lethal act disproportionate to the threatened good.",
+      "relies_on": [
+        "daenerys.p3",
+        "daenerys.p2"
+      ]
+    }
+  ],
+  "role_id": "judge-1",
+  "verdict": "not_justified",
+  "deliberation_id": "d-T-001-1788124601994"
+}

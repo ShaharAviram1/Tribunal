@@ -1,0 +1,36 @@
+{
+  "label": "Elon model",
+  "against": {
+    "text": "Even though Daenerys was not actively harming anyone at the precise moment of the stabbing, she had just destroyed a city on a massive scale and announced that the campaign of violence would continue, creating an imminent risk of further atrocities that no other authority could swiftly prevent; this could be seen as a compelling necessity that might justify lethal action to protect the realm.",
+    "relies_on": []
+  },
+  "reasons": [
+    {
+      "text": "Daenerys was unarmed and not attacking Jon at the moment of the killing, so there was no present, imminent threat that would justify the use of lethal force under the doctrine of necessary defense.",
+      "relies_on": [
+        "daenerys.p1",
+        "greyworm.p1",
+        "jon.p1"
+      ]
+    },
+    {
+      "text": "Jon did not pursue any of the recognized, less‑lethal alternatives—such as convening a council, detaining Daenerys, or seeking a public surrender of power—before resorting to lethal action, which undermines the claim that the killing was necessary.",
+      "relies_on": [
+        "jon.p2",
+        "greyworm.p2",
+        "tyrion.p2"
+      ]
+    },
+    {
+      "text": "Jon lacked any formal legal authority to execute a ruler; extra‑judicial killing without a lawful mandate violates the principle that only a legitimate authority may impose a capital sentence.",
+      "relies_on": [
+        "jon.p3",
+        "greyworm.p4",
+        "tyrion.p5"
+      ]
+    }
+  ],
+  "role_id": "judge-2",
+  "verdict": "not_justified",
+  "deliberation_id": "d-T-001-1788124601994"
+}
