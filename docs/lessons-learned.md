@@ -9,3 +9,7 @@ Every correction from the user, written as a rule to follow rather than a record
 ## 2. When the code cannot do what a document claims, narrow the document
 
 Fourth instance of the same shape: a document claimed a distinction (a refusal in prose versus prose that is merely not JSON) that no rule in the code could draw. The fix is never a heuristic that makes the claim true at the cost of a new false positive. Narrow the document to what the code can check, and say plainly what is not checked. (2026-08-30, turn one)
+
+## 3. A platform access-control change does not reach deploys that already exist
+
+Access control is applied when a deploy is created. A deploy built while the project was private keeps answering the platform's 401 after the project is made public, so a cookie-free probe against the old deploy disproves nothing. Rebuild first, then probe, then conclude. (2026-08-30, turn two)
