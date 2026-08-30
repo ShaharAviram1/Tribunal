@@ -99,7 +99,7 @@ GATE G4 REFUSED: offline test suite failed.
 
 **Runs.** On every Netlify deploy, before publish.
 
-**False positive, 2026-08-30, and its resolution.** The scanner flagged `TRIBUNAL_STORE` because its dashboard value was the word `supabase`, which appears throughout the source. The fix was not to disable scanning: `TRIBUNAL_STORE` and `TRIBUNAL_FILING_ENABLED` are configuration, not secrets, and moved into `netlify.toml` as per-context environment blocks, with filing disabled on deploy previews and branch deploys. Only `OPENROUTER_API_KEY`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `TRIBUNAL_FUNCTION_SECRET`, and `TRIBUNAL_ACCESS_CODE` remain in the dashboard. If a specific key still trips falsely, the remedy is `SECRETS_SCAN_OMIT_KEYS` naming that key, never `SECRETS_SCAN_ENABLED`.
+**False positive, 2026-08-30, and its resolution.** The scanner flagged `TRIBUNAL_STORE` because its dashboard value was the word `supabase`, which appears throughout the source. The fix was not to disable scanning: `TRIBUNAL_STORE` and `TRIBUNAL_FILING_ENABLED` are configuration, not secrets, and moved into `netlify.toml` as per-context environment blocks, with filing disabled on deploy previews and branch deploys. Only `OPENROUTER_API_KEY`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `TRIBUNAL_FUNCTION_SECRET`, and `TRIBUNAL_ACCESS_CODE` remain in the dashboard. If a specific key still trips falsely, the remedy is `SECRETS_SCAN_OMIT_KEYS` naming that key, never `SECRETS_SCAN_ENABLED`. After the move, the scan passed clean on the next build (2026-08-30).
 
 ## Record of first refusals
 
