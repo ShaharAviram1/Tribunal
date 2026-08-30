@@ -13,3 +13,7 @@ Fourth instance of the same shape: a document claimed a distinction (a refusal i
 ## 3. A platform access-control change does not reach deploys that already exist
 
 Access control is applied when a deploy is created. A deploy built while the project was private keeps answering the platform's 401 after the project is made public, so a cookie-free probe against the old deploy disproves nothing. Rebuild first, then probe, then conclude. (2026-08-30, turn two)
+
+## 4. Check where the runtime actually reads from before treating a config file as the boundary
+
+Platform configuration declared in a repository file may reach only the build. Netlify's toml context environment fed the build and not the function runtime, so a value that looked committed and versioned was absent where it mattered. Find out where each consumer reads from; keep one source of truth per value, and let the repo carry only what the repo's consumer reads. (2026-08-31, turn two)

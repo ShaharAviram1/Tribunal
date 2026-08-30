@@ -5,25 +5,3 @@
 [build.environment]
   NODE_VERSION = "24.11.1"
   SECRETS_SCAN_OMIT_KEYS = "TRIBUNAL_STORE,TRIBUNAL_FILING_ENABLED"
-
-# TRIBUNAL_STORE and TRIBUNAL_FILING_ENABLED are configuration, not secrets, but they must
-# live in the DASHBOARD: these toml context blocks reach the build, not the function runtime,
-# which the env-validation drill proved in production (missing: TRIBUNAL_STORE, 2026-08-30).
-# The blocks below are kept for the build context; the dashboard carries the runtime values
-# per context. The scanner would flag "supabase" as a dashboard value appearing in source, so
-# the two config keys are exempted BY NAME below, per the pre-stated rule: omit specific keys,
-# never disable scanning. The four real secrets and the access code stay scanned.
-[context.production.environment]
-  TRIBUNAL_STORE = "supabase"
-  TRIBUNAL_FILING_ENABLED = "true"
-
-[context.deploy-preview.environment]
-  TRIBUNAL_STORE = "supabase"
-  TRIBUNAL_FILING_ENABLED = "false"
-
-# Branch deploys file: the end-to-end test runs on the turn branch before merge.
-# Deploy previews stay read-only: a PR from anywhere gets a preview, and a preview that
-# files can spend.
-[context.branch-deploy.environment]
-  TRIBUNAL_STORE = "supabase"
-  TRIBUNAL_FILING_ENABLED = "true"
