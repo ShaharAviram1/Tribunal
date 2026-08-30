@@ -1,0 +1,28 @@
+{
+  "seat": "prosecution",
+  "points": [
+    {
+      "id": "daenerys.p1",
+      "claim": "Daenerys was unarmed and not attacking Jon at the moment of the killing, so there was no immediate threat requiring lethal force.",
+      "support": "The record states that Daenerys was unarmed and was not attacking Jon when he killed her. Self‑defence law requires a present, imminent danger; without it, the use of deadly force cannot be justified."
+    },
+    {
+      "id": "daenerys.p2",
+      "claim": "Jon had safer, non‑lethal alternatives such as convening a council, seeking a public surrender of power, or detaining Daenerys, which he did not pursue.",
+      "support": "The record notes that Jon did not convene a council, attempt detention, or seek a public surrender of power. These lawful options were available and could have addressed the threat without killing her."
+    },
+    {
+      "id": "daenerys.p3",
+      "claim": "The threatened future harm was speculative, not an imminent danger that would justify immediate lethal action against Daenerys.",
+      "support": "While Daenerys announced continued campaigns, the record shows no imminent, specific attack on anyone at the moment of the killing. Anticipated future violence does not meet the imminence requirement for necessary defense."
+    },
+    {
+      "id": "daenerys.p4",
+      "claim": "Jon lacked formal authority to execute a ruler, and no legal process sanctioned his act, making the killing an unauthorized assassination.",
+      "support": "The record explicitly notes Jon’s lack of formal authority. Without a lawful mandate or judicial sanction, a private individual cannot lawfully kill a sovereign, even one perceived as dangerous."
+    }
+  ],
+  "role_id": "daenerys",
+  "position": "not_justified",
+  "deliberation_id": "d-T-001-1788124601994"
+}

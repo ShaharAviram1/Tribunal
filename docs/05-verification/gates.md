@@ -91,6 +91,18 @@ GATE G4 REFUSED: offline test suite failed.
   AssertionError: jon hash changed=true
 ```
 
+## Platform gate: Netlify secret scanning
+
+**Checks.** Every deploy's build output for values of dashboard environment variables appearing in the published files or function bundles.
+
+**Catches.** What G1 cannot: G1 scans the staged diff at commit time, so a secret that reaches the output through the build itself, an inlined environment variable, a bundler embedding `process.env` values, never passes G1's eyes. The scanner reads the artifact that actually ships.
+
+**Runs.** On every Netlify deploy, before publish.
+
+**False positive, 2026-08-30, and its resolution.** The scanner flagged `TRIBUNAL_STORE` because its dashboard value was the word `supabase`, which appears throughout the source. The fix was not to disable scanning: `TRIBUNAL_STORE` and `TRIBUNAL_FILING_ENABLED` are configuration, not secrets, and moved into `netlify.toml` as per-context environment blocks, with filing disabled on deploy previews and branch deploys. Only `OPENROUTER_API_KEY`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `TRIBUNAL_FUNCTION_SECRET`, and `TRIBUNAL_ACCESS_CODE` remain in the dashboard. If a specific key still trips falsely, the remedy is `SECRETS_SCAN_OMIT_KEYS` naming that key, never `SECRETS_SCAN_ENABLED`. After the move, the scan passed clean on the next build (2026-08-30).
+
+**Second finding, same day.** The toml context blocks reach the build but not the function runtime: the deployed filing function answered `missing: TRIBUNAL_STORE` from its own env drill. The two configuration variables therefore live in the dashboard after all, per context, and are exempted by name via `SECRETS_SCAN_OMIT_KEYS`; the four secrets and the access code remain scanned.
+
 ## Record of first refusals
 
 | Gate | Date | How it was made to refuse | Result |

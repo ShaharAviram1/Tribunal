@@ -1,0 +1,28 @@
+{
+  "seat": "defense",
+  "points": [
+    {
+      "id": "jon.p1",
+      "claim": "Daenerys posed an ongoing threat, but she was not attacking at the moment I struck.",
+      "support": "The record shows the city had surrendered and organized resistance had ceased. She was unarmed and not actively harming anyone when I killed her, so the immediate danger required to justify lethal force was absent."
+    },
+    {
+      "id": "jon.p2",
+      "claim": "I did not exhaust safer options before resorting to lethal action.",
+      "support": "I never convened a council, attempted detention, or sought a public surrender of power. The record notes I made no effort to rally other leaders or contain her through less harmful means, which undermines any claim of necessity."
+    },
+    {
+      "id": "jon.p3",
+      "claim": "I lacked the authority to execute her, and the killing denied any form of trial.",
+      "support": "I am not a judge, nor do I hold any official warrant to sentence anyone. My lack of formal authority, combined with the absence of a judicial process, means the act cannot be justified as lawful enforcement."
+    },
+    {
+      "id": "jon.p4",
+      "claim": "I used our intimacy to get close enough to strike, which was a breach of trust.",
+      "support": "I exploited our personal relationship to approach her without warning. This deception shows the act was not a spontaneous defense but a calculated killing, further undermining any justification."
+    }
+  ],
+  "role_id": "jon",
+  "position": "not_justified",
+  "deliberation_id": "d-T-001-1788124601994"
+}

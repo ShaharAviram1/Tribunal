@@ -1,0 +1,33 @@
+{
+  "seat": "defense",
+  "points": [
+    {
+      "id": "tyrion.p1",
+      "claim": "Daenerys was not an immediate threat when Jon killed her, since she was unarmed and not attacking, so the killing cannot be justified as necessary defense of an imminent harm.",
+      "support": "The agreed facts state Daenerys was unarmed and not attacking at the moment of the stabbing. Defense of others requires an imminent threat; the record shows no immediate danger, only past destruction and declared future intentions. Therefore, the necessity defense fails because the harm was not imminent."
+    },
+    {
+      "id": "tyrion.p2",
+      "claim": "Safer, lawful alternatives existed that Jon did not attempt, making his action not necessary.",
+      "support": "The record shows Jon did not convene a council, attempt detention, or seek a public surrender of power. The silence on any attempt suggests alternatives were available but ignored. As Hand, I know that lords could have been gathered to depose her. The absence of any effort to use lawful channels undermines the claim of necessity."
+    },
+    {
+      "id": "tyrion.p3",
+      "claim": "Jon’s use of intimacy to approach Daenerys indicates premeditation rather than necessity, undermining a defense of last resort.",
+      "support": "He used their personal relationship to get close enough to strike, a calculated move. Necessity requires that the act be the only possible response in the moment, not a planned assassination. This premeditation suggests he had time to consider other options, which contradicts a necessity defense."
+    },
+    {
+      "id": "tyrion.p4",
+      "claim": "The threat of future liberation campaigns, while serious, does not justify immediate execution without due process.",
+      "support": "Daenerys announced continuation of liberation, but this was a political and military threat, not an instantaneous act of violence. The proper response is political removal, not murder. The record does not show she was about to carry out immediate attacks, so execution was premature and disproportionate."
+    },
+    {
+      "id": "tyrion.p5",
+      "claim": "Jon lacked formal authority to execute a ruler, and extra‑judicial killing sets a dangerous precedent for the realm.",
+      "support": "He was not appointed by a council or legal body to carry out such an act. The lack of authority means he acted as a private individual, and allowing such extra‑judicial killings would destabilize governance, contrary to the defense of the realm."
+    }
+  ],
+  "role_id": "tyrion",
+  "position": "not_justified",
+  "deliberation_id": "d-T-001-1788124601994"
+}
