@@ -17,6 +17,9 @@
   TRIBUNAL_STORE = "supabase"
   TRIBUNAL_FILING_ENABLED = "false"
 
+# Branch deploys file: the end-to-end test runs on the turn branch before merge.
+# Deploy previews stay read-only: a PR from anywhere gets a preview, and a preview that
+# files can spend.
 [context.branch-deploy.environment]
   TRIBUNAL_STORE = "supabase"
-  TRIBUNAL_FILING_ENABLED = "false"
+  TRIBUNAL_FILING_ENABLED = "true"
