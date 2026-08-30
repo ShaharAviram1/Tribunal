@@ -3,9 +3,12 @@
 import { validateChargeSheet } from '../../src/protocol/validate-charge-sheet.ts';
 import { stampChargeSheet } from '../../src/protocol/stamp.ts';
 import { SupabaseStore } from '../../src/store/supabase-store.ts';
+import { checkEnv, FILE_ENV } from '../../src/functions-env.ts';
 
 export default async (req: Request): Promise<Response> => {
   if (req.method !== 'POST') return json({ error: 'POST only' }, 405);
+  const env = checkEnv(FILE_ENV);
+  if (!env.ok) return env.response;
   if (process.env.TRIBUNAL_FILING_ENABLED === 'false') return json({ error: 'filing is disabled; reading still works' }, 503);
   if (req.headers.get('x-tribunal-access-code') !== requireEnv('TRIBUNAL_ACCESS_CODE')) return json({ error: 'access code missing or wrong' }, 401);
   let input: unknown;
@@ -14,7 +17,6 @@ export default async (req: Request): Promise<Response> => {
   if (!v.ok) return json({ rejected: true, failures: v.failures }, 422);
 
   const url = requireEnv('SUPABASE_URL'); const key = requireEnv('SUPABASE_SERVICE_ROLE_KEY');
-  const admin = new SupabaseStore({ url, serviceKey: key, deliberation_id: 'unused' });
   // Next unused case id, assigned by the system (charge sheet spec 1b).
   const res = await fetch(`${url}/rest/v1/charge_sheets?select=case_id&order=case_id.desc&limit=1`, { headers: { apikey: key, Authorization: `Bearer ${key}` } });
   const last = ((await res.json()) as { case_id: string }[])[0]?.case_id ?? 'T-000';

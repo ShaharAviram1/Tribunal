@@ -7,8 +7,11 @@ import { ModelClient, type Caps } from '../../src/client/model-client.ts';
 import { openRouterTransport } from '../../src/client/openrouter-transport.ts';
 import { SupabaseStore } from '../../src/store/supabase-store.ts';
 import { runDeliberation } from '../../src/protocol/run.ts';
+import { checkEnv, RUN_ENV } from '../../src/functions-env.ts';
 
 export default async (req: Request): Promise<Response> => {
+  const env = checkEnv(RUN_ENV);
+  if (!env.ok) return env.response;
   if (req.headers.get('x-tribunal-function-secret') !== requireEnv('TRIBUNAL_FUNCTION_SECRET')) {
     return new Response('forbidden', { status: 403 });
   }
