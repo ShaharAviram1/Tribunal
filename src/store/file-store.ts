@@ -33,7 +33,7 @@ export class FileStore implements Store, Budget {
       const hb = job.heartbeat_at ? Date.parse(job.heartbeat_at) : 0;
       if (Date.now() - hb < this.#staleMs) return false;
     }
-    const claimed = { ...(job ?? {}), heartbeat_at: new Date().toISOString() };
+    const claimed = { ...(job ?? {}), status: 'running', claimed_at: new Date().toISOString(), heartbeat_at: new Date().toISOString() };
     this.putJob(claimed);
     return true;
   }

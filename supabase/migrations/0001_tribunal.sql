@@ -45,16 +45,24 @@ create table call_log (
 -- the conditional update is atomic, so two concurrent invocations cannot both claim;
 -- the heartbeat threshold frees a job whose function died mid-run and will never finish.
 -- Terminal statuses are never claimable: a platform re-invocation must not re-run a done job.
+-- Claiming and becoming running are one atomic act: if the status transition happened outside
+-- this update, a heartbeat that only touches running rows would be a no-op until the protocol
+-- caught up, the heartbeat would go stale on schedule, and a second invocation could claim a
+-- job still being worked. coalesce makes the no-row case an explicit false, not a null that
+-- happens to be falsy.
 create function claim_job(p_deliberation_id text, p_stale_seconds integer)
 returns boolean
 language sql
 as $$
-  update jobs
-     set claimed_at = now(), heartbeat_at = now(), updated_at = now()
-   where deliberation_id = p_deliberation_id
-     and ( status = 'pending'
-        or (status = 'running' and (heartbeat_at is null or heartbeat_at < now() - make_interval(secs => p_stale_seconds))) )
-  returning true;
+  with claimed as (
+    update jobs
+       set claimed_at = now(), heartbeat_at = now(), status = 'running', updated_at = now()
+     where deliberation_id = p_deliberation_id
+       and ( status = 'pending'
+          or (status = 'running' and (heartbeat_at is null or heartbeat_at < now() - make_interval(secs => p_stale_seconds))) )
+    returning 1
+  )
+  select coalesce((select true from claimed), false);
 $$;
 
 create function heartbeat_job(p_deliberation_id text)

@@ -13,11 +13,11 @@ function fakeSupabase() {
     const q = Object.fromEntries([...new URL(u).searchParams].map(([k, v]) => [k, v.replace(/^eq\./, '')]));
     if (u.includes('/rpc/claim_job')) {
       const j = jobs.get(body.p_deliberation_id);
-      if (!j) return respond(null);
+      if (!j) return respond(false);
       const hb = j.heartbeat_at ? Date.parse(String(j.heartbeat_at)) : 0;
       const claimable = j.status === 'pending' || (j.status === 'running' && Date.now() - hb > body.p_stale_seconds * 1000);
-      if (claimable) { j.claimed_at = new Date().toISOString(); j.heartbeat_at = j.claimed_at; return respond(true); }
-      return respond(null);
+      if (claimable) { j.claimed_at = new Date().toISOString(); j.heartbeat_at = j.claimed_at; j.status = 'running'; return respond(true); }
+      return respond(false); // coalesce(..., false): explicit false, never null
     }
     if (u.includes('/rpc/heartbeat_job')) { const j = jobs.get(body.p_deliberation_id); if (j?.status === 'running') j.heartbeat_at = new Date().toISOString(); return respond(null); }
     if (u.includes('/outputs')) {
@@ -51,7 +51,7 @@ test('claim semantics match the migration: pending yes, running fresh no, runnin
   const { store, fake } = mk();
   fake.jobs.set('d-1', { deliberation_id: 'd-1', status: 'pending' });
   assert.equal(await store.claim(), true);
-  fake.jobs.get('d-1')!.status = 'running';
+  assert.equal(fake.jobs.get('d-1')!.status, 'running', 'claiming and becoming running are one atomic act');
   assert.equal(await store.claim(), false, 'running with fresh heartbeat');
   fake.jobs.get('d-1')!.heartbeat_at = new Date(Date.now() - 120000).toISOString();
   assert.equal(await store.claim(), true, 'running with stale heartbeat');
@@ -77,4 +77,9 @@ test('every request carries the service key and never a hardcoded one', async ()
   const fake = fakeSupabase(); const { store } = mk(fake);
   await store.getOutput('jon');
   assert.ok(fake.calls.length > 0);
+});
+
+test('a claim for a row that does not exist returns explicit false, not null', async () => {
+  const { store } = mk();
+  assert.strictEqual(await store.claim(), false);
 });

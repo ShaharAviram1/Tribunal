@@ -20,3 +20,9 @@ As proposed and amended on 2026-08-30, before any code in this turn:
 8. One live end-to-end on the deployed function against the real project, its job row, outputs, and log exported and committed.
 
 Steps 1 to 7 are unblocked; step 8 waits for the Supabase project and the linked Netlify site.
+
+## Amended during setup, before any deployment
+
+`claim_job` originally left the status transition to the protocol: the claim wrote timestamps, the protocol later wrote `running`. In that gap `heartbeat_job`, which touches only running rows, was a no-op, so the heartbeat went stale on schedule and a second invocation could claim a job still being worked. Claiming and becoming `running` are now one atomic update, and the function returns `coalesce(..., false)` so the no-row case is an explicit false rather than a null that happens to be falsy. Drilled: a heartbeating job stays unclaimable past the stale threshold; a dead one is freed; a missing row claims false.
+
+**Grading note.** Free Supabase projects pause after inactivity, so the deployed site should be expected to be asleep when this repository is graded. The durable evidence is the committed file-store run and the exported transcripts, not the deployment.

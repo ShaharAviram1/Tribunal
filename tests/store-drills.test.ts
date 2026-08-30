@@ -37,10 +37,10 @@ function fakeSupabaseStore(id: string): SupabaseStore {
       const j = jobs.get(body.p_deliberation_id) ?? jobs.set(body.p_deliberation_id, { status: 'pending' }).get(body.p_deliberation_id)!;
       const hb = j.heartbeat_at ? Date.parse(String(j.heartbeat_at)) : 0;
       const okc = j.status === 'pending' || j.status === undefined || (j.status === 'running' && Date.now() - hb > body.p_stale_seconds * 1000);
-      if (okc) { j.heartbeat_at = new Date().toISOString(); return respond(true); }
-      return respond(null);
+      if (okc) { j.heartbeat_at = new Date().toISOString(); j.status = 'running'; return respond(true); }
+      return respond(false);
     }
-    if (u.includes('/rpc/heartbeat_job')) return respond(null);
+    if (u.includes('/rpc/heartbeat_job')) { const j = jobs.get(body.p_deliberation_id); if (j?.status === 'running') j.heartbeat_at = new Date().toISOString(); return respond(null); }
     if (u.includes('/outputs')) {
       if (method === 'POST') { outputs.set(body.role_id, body.body); return respond([], 201); }
       const v = outputs.get(q.role_id); return respond(v === undefined ? [] : [{ body: v }]);
@@ -90,3 +90,16 @@ for (const [name, make] of implementations) {
     assert.equal(job.status, 'complete');
   });
 }
+
+// The drill the migration fix demands: with heartbeats firing, time alone must not free the job.
+test('FileStore: heartbeats keep a running job unclaimable past the stale threshold', async () => {
+  const root = mkdtempSync(join(tmpdir(), 'tribunal-hb-'));
+  const holder = new FileStore(root, 'd-hb', 80);
+  assert.equal(holder.claim(), true);
+  assert.equal((holder.getJob() as { status: string }).status, 'running', 'claim set the status');
+  const started = Date.now();
+  while (Date.now() - started < 200) { holder.heartbeat(); await new Promise((r) => setTimeout(r, 20)); }
+  assert.equal(new FileStore(root, 'd-hb', 80).claim(), false, 'a heartbeating job was claimed');
+  await new Promise((r) => setTimeout(r, 120)); // heartbeats stop: the function died
+  assert.equal(new FileStore(root, 'd-hb', 80).claim(), true, 'a dead job stayed unclaimable');
+});
