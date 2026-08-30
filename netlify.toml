@@ -4,11 +4,15 @@
 
 [build.environment]
   NODE_VERSION = "24.11.1"
+  SECRETS_SCAN_OMIT_KEYS = "TRIBUNAL_STORE,TRIBUNAL_FILING_ENABLED"
 
-# Configuration, not secrets: values live here per context, not in the dashboard, so the
-# platform's secret scanner never sees the word "supabase" as a secret value (it is all over
-# the source, and the scanner rightly flags dashboard values that appear in build output).
-# The four real secrets and the access code stay in the dashboard.
+# TRIBUNAL_STORE and TRIBUNAL_FILING_ENABLED are configuration, not secrets, but they must
+# live in the DASHBOARD: these toml context blocks reach the build, not the function runtime,
+# which the env-validation drill proved in production (missing: TRIBUNAL_STORE, 2026-08-30).
+# The blocks below are kept for the build context; the dashboard carries the runtime values
+# per context. The scanner would flag "supabase" as a dashboard value appearing in source, so
+# the two config keys are exempted BY NAME below, per the pre-stated rule: omit specific keys,
+# never disable scanning. The four real secrets and the access code stay scanned.
 [context.production.environment]
   TRIBUNAL_STORE = "supabase"
   TRIBUNAL_FILING_ENABLED = "true"
