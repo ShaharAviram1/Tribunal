@@ -42,3 +42,7 @@ Steps 1 to 7 are unblocked; step 8 waits for the Supabase project and the linked
 ## End-to-end on the deployed function: complete
 
 Branch deploy `https://turn-2--incomparable-hotteok-4da2cf.netlify.app`. Filed `fixtures/charge-sheets/T-001.filed.json` by curl with the access code; the system assigned `T-001` and `d-T-001-1788124601994`, answered 202, and the background function ran the deliberation to `complete` in about 122 seconds: advocates stage, then judges, 7 calls, 7 outputs, zero retries, zero failures, $0 on the free model. Transcripts: `docs/04-turns/e2e/filing-transcript.txt` and `polling-transcript.txt`. Database evidence exported to `docs/04-turns/e2e/d-T-001-1788124601994/` (job, outputs, log). The claim, heartbeat, budget-on-the-job, and stage machinery all ran on the real platform: Netlify function to Supabase to OpenRouter and back.
+
+## Production confirmed after merge
+
+`main` merged (`--no-ff`) and pushed; first production deploy live at `https://incomparable-hotteok-4da2cf.netlify.app`. Cookie-free checks: `GET /` answers 200 with the placeholder; an uncoded filing POST answers our own JSON 401, `access code missing or wrong`, not the platform's edge-access page. Turn two closes here.
