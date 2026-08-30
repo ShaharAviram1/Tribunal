@@ -4,3 +4,19 @@
 
 [build.environment]
   NODE_VERSION = "24.11.1"
+
+# Configuration, not secrets: values live here per context, not in the dashboard, so the
+# platform's secret scanner never sees the word "supabase" as a secret value (it is all over
+# the source, and the scanner rightly flags dashboard values that appear in build output).
+# The four real secrets and the access code stay in the dashboard.
+[context.production.environment]
+  TRIBUNAL_STORE = "supabase"
+  TRIBUNAL_FILING_ENABLED = "true"
+
+[context.deploy-preview.environment]
+  TRIBUNAL_STORE = "supabase"
+  TRIBUNAL_FILING_ENABLED = "false"
+
+[context.branch-deploy.environment]
+  TRIBUNAL_STORE = "supabase"
+  TRIBUNAL_FILING_ENABLED = "false"
