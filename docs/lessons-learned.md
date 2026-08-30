@@ -17,3 +17,7 @@ Access control is applied when a deploy is created. A deploy built while the pro
 ## 4. Check where the runtime actually reads from before treating a config file as the boundary
 
 Platform configuration declared in a repository file may reach only the build. Netlify's toml context environment fed the build and not the function runtime, so a value that looked committed and versioned was absent where it mattered. Find out where each consumer reads from; keep one source of truth per value, and let the repo carry only what the repo's consumer reads. (2026-08-31, turn two)
+
+## 5. Do not mark a non-secret value secret
+
+A value marked secret cannot be read back, so masking a public value costs verification and buys nothing. SUPABASE_URL is a public API endpoint; masked, it hid for an hour that it was the dashboard URL rather than the API host, and no one could notice by looking. Mark secret what is secret; leave readable what is public, so a wrong value is visible. (2026-08-31, turn two)
