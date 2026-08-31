@@ -82,9 +82,10 @@ ${modelLine(models, o.role_id)}
 }
 
 function roleSection(out: CaseData['outputs'][string], role: string, title: string, stances: Map<string, StoredStance>, kind: 'stance' | 'opinion', jobState: string, models?: Record<string, string>): string {
-  if (isFailureRecord(out)) return failureCard(out, title);
-  if (out === undefined) return `<article class="absent"><h3>${esc(title)}</h3><p>No output yet. Deliberation is ${esc(jobState)}.</p></article>`;
-  return kind === 'stance' ? stanceCard(out as StoredStance, models) : opinionColumn(out as StoredOpinion, stances, models);
+  const wrap = (state: string, inner: string) => `<div class="role-slot" data-role="${esc(role)}" data-kind="${kind}" data-state="${state}">${inner}</div>`;
+  if (isFailureRecord(out)) return wrap('failed', failureCard(out, title));
+  if (out === undefined) return wrap('absent', `<article class="absent"><h3>${esc(title)}</h3><p>No output yet. Deliberation is ${esc(jobState)}.</p></article>`);
+  return wrap('returned', kind === 'stance' ? stanceCard(out as StoredStance, models) : opinionColumn(out as StoredOpinion, stances, models));
 }
 
 export function renderCasePage(data: CaseData): string {

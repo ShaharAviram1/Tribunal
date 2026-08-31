@@ -9,6 +9,13 @@ export default async (req: Request): Promise<Response> => {
   const env = checkEnv(['TRIBUNAL_STORE', 'SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY']);
   if (!env.ok) return env.response;
   const u = new URL(req.url);
+  if (u.searchParams.has('list')) {
+    const url0 = process.env.SUPABASE_URL!.replace(/\/$/, ''); const key0 = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+    const h = { apikey: key0, Authorization: `Bearer ${key0}` };
+    const sheets = (await (await fetch(`${url0}/rest/v1/charge_sheets?select=case_id,body&order=case_id`, { headers: h })).json()) as { case_id: string; body: { accused: string; deceased: string } }[];
+    const jobs = (await (await fetch(`${url0}/rest/v1/jobs?select=deliberation_id,case_id,status&order=deliberation_id`, { headers: h })).json()) as { deliberation_id: string; case_id: string; status: string }[];
+    return json({ cases: sheets.map((s0) => ({ case_id: s0.case_id, accused: s0.body.accused, deceased: s0.body.deceased, deliberations: jobs.filter((j) => j.case_id === s0.case_id).map(({ deliberation_id, status }) => ({ deliberation_id, status })) })) }, 200);
+  }
   const deliberation_id = u.searchParams.get('deliberation_id');
   if (!deliberation_id) return json({ error: 'deliberation_id is required' }, 400);
   const url = process.env.SUPABASE_URL!; const key = process.env.SUPABASE_SERVICE_ROLE_KEY!;

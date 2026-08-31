@@ -4,38 +4,51 @@
 <style>:root{color-scheme:light dark}body{margin:0 auto;max-width:44rem;padding:2rem 1.5rem;font:18px/1.6 Georgia,serif}h1{font-variant:small-caps}
 fieldset{border:1px solid color-mix(in srgb,currentColor 30%,transparent);border-radius:.4rem;padding:1rem;margin:1rem 0}
 label{display:block;margin:.4rem 0}input[type=password]{font:inherit;padding:.2rem .4rem;width:14rem}
-button{font:inherit;padding:.4rem 1rem;cursor:pointer}#status{font-style:italic}</style></head>
+button{font:inherit;padding:.5rem 1.2rem;cursor:pointer}#status{font-style:italic}
+.case{border:1px solid color-mix(in srgb,currentColor 25%,transparent);border-radius:.4rem;padding:.6rem 1rem;margin:.5rem 0}
+.case ul{margin:.3rem 0;font-size:.9em}
+input[type=radio][name=case_id]{margin-right:.4rem}</style></head>
 <body>
 <h1>The Tribunal</h1>
 <p>Four advocates and three judges deliberate one charge sheet in seven separate model calls. The three judicial opinions are presented side by side and are never combined.</p>
-<p><a href="/case/d-T-001-1788124601994">Case T-001: The Realm v. Jon Snow</a> — the canonical deliberation.</p>
+<h2>Cases</h2>
+<div id="cases"><p>Loading the case list…</p></div>
 <fieldset>
-<legend>File the charge sheet again</legend>
-<p>Filing creates a new case on the same charge sheet and the panel deliberates it afresh.</p>
-<label><input type="radio" name="panel" value="single" checked> Single model: all seven roles on one model</label>
-<label><input type="radio" name="panel" value="multi"> Several models: seven roles, seven distinct models</label>
+<legend>Convene the tribunal</legend>
+<label><input type="radio" name="panel" value="single" checked> One model for all seven roles</label>
+<label><input type="radio" name="panel" value="multi"> Seven roles, seven distinct models</label>
 <label>Access code <input type="password" id="code" autocomplete="off"></label>
-<button id="file">File</button>
+<button id="convene">Convene Tribunal</button>
 <p id="status"></p>
 </fieldset>
 <p>A fictional proceeding. Each judge adapts a judicial method from a real jurist's published opinions; no judge represents the jurist or predicts how they would decide.</p>
 <script>
-document.getElementById('file').addEventListener('click', async () => {
+(async () => {
+  const box = document.getElementById('cases');
+  try {
+    const { cases } = await (await fetch('/.netlify/functions/tribunal-case?list=1')).json();
+    box.innerHTML = cases.map((c, i) => `<div class="case">
+<label><input type="radio" name="case_id" value="${c.case_id}" ${i === 0 ? 'checked' : ''}><strong>${c.case_id}</strong>: The Realm v. ${c.accused}</label>
+${c.deliberations.length ? `<ul>${c.deliberations.map((d) => `<li><a href="/case/${d.deliberation_id}">${d.deliberation_id}</a> — ${d.status}</li>`).join('')}</ul>` : '<p>Not yet deliberated.</p>'}
+</div>`).join('');
+  } catch (e) { box.innerHTML = '<p>The case list could not be loaded: ' + e + '</p>'; }
+})();
+document.getElementById('convene').addEventListener('click', async () => {
   const status = document.getElementById('status');
   const code = document.getElementById('code').value;
+  const picked = document.querySelector('input[name=case_id]:checked');
+  if (!picked) { status.textContent = 'Pick a case.'; return; }
   if (!code) { status.textContent = 'The access code is required.'; return; }
   const panel = document.querySelector('input[name=panel]:checked').value;
-  status.textContent = 'Filing\u2026';
+  status.textContent = 'Convening…';
   try {
-    const sheet = await (await fetch('/charge-sheet.json')).json();
     const res = await fetch('/.netlify/functions/tribunal-file?panel=' + panel, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-tribunal-access-code': code },
-      body: JSON.stringify(sheet),
+      body: JSON.stringify({ case_id: picked.value }),
     });
     const body = await res.json();
-    if (!res.ok) { status.textContent = 'Refused: ' + (body.error ?? JSON.stringify(body.failures ?? body)); return; }
-    status.textContent = 'Filed as ' + body.case_id + '. Opening the case page\u2026';
+    if (!res.ok) { status.textContent = 'Refused: ' + (body.error ?? JSON.stringify(body)); return; }
     location.href = '/case/' + body.deliberation_id;
   } catch (e) { status.textContent = 'Failed: ' + e; }
 });
