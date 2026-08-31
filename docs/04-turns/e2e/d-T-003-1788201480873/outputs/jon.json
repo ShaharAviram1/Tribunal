@@ -1,0 +1,33 @@
+{
+  "seat": "defense",
+  "points": [
+    {
+      "id": "jon.p1",
+      "claim": "Daenerys was unarmed and not attacking when I killed her, so the threat was not immediate at that moment.",
+      "support": "The agreed record states that Daenerys was unarmed and was not attacking Jon when he stabbed her. No physical assault was occurring at the time of the killing. This lack of an immediate, ongoing threat undermines the claim that lethal force was necessary at that precise instant."
+    },
+    {
+      "id": "jon.p2",
+      "claim": "I did not convene a council, attempt detention, or seek her public surrender, leaving safer non‑lethal options untried.",
+      "support": "The record notes that Jon did not convene a council, did not attempt to detain Daenerys, and did not seek a public surrender of power. These alternatives could have neutralized her threat without killing her. Their absence suggests that less harmful means were available but unused."
+    },
+    {
+      "id": "jon.p3",
+      "claim": "I had no formal authority to execute anyone; I was not a king, judge, or recognized court.",
+      "support": "Jon holds no recognized legal authority to carry out an execution. The agreed facts do not grant him any judicial or monarchical power. Acting outside any formal authority makes the killing an extra‑judicial act rather than a lawful exercise of defense."
+    },
+    {
+      "id": "jon.p4",
+      "claim": "The danger she posed was future and ongoing, not an immediate, unavoidable harm that required lethal action.",
+      "support": "Daenerys' speech promised further campaigns of liberation beyond King's Landing, indicating a future threat to many lives. However, no immediate violent act was occurring at the moment Jon killed her. The requirement for imminent harm in defensive force is not met."
+    },
+    {
+      "id": "jon.p5",
+      "claim": "I used our intimacy to approach her, indicating premeditation rather than a desperate response to an imminent threat.",
+      "support": "Jon leveraged his personal relationship to get close enough to strike, a tactic that shows planning rather than a reaction to an immediate danger. Premeditation suggests the killing was not a necessary act of defense at that instant."
+    }
+  ],
+  "role_id": "jon",
+  "position": "not_justified",
+  "deliberation_id": "d-T-003-1788201480873"
+}

@@ -1,0 +1,33 @@
+{
+  "seat": "prosecution",
+  "points": [
+    {
+      "id": "greyworm.p1",
+      "claim": "Daenerys had surrendered; organized resistance ceased; the immediate lethal threat to persons ended at that moment.",
+      "support": "The record states the bells rang and organized resistance had ceased after Daenerys's attack. No combat was occurring when Jon struck. Justification for lethal force requires an ongoing threat; here there was none."
+    },
+    {
+      "id": "greyworm.p2",
+      "claim": "The danger Jon feared was future, not immediate; Daenerys's speech outlined further campaigns, but no attack was imminent at the moment of the killing.",
+      "support": "The record notes Daenerys told her forces the campaign would continue beyond King's Landing. This describes a future intent, not an imminent attack. Immediate necessity for self‑defence is absent."
+    },
+    {
+      "id": "greyworm.p3",
+      "claim": "Jon bypassed lawful alternatives; he did not convene a council, attempt detention, or seek a formal surrender of power before killing.",
+      "support": "The agreed facts say Jon had not convened a council, attempted detention, or sought a public surrender of power. He chose lethal action without exhausting lawful, less‑lethal options."
+    },
+    {
+      "id": "greyworm.p4",
+      "claim": "Jon held no formal authority to execute Daenerys; he was not a judge, magistrate, or commander with lawful power to impose death.",
+      "support": "The record shows Jon was a former King in the North who pledged loyalty to Daenerys. He held no judicial or military authority to carry out an execution; he acted outside any recognized chain of command."
+    },
+    {
+      "id": "greyworm.p5",
+      "claim": "Jon used intimacy to approach Daenerys, not open authority; this undermines any claim of necessary defense.",
+      "support": "The record states Jon used their intimacy to get close enough to strike, not open authority or a lawful command. This method does not fit a justified defense of others."
+    }
+  ],
+  "role_id": "greyworm",
+  "position": "not_justified",
+  "deliberation_id": "d-T-004-1788201481917"
+}

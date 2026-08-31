@@ -1,0 +1,28 @@
+{
+  "seat": "prosecution",
+  "points": [
+    {
+      "id": "daenerys.p1",
+      "claim": "Jon Snow's killing of Daenerys was not necessary defense because she was unarmed and not actively attacking at the time.",
+      "support": "The record states Daenerys was unarmed and not attacking Jon when he killed her. The bells had rung, organized resistance had ceased, and her destruction had ended. There was no immediate threat requiring lethal force."
+    },
+    {
+      "id": "daenerys.p2",
+      "claim": "Jon failed to exhaust safer alternatives before resorting to lethal force.",
+      "support": "The record notes Jon did not convene a council, attempt detention, or seek a public surrender of power. He chose to use intimacy to get close and strike, indicating he had other options available but did not pursue them."
+    },
+    {
+      "id": "daenerys.p3",
+      "claim": "The future threat of Daenerys's continued campaigns was not imminent, and there was time for deliberation.",
+      "support": "After the victory, Daenerys announced the campaign would continue beyond King's Landing, but the record does not indicate any immediate order to attack. The threat was speculative, not an imminent danger requiring immediate lethal action."
+    },
+    {
+      "id": "daenerys.p4",
+      "claim": "Jon Snow's act was premeditated murder rather than defense, as he planned his approach.",
+      "support": "By using their intimacy to get close enough to strike, Jon demonstrated premeditation. Defense of others requires immediate necessity, not calculated assassination. The record shows he did not act in the heat of the moment."
+    }
+  ],
+  "role_id": "daenerys",
+  "position": "not_justified",
+  "deliberation_id": "d-T-003-1788201480873"
+}

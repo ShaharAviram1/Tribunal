@@ -1,0 +1,33 @@
+{
+  "seat": "defense",
+  "points": [
+    {
+      "id": "tyrion.p1",
+      "claim": "Daenerys's destruction of a surrendered city and announced plans for further campaigns created an imminent threat of mass casualties that demanded immediate action.",
+      "support": "The record states that after the bells rang and resistance ended, Daenerys used Drogon to burn streets, killing many. She then told her forces the liberation would continue. Jon witnessed this, establishing that the threat was present, not speculative, and required swift intervention to prevent additional loss of life."
+    },
+    {
+      "id": "tyrion.p2",
+      "claim": "Tyrion's warning that Daenerys would treat Jon's sisters as enemies gave Jon personal knowledge of a concrete danger to innocents, reinforcing the urgency of his decision.",
+      "support": "Tyrion, before his imprisonment, told Jon that Daenerys would see his sisters as obstacles and act against them. This warning, combined with Daenerys's recent brutality, meant Jon faced a credible threat to people he loved, not merely a political calculation."
+    },
+    {
+      "id": "tyrion.p3",
+      "claim": "No practical alternative existed to stop Daenerys without further bloodshed; attempting a council, detention, or public surrender would have been futile and would have delayed action while she retained the power to kill.",
+      "support": "Daenerys commanded the only effective military force (Grey Worm's troops) and had already shown willingness to execute dissenters. Any formal process would require time she could use to inflict more harm. The record shows Jon did not convene a council, but the record also shows Daenerys's absolute control, making such steps unrealistic."
+    },
+    {
+      "id": "tyrion.p4",
+      "claim": "Although Jon lacked formal authority, the principle of necessity permits individuals to act beyond their official role when confronted with an immediate threat that the established order cannot or will not address.",
+      "support": "The law exists to protect life; when those in power become the instrument of mass murder, the normal legal channels are compromised. Jon, as a former king and leader, had a moral duty that transcended his lack of current legal standing, and the urgency of the threat justified his action."
+    },
+    {
+      "id": "tyrion.p5",
+      "claim": "Jon used the only means available to him—a surprise attack—to neutralize the threat with minimal additional violence, avoiding a broader conflict that would have cost more lives.",
+      "support": "He did not order an army assault or launch a prolonged battle; he struck at the source of the threat in a single act. This targeted approach limited further bloodshed, unlike a prolonged resistance which would have endangered countless civilians and soldiers alike."
+    }
+  ],
+  "role_id": "tyrion",
+  "position": "justified",
+  "deliberation_id": "d-T-003-1788201480873"
+}
