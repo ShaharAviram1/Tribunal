@@ -1,36 +1,44 @@
 <!doctype html>
 <html lang="en">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>The Tribunal</title>
-<style>:root{color-scheme:light dark}body{margin:0 auto;max-width:44rem;padding:2rem 1.5rem;font:18px/1.6 Georgia,serif}h1{font-variant:small-caps}
+<style>:root{color-scheme:light dark}body{margin:0 auto;max-width:44rem;padding:1.5rem;font:18px/1.6 Georgia,serif}h1{font-variant:small-caps;margin-bottom:.2rem}
+.guard{font-size:.85em;border:1px solid color-mix(in srgb,currentColor 30%,transparent);border-radius:.3rem;padding:.4rem .7rem;opacity:.9;font-style:italic}
 fieldset{border:1px solid color-mix(in srgb,currentColor 30%,transparent);border-radius:.4rem;padding:1rem;margin:1rem 0}
-label{display:block;margin:.4rem 0}input[type=password]{font:inherit;padding:.2rem .4rem;width:14rem}
-button{font:inherit;padding:.5rem 1.2rem;cursor:pointer}#status{font-style:italic}
+label{display:block;margin:.4rem 0}input[type=password]{font:inherit;padding:.2rem .4rem;width:min(14rem,100%)}
+button{font:inherit;padding:.5rem 1.2rem;cursor:pointer}#status,.duration{font-style:italic;opacity:.9}
 .case{border:1px solid color-mix(in srgb,currentColor 25%,transparent);border-radius:.4rem;padding:.6rem 1rem;margin:.5rem 0}
-.case ul{margin:.3rem 0;font-size:.9em}
-input[type=radio][name=case_id]{margin-right:.4rem}</style></head>
+.case ul{margin:.3rem 0 .3rem 1.1rem;font-size:.9em;padding:0}
+.case li{margin:.25rem 0}
+details.debug{margin:1rem 0;opacity:.85}</style></head>
 <body>
 <h1>The Tribunal</h1>
+<p class="guard">A fictional proceeding. Each judge adapts a judicial method from a real jurist's published opinions; no judge represents the jurist or predicts how they would decide.</p>
 <p>Four advocates and three judges deliberate one charge sheet in seven separate model calls. The three judicial opinions are presented side by side and are never combined.</p>
-<h2>Cases</h2>
-<div id="cases"><p>Loading the case list…</p></div>
+<h2>The case</h2>
+<div id="cases"><p>Loading the case…</p></div>
 <fieldset>
 <legend>Convene the tribunal</legend>
 <label><input type="radio" name="panel" value="single" checked> One model for all seven roles</label>
 <label><input type="radio" name="panel" value="multi"> Seven roles, seven distinct models</label>
 <label>Access code <input type="password" id="code" autocomplete="off"></label>
 <button id="convene">Convene Tribunal</button>
+<p class="duration">A deliberation takes about two minutes: the four advocates speak, then the bench rules.</p>
 <p id="status"></p>
 </fieldset>
-<p>A fictional proceeding. Each judge adapts a judicial method from a real jurist's published opinions; no judge represents the jurist or predicts how they would decide.</p>
 <script>
+const fmt = (iso) => new Date(iso).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+const runLine = (d) => `<li><a href="/case/${d.deliberation_id}">Convened ${fmt(d.convened_at)}</a> — ${d.panel} — ${d.status}</li>`;
+const caseBlock = (c, checked) => `<div class="case">
+<label><input type="radio" name="case_id" value="${c.case_id}" ${checked ? 'checked' : ''}><strong>${c.case_id}</strong>: The Realm v. ${c.accused}</label>
+${c.deliberations.length ? `<ul>${c.deliberations.map(runLine).join('')}</ul>` : '<p>Not yet deliberated.</p>'}
+</div>`;
 (async () => {
   const box = document.getElementById('cases');
   try {
     const { cases } = await (await fetch('/.netlify/functions/tribunal-case?list=1')).json();
-    box.innerHTML = cases.map((c, i) => `<div class="case">
-<label><input type="radio" name="case_id" value="${c.case_id}" ${i === 0 ? 'checked' : ''}><strong>${c.case_id}</strong>: The Realm v. ${c.accused}</label>
-${c.deliberations.length ? `<ul>${c.deliberations.map((d) => `<li><a href="/case/${d.deliberation_id}">${d.deliberation_id}</a> — ${d.status}</li>`).join('')}</ul>` : '<p>Not yet deliberated.</p>'}
-</div>`).join('');
+    const [first, ...rest] = cases;
+    box.innerHTML = caseBlock(first, true) +
+      (rest.length ? `<details class="debug"><summary>${rest.length} debug filings from the build, kept for the audit trail</summary>${rest.map((c) => caseBlock(c, false)).join('')}</details>` : '');
   } catch (e) { box.innerHTML = '<p>The case list could not be loaded: ' + e + '</p>'; }
 })();
 document.getElementById('convene').addEventListener('click', async () => {
