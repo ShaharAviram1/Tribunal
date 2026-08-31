@@ -33,3 +33,7 @@ The window could not be resized below the desktop minimum, so a screenshot would
 ## Fresh clone
 
 `node scripts/render-static.ts run-02` renders the committed single-model deliberation to `runs/run-02/case.html` through the file store with no key and no network; the offline render tests read the same run. A fresh clone therefore renders a complete T-001 case page from the repository alone (problem.md item 9), and the committed `case.html` for both runs is checked in beside its run.
+
+## The convening view, watched live
+
+Direction change mid-turn, on record: the live run is the product; the finished-case renderer stays for committed evidence. Convened `d-T-001-1788202422638` on the existing case T-001 (the convene mode deliberates a stored charge sheet without creating a new case) and watched in the browser: Jon alone on screen first, Tyrion, Daenerys, Grey Worm each taking the floor in seat order with the hold capped; then three per-judge chips, "Deliberating…", one flipping to "Opinion returned, under seal until the bench rules" while the others worked, never a count; then the gavel, and all three columns in the same frame. Verdicts: Barak model justified, Elon model not_justified, Shamgar model not_justified, the second split, and Tyrion argued justified from the defense seat for the second consecutive run. Every card on screen was adopted from the server render of stored output; the client builds no content. The gavel is conditional on at least one opinion existing; a stalled run shows its job state and stops polling.

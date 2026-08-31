@@ -1,0 +1,32 @@
+{
+  "label": "Shamgar model",
+  "against": {
+    "text": "The most powerful counterargument is that Daenerys had just devastated King's Landing and announced a continuation of mass‑killing campaigns, creating a credible and imminent threat of further large‑scale casualties, and that the collapse of legitimate institutions left no viable legal process for her removal, potentially justifying private action in extremis.",
+    "relies_on": [
+      "tyrion.p1",
+      "tyrion.p2",
+      "tyrion.p3",
+      "tyrion.p4"
+    ]
+  },
+  "reasons": [
+    {
+      "text": "Daenerys was not posing an imminent, immediate threat at the moment Jon killed her; she was unarmed and not attacking, so the requirement of an immediate danger for a necessity defense was absent.",
+      "relies_on": [
+        "daenerys.p1",
+        "greyworm.p1"
+      ]
+    },
+    {
+      "text": "Jon had not exhausted lawful alternatives before resorting to lethal force; the record shows he did not convene a council, attempt detention, or seek a public surrender of power, leaving safer means available that could have been tried first.",
+      "relies_on": [
+        "jon.p2",
+        "jon.p4",
+        "daenerys.p2"
+      ]
+    }
+  ],
+  "role_id": "judge-3",
+  "verdict": "not_justified",
+  "deliberation_id": "d-T-001-1788202422638"
+}

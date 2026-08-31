@@ -1,0 +1,33 @@
+{
+  "seat": "prosecution",
+  "points": [
+    {
+      "id": "greyworm.p1",
+      "claim": "Daenerys had stopped actively attacking when Jon stabbed her; the city had surrendered and no immediate threat existed.",
+      "support": "The agreed record states that King's Landing had surrendered and organized resistance had ceased. Daenerys was not engaged in combat or threatening anyone at the moment of the killing."
+    },
+    {
+      "id": "greyworm.p2",
+      "claim": "Jon lacked any formal authority to execute the queen; no council or law granted him that power.",
+      "support": "The record shows Jon was not appointed by any governing body to act as judge or executioner. He was a former king and loyalist, not a legal authority."
+    },
+    {
+      "id": "greyworm.p3",
+      "claim": "Jon did not seek any alternative to killing; he neither convened a council nor attempted detention or surrender of power.",
+      "support": "The agreed record explicitly states that Jon had not convened a council, attempted detention, or sought a public surrender of power before the killing."
+    },
+    {
+      "id": "greyworm.p4",
+      "claim": "Jon used his intimate relationship to get close enough to strike, showing premeditation rather than urgent necessity.",
+      "support": "The record notes that Jon used their intimacy to approach Daenerys, indicating he planned the act in advance, not that he acted in immediate self-defense."
+    },
+    {
+      "id": "greyworm.p5",
+      "claim": "The future harm Jon feared was speculative; Daenerys was not currently harming anyone, and other measures could have been taken to prevent her.",
+      "support": "While Daenerys promised further campaigns, the record shows no imminent threat at the time of the killing. Safer alternatives, such as rallying allies or detaining her, were available."
+    }
+  ],
+  "role_id": "greyworm",
+  "position": "not_justified",
+  "deliberation_id": "d-T-001-1788202422638"
+}

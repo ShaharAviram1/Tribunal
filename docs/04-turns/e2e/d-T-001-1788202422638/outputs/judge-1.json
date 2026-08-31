@@ -1,0 +1,44 @@
+{
+  "label": "Barak model",
+  "against": {
+    "text": "The strongest counterargument is that Jon's act was premeditated—he used his intimate relationship to approach Daenerys and did not act in the heat of an immediate attack. This premeditation, together with the availability of alternatives such as convening a council or detaining her, undermines the claim that the killing was the only feasible response and raises serious doubts about the necessity of the act.",
+    "relies_on": [
+      "daenerys.p4",
+      "greyworm.p4",
+      "daenerys.p2"
+    ]
+  },
+  "reasons": [
+    {
+      "text": "The record shows Daenerys had just burned civilians after the city's surrender and announced that her campaign of liberation would continue beyond King's Landing, creating a credible, imminent threat of further mass casualties. This satisfies the requirement of a serious, ongoing danger that justifies defensive action.",
+      "relies_on": [
+        "jon.p1",
+        "tyrion.p1"
+      ]
+    },
+    {
+      "text": "No viable less harmful alternatives were available because Daenerys had imprisoned dissenters, controlled the loyalty of her forces, and refused any appeal for mercy, making any attempt at convening a council, detention, or negotiated surrender futile. The record reflects that Jon did not convene a council, attempt detention, or seek a public surrender, and those steps would not have succeeded.",
+      "relies_on": [
+        "tyrion.p2",
+        "jon.p2",
+        "daenerys.p2",
+        "greyworm.p3"
+      ]
+    },
+    {
+      "text": "The killing was rationally connected to preventing the threat because Daenerys was the sole authority capable of ordering further attacks; removing her neutralizes the source of the ongoing campaign.",
+      "relies_on": [
+        "tyrion.p2"
+      ]
+    },
+    {
+      "text": "The harm prevented—potential death of thousands of civilians—vastly outweighs the harm of killing a single individual, satisfying the proportionality requirement.",
+      "relies_on": [
+        "tyrion.p4"
+      ]
+    }
+  ],
+  "role_id": "judge-1",
+  "verdict": "justified",
+  "deliberation_id": "d-T-001-1788202422638"
+}
