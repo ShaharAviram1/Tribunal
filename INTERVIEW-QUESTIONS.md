@@ -22,10 +22,8 @@ Several decisions in the original interview came from bad input and were struck 
 
 ## Q5 — Who runs a case and who reads one later?
 **Decision:** Target is the cold reader with no knowledge of story, dossier, or design; the live user is that plus progress. Ids never render raw — a citation shows the advocate's name and claim text, expandable to the support. Case block incl. base premises sits on the case page. No onboarding, tooltips, tours, or help text.
-**Criterion:** a person who has not read the dossier can, from the case page alone, state each judge's verdict, one reason each, and whether all three reached the same verdict.
-
 ## Q6 — Are the verdicts combined?
-**Decision:** Never. No tally, no majority marker, no "split" wording, no agreement metric — not combining is in the course spec and goes in CLAUDE.md explicitly. Three columns of identical shape: verdict, reasons, cited points, strongest point against the conclusion. *Struck:* the citation-overlap view.
+**Decision:** Never. No tally, no majority marker, no "split" wording, no agreement metric — not combining is in the course spec and goes in CLAUDE.md explicitly. Three columns of identical shape: verdict, reasons, cited points, strongest point against the conclusion. *Struck:* the citation-overlap view; later, the cold-reader test criterion (removed 2026-08-31, see problem.md history).
 
 ## Q7 — Character fidelity evaluation
 **Struck entirely.** No baseline opinion, no fourth judge, no blind attribution round, no rubric rater, no marker lists, no calibration, no thresholds. Character fidelity is not something this project measures.

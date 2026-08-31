@@ -29,9 +29,8 @@ Each item is a fact a second reader can check by looking at the repository, a lo
 7. A model call that fails, including a refusal, appears in the log as a failure and appears on the case page as a failure; no failed call is rendered as a verdict or a stance.
 8. The repository contains one committed deliberation in which all seven roles ran on a single model, and one in which the seven roles ran across more than one model, and the log of each shows which.
 9. A fresh clone of the repository renders a complete T-001 case page from the committed deliberation with no API key present.
-10. A person who has not read the dossier, given only the case page, states each judge's verdict, one reason each, and whether all three reached the same verdict. Recorded as a dated note in the repository naming the date and whether the person succeeded.
-11. The seven agent prompts exist as versioned files in the repository and are loaded at runtime; no prompt text is inlined in code.
-12. The charge sheet specification exists as a written specification document in the repository, separate from the validation code that enforces it.
+10. The seven agent prompts exist as versioned files in the repository and are loaded at runtime; no prompt text is inlined in code.
+11. The charge sheet specification exists as a written specification document in the repository, separate from the validation code that enforces it.
 
 Item not written because it cannot be made argument-free: whether an advocate or judge is "in character". Character fidelity is not measured by this project (interview Q7, struck), so it is not a done criterion.
 

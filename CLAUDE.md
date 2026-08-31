@@ -39,7 +39,6 @@ Do not copy from these into code comments, prompts, or this file. Copies drift a
 - A second reader can check every claim against a committed log, fixture, or page, without asking.
 - The offline suite runs with no key in the environment and reaches no network.
 - Every model attempt has its own log row; the cost of a deliberation equals the sum of its rows.
-- A cold reader, from the case page alone, can state each judge's verdict, one reason each, and whether all three reached the same verdict.
 - The commit history reads as a sequence of reasons, not a changelog.
 
 ## How to work here
