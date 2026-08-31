@@ -62,3 +62,17 @@ test('model text is escaped: a stance containing markup cannot inject it', () =>
   const html = renderCasePage({ chargeSheet, job, outputs: { ...outputs, jon: evil } });
   assert.ok(!html.includes('<script>alert(1)'));
 });
+
+test('the dossier guard and the as-filed scoping line sit with the opinions', () => {
+  const html = page();
+  assert.ok(html.includes('no judge represents the jurist or predicts how they would decide'));
+  assert.ok(html.includes('The panel judges the record as filed.'));
+});
+
+test('failure attempts each sit behind their own disclosure with the not-a-position caveat', () => {
+  const failed = { failed: true, role_id: 'tyrion', deliberation_id: 'x', reason: 'truncated on both attempts', attempts: [{ hash: 'h', text: '{"position":"justified"', outcome: 'ok', detail: 'truncated' }] };
+  const html = renderCasePage({ chargeSheet, job, outputs: { ...outputs, tyrion: failed as never } });
+  assert.ok(html.includes('nothing in it counts as this role'));
+  const card = html.slice(html.indexOf('class="failure"'));
+  assert.ok(card.indexOf('<pre>') > card.indexOf('<details><summary>Attempt 1'), 'raw text is not behind a per-attempt disclosure');
+});

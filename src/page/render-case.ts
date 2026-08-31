@@ -38,7 +38,8 @@ function failureCard(rec: FailureRecord, roleTitle: string): string {
 <p class="failure-label">This role produced no output.</p>
 <p>${esc(rec.reason)}</p>
 <details><summary>What the model actually returned, attempt by attempt</summary>
-${rec.attempts.map((a, i) => `<section><h4>Attempt ${i + 1}: ${esc(a.outcome)}${a.detail ? `, ${esc(a.detail)}` : ''}</h4>${a.text ? `<pre>${esc(a.text)}</pre>` : '<p>No text was returned.</p>'}</section>`).join('\n')}
+<p class="explain">The text below failed validation. It is not a stance and not an opinion, and nothing in it counts as this role's position.</p>
+${rec.attempts.map((a, i) => `<details><summary>Attempt ${i + 1}: ${esc(a.outcome)}${a.detail ? `, ${esc(a.detail)}` : ''}</summary>${a.text ? `<pre>${esc(a.text)}</pre>` : '<p>No text was returned.</p>'}</details>`).join('\n')}
 </details>
 </article>`;
 }
@@ -100,6 +101,7 @@ ${incomplete}
 <section id="advocates"><h2>The four advocates</h2><p class="explain">Each seat fixes a procedural role, not a conclusion; each advocate states the position it actually reached. Positions are shown per advocate.</p>
 <div class="grid grid-4">${ADVOCATE_ORDER.map((r) => roleSection(data.outputs[r], r, NAMES[r] ?? r, stances, 'stance', jobState)).join('\n')}</div></section>
 <section id="opinions"><h2>The three opinions</h2><p class="explain">Three judicial methods, each ruling alone on the same record. The opinions are presented side by side and are not combined.</p>
+<p class="guard">A fictional proceeding. Each judge adapts a judicial method from a real jurist's published opinions; no judge represents the jurist or predicts how they would decide. The panel judges the record as filed.</p>
 <div class="grid grid-3">${JUDGE_ORDER.map((r) => roleSection(data.outputs[r], r, (data.outputs[r] as StoredOpinion | undefined)?.label ?? r.replace('judge-', 'Judge '), stances, 'opinion', jobState)).join('\n')}</div></section>
 <footer><p>${esc(cs.scope_note)}</p></footer>
 </body>
@@ -129,5 +131,6 @@ blockquote{margin:.4rem 0 .4rem 1rem;padding-left:.6rem;border-left:3px solid co
 .failure pre{white-space:pre-wrap;font-size:.85em}
 .notice{border:2px dashed currentColor;padding:.5rem 1rem;font-weight:bold}
 .scope,.explain{font-style:italic;opacity:.85}
+.guard{font-size:.9em;border:1px solid color-mix(in srgb,currentColor 30%,transparent);border-radius:.3rem;padding:.4rem .7rem;opacity:.9}
 footer{margin-top:2rem;border-top:3px double currentColor;padding-top:.5rem;font-style:italic;opacity:.8}
 `;
