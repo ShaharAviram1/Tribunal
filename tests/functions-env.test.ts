@@ -14,7 +14,7 @@ test('the filing function with an empty environment returns 500 naming every mis
   assert.equal(res.status, 500);
   const body = await res.json() as { error: string; missing: string[] };
   assert.match(body.error, /no model call/);
-  for (const v of ['TRIBUNAL_ACCESS_CODE', 'TRIBUNAL_FUNCTION_SECRET', 'TRIBUNAL_STORE', 'SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY']) {
+  for (const v of ['TRIBUNAL_FUNCTION_SECRET', 'TRIBUNAL_STORE', 'SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY']) {
     assert.ok(body.missing.includes(v), `missing list lacks ${v}`);
   }
 });

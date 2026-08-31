@@ -12,7 +12,6 @@ A contested act admits several defensible readings, but someone trying to unders
 - **The people whose methods are adapted.** The three judge profiles derive from real jurists' published opinions. The dossier's own qualification (fictional proceeding; adapts methods, does not impersonate) is a constraint the product inherits.
 
 Unsure, flagged rather than added:
-- *Whoever holds the access code besides the builder.* Nothing on record says anyone does.
 - *A course grader as cold reader.* Whether a grader counts as the test person is an open item in the assumptions file.
 - *OpenRouter and the model providers.* Their terms constrain the build, but nothing on record makes them a stakeholder in the outcome.
 

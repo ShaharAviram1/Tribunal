@@ -22,7 +22,7 @@ test('citations render as advocate name plus claim text; no raw point id is visi
   const html = page();
   const visible = html.replace(/<[^>]+>/g, ' ');
   assert.ok(!/\b(?:jon|tyrion|daenerys|greyworm)\.p\d\b/.test(visible), 'a raw id renders on screen');
-  assert.ok(visible.includes('Grey Worm:'), 'citation does not carry the advocate name');
+  assert.ok(/Grey Worm\s/.test(visible) && html.includes('cite-who'), 'citation does not carry the advocate name');
 });
 
 test('three opinion columns, identical structure, and no combined result anywhere', () => {
@@ -45,7 +45,7 @@ test('three opinion columns, identical structure, and no combined result anywher
 test('a failure record renders as a failure and cannot go down the output path', () => {
   const failed: CaseData['outputs'] = { ...outputs, 'judge-2': { failed: true, role_id: 'judge-2', deliberation_id: 'x', reason: 'refusal', attempts: [{ hash: 'h', text: 'I refuse.', outcome: 'refusal', detail: null }] } as never };
   const html = renderCasePage({ chargeSheet, job, outputs: failed });
-  assert.ok(html.includes('This role produced no output.'));
+  assert.ok(html.includes('This seat produced no output.'));
   assert.equal((html.match(/class="opinion"/g) ?? []).length, 2, 'failure record entered the opinion path');
   assert.ok(html.includes('I refuse.'), 'raw text of the attempt is not shown');
 });
@@ -53,7 +53,7 @@ test('a failure record renders as a failure and cannot go down the output path',
 test('an absent output renders the job state, not an empty column', () => {
   const partial: CaseData['outputs'] = { ...outputs }; delete partial['judge-3'];
   const html = renderCasePage({ chargeSheet, job: { ...job, status: 'running' }, outputs: partial });
-  assert.ok(html.includes('No output yet'));
+  assert.ok(html.includes('Awaiting argument'), 'an absent judge does not show its waiting state');
 });
 
 test('model text is escaped: a stance containing markup cannot inject it', () => {
@@ -79,7 +79,7 @@ test('failure attempts each sit behind their own disclosure with the not-a-posit
 
 test('the page names the panel and the model behind each card', () => {
   const html = page();
-  assert.ok(html.includes('Panel: one model for all seven roles'));
+  assert.ok(html.includes('One model for all seven roles'));
   assert.equal((html.match(/class="model"/g) ?? []).length, 7, 'each of the seven cards carries its model');
   assert.ok(html.includes('minimax/minimax-m2.7:free'));
 });

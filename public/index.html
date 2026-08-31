@@ -1,64 +1,144 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>The Tribunal</title>
-<style>:root{color-scheme:light dark}body{margin:0 auto;max-width:44rem;padding:1.5rem;font:18px/1.6 Georgia,serif}h1{font-variant:small-caps;margin-bottom:.2rem}
-.guard{font-size:.85em;border:1px solid color-mix(in srgb,currentColor 30%,transparent);border-radius:.3rem;padding:.4rem .7rem;opacity:.9;font-style:italic}
-fieldset{border:1px solid color-mix(in srgb,currentColor 30%,transparent);border-radius:.4rem;padding:1rem;margin:1rem 0}
-label{display:block;margin:.4rem 0}input[type=password]{font:inherit;padding:.2rem .4rem;width:min(14rem,100%)}
-button{font:inherit;padding:.5rem 1.2rem;cursor:pointer}#status,.duration{font-style:italic;opacity:.9}
-.case{border:1px solid color-mix(in srgb,currentColor 25%,transparent);border-radius:.4rem;padding:.6rem 1rem;margin:.5rem 0}
-.case ul{margin:.3rem 0 .3rem 1.1rem;font-size:.9em;padding:0}
-.case li{margin:.25rem 0}
-details.debug{margin:1rem 0;opacity:.85}</style></head>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Tribunal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,600;6..96,700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#14100c;--panel:#1d1712;--hairline:#3a2f22;--ink:#efe7d8;--ink2:#9b8d76;--muted:#7a6b55;
+  --brass:#c9a227;--defense:#7d8fa3;--prosecution:#a3705d;
+  --display:"Bodoni Moda",Didot,"Playfair Display",Georgia,serif;
+  --text:Spectral,Georgia,"Times New Roman",serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0 auto;max-width:46rem;padding:1rem 1.25rem 2.5rem;font:16px/1.6 var(--text);background:var(--ground);color:var(--ink);overflow-wrap:break-word}
+.masthead{border-bottom:3px double var(--brass);padding-bottom:.9rem;margin-bottom:1.1rem}
+.tribunal-name{font-family:var(--display);font-size:1.15rem;font-weight:600;letter-spacing:.35em;text-transform:uppercase;color:var(--brass);margin:.4rem 0 .3rem}
+.charter{color:var(--ink2);margin:.2rem 0 0;font-size:.98rem}
+.guard{font-size:.88em;border:1px solid var(--hairline);background:var(--panel);border-radius:.35rem;padding:.5rem .85rem;color:var(--ink2);margin:0 0 1.4rem}
+h2{font-family:var(--display);font-variant:small-caps;letter-spacing:.12em;font-weight:600;font-size:1.35rem;border-bottom:1px solid var(--hairline);padding-bottom:.25rem;margin:1.6rem 0 .7rem}
+.card{display:block;background:var(--panel);border:1px solid var(--hairline);border-radius:.45rem;padding:.8rem 1rem;margin:.6rem 0;width:100%;cursor:pointer}
+.card:hover{border-color:var(--muted)}
+.card input[type=radio]{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;clip-path:inset(50%);overflow:hidden;white-space:nowrap}
+.card:has(input:checked){border:1px solid var(--brass);box-shadow:0 0 0 1px var(--brass)}
+.card-title{font-family:var(--display);font-weight:600;font-size:1.15rem;margin:0}
+.card-sub{color:var(--ink2);font-size:.92em;margin:.15rem 0 0}
+.case-name{font-family:var(--display)}
+.docket{font-size:.8em;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin:0 0 .1rem}
+.runs{list-style:none;margin:.5rem 0 0;padding:.45rem 0 0;border-top:1px solid var(--hairline);font-size:.9em}
+.runs li{margin:.25rem 0;color:var(--ink2);overflow-wrap:anywhere}
+.no-runs{margin:.5rem 0 0;padding-top:.45rem;border-top:1px solid var(--hairline);font-size:.9em;font-style:italic;color:var(--muted)}
+details.debug{border:1px dashed var(--hairline);border-radius:.45rem;padding:.35rem .9rem;margin:.9rem 0;color:var(--ink2)}
+details.debug summary{cursor:pointer;font-size:.9em;font-style:italic;color:var(--muted)}
+.panel-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.6rem}
+.panel-grid .card{margin:0}
+.bench{margin:1.6rem 0 0;border-top:3px double var(--brass);padding-top:1rem}
+button{font:inherit;font-family:var(--display);font-weight:600;letter-spacing:.06em;color:var(--ground);background:var(--brass);border:1px solid var(--brass);border-radius:.35rem;padding:.55rem 1.4rem;cursor:pointer}
+button:hover{filter:brightness(1.08)}
+button:disabled{opacity:.55;cursor:default}
+.duration{font-style:italic;color:var(--ink2);font-size:.92em;margin:.5rem 0 0}
+#status{color:var(--ink2);font-style:italic;min-height:1.4em;margin:.7rem 0 0;overflow-wrap:anywhere}
+a{color:var(--brass)}
+footer{margin-top:2.2rem;border-top:3px double var(--brass);padding-top:.6rem;color:var(--muted);font-size:.9em}
+</style>
+</head>
 <body>
-<h1>The Tribunal</h1>
+<header class="masthead">
+  <p class="tribunal-name">The Tribunal</p>
+  <p class="charter">Four advocates and three judges deliberate one charge sheet in seven separate model calls. The three opinions are presented side by side and are never combined.</p>
+</header>
+
 <p class="guard">A fictional proceeding. Each judge adapts a judicial method from a real jurist's published opinions; no judge represents the jurist or predicts how they would decide.</p>
-<p>Four advocates and three judges deliberate one charge sheet in seven separate model calls. The three judicial opinions are presented side by side and are never combined.</p>
-<h2>The case</h2>
-<div id="cases"><p>Loading the case…</p></div>
-<fieldset>
-<legend>Convene the tribunal</legend>
-<label><input type="radio" name="panel" value="single" checked> One model for all seven roles</label>
-<label><input type="radio" name="panel" value="multi"> Seven roles, seven distinct models</label>
-<label>Access code <input type="password" id="code" autocomplete="off"></label>
-<button id="convene">Convene Tribunal</button>
-<p class="duration">A deliberation takes about two minutes: the four advocates speak, then the bench rules.</p>
-<p id="status"></p>
-</fieldset>
+
+<h2>The Case</h2>
+<div id="cases"><p class="card-sub">Retrieving the docket…</p></div>
+
+<h2>The Panel</h2>
+<div class="panel-grid">
+  <label class="card">
+    <input type="radio" name="panel" value="single" checked>
+    <p class="card-title">One model</p>
+    <p class="card-sub">All seven roles argued and judged by a single model.</p>
+  </label>
+  <label class="card">
+    <input type="radio" name="panel" value="multi">
+    <p class="card-title">Seven models</p>
+    <p class="card-sub">Every role a distinct model, no two shared.</p>
+  </label>
+</div>
+
+<div class="bench">
+  <button id="convene">Convene Tribunal</button>
+  <p class="duration">Seven model calls, about two minutes: the four advocates speak, then the bench rules.</p>
+  <p id="status" role="status"></p>
+</div>
+
+<footer>The record of each deliberation is kept in full; opinions are read one beside another.</footer>
+
 <script>
-const fmt = (iso) => new Date(iso).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
-const runLine = (d) => `<li><a href="/case/${d.deliberation_id}">Convened ${fmt(d.convened_at)}</a> — ${d.panel} — ${d.status}</li>`;
-const caseBlock = (c, checked) => `<div class="case">
-<label><input type="radio" name="case_id" value="${c.case_id}" ${checked ? 'checked' : ''}><strong>${c.case_id}</strong>: The Realm v. ${c.accused}</label>
-${c.deliberations.length ? `<ul>${c.deliberations.map(runLine).join('')}</ul>` : '<p>Not yet deliberated.</p>'}
-</div>`;
+'use strict';
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const fmt = (iso) => { try { return new Date(iso).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' }); } catch { return iso; } };
+const runLine = (d) => '<li><a href="/case/' + encodeURIComponent(d.deliberation_id) + '">Convened ' + esc(fmt(d.convened_at)) + '</a> — ' + esc(d.panel) + ' — ' + esc(d.status) + '</li>';
+const caseCard = (c, checked) => '<label class="card">' +
+  '<input type="radio" name="case_id" value="' + esc(c.case_id) + '"' + (checked ? ' checked' : '') + '>' +
+  '<p class="docket">Docket ' + esc(c.case_id) + '</p>' +
+  '<p class="card-title case-name">The Realm v. ' + esc(c.accused) + '</p>' +
+  '<p class="card-sub">In the matter of the death of ' + esc(c.deceased) + '.</p>' +
+  (c.deliberations && c.deliberations.length
+    ? '<ul class="runs">' + c.deliberations.map(runLine).join('') + '</ul>'
+    : '<p class="no-runs">Not yet deliberated.</p>') +
+  '</label>';
+
 (async () => {
   const box = document.getElementById('cases');
   try {
-    const { cases } = await (await fetch('/.netlify/functions/tribunal-case?list=1')).json();
+    const res = await fetch('/.netlify/functions/tribunal-case?list=1');
+    if (!res.ok) throw new Error('the registry answered ' + res.status);
+    const { cases } = await res.json();
+    if (!cases || !cases.length) { box.innerHTML = '<p class="card-sub">The docket is empty.</p>'; return; }
     const [first, ...rest] = cases;
-    box.innerHTML = caseBlock(first, true) +
-      (rest.length ? `<details class="debug"><summary>${rest.length} debug filings from the build, kept for the audit trail</summary>${rest.map((c) => caseBlock(c, false)).join('')}</details>` : '');
-  } catch (e) { box.innerHTML = '<p>The case list could not be loaded: ' + e + '</p>'; }
+    box.innerHTML = caseCard(first, true) +
+      (rest.length
+        ? '<details class="debug"><summary>' + rest.length + ' debug filing' + (rest.length === 1 ? '' : 's') + ' kept for the audit trail</summary>' + rest.map((c) => caseCard(c, false)).join('') + '</details>'
+        : '');
+  } catch (e) {
+    box.innerHTML = '<p class="card-sub">The docket could not be retrieved: ' + esc(e && e.message ? e.message : e) + '</p>';
+  }
 })();
+
 document.getElementById('convene').addEventListener('click', async () => {
   const status = document.getElementById('status');
-  const code = document.getElementById('code').value;
+  const button = document.getElementById('convene');
   const picked = document.querySelector('input[name=case_id]:checked');
-  if (!picked) { status.textContent = 'Pick a case.'; return; }
-  if (!code) { status.textContent = 'The access code is required.'; return; }
+  if (!picked) { status.textContent = 'Select a case to bring before the bench.'; return; }
   const panel = document.querySelector('input[name=panel]:checked').value;
-  status.textContent = 'Convening…';
+  button.disabled = true;
+  status.textContent = 'Convening… the advocates are taking their seats.';
   try {
     const res = await fetch('/.netlify/functions/tribunal-file?panel=' + panel, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-tribunal-access-code': code },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ case_id: picked.value }),
     });
-    const body = await res.json();
-    if (!res.ok) { status.textContent = 'Refused: ' + (body.error ?? JSON.stringify(body)); return; }
-    location.href = '/case/' + body.deliberation_id;
-  } catch (e) { status.textContent = 'Failed: ' + e; }
+    const text = await res.text();
+    if (!res.ok) {
+      let message = text;
+      try { const parsed = JSON.parse(text); if (parsed && parsed.error) message = parsed.error; } catch {}
+      status.textContent = message;
+      button.disabled = false;
+      return;
+    }
+    const body = JSON.parse(text);
+    location.href = '/case/' + encodeURIComponent(body.deliberation_id);
+  } catch (e) {
+    status.textContent = 'The filing failed: ' + (e && e.message ? e.message : e);
+    button.disabled = false;
+  }
 });
 </script>
 </body>

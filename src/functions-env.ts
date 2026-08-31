@@ -12,5 +12,5 @@ export function checkEnv(required: string[]): { ok: true } | { ok: false; respon
   const body = { error: 'environment invalid; no model call was made', missing, wrong };
   return { ok: false, response: new Response(JSON.stringify(body, null, 2), { status: 500, headers: { 'Content-Type': 'application/json' } }) };
 }
-export const FILE_ENV = ['TRIBUNAL_ACCESS_CODE', 'TRIBUNAL_FUNCTION_SECRET', 'TRIBUNAL_STORE', 'SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY'];
+export const FILE_ENV = ['TRIBUNAL_FUNCTION_SECRET', 'TRIBUNAL_STORE', 'SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY'];
 export const RUN_ENV = ['TRIBUNAL_FUNCTION_SECRET', 'TRIBUNAL_STORE', 'SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY', 'OPENROUTER_API_KEY'];

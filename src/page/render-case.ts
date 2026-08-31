@@ -1,7 +1,9 @@
-// Renders one deliberation as the case page. Pure: data in, HTML out. Used by the static
-// render (fresh clone, file store) and by the live page. No framework, no network.
-// The three opinions render with equal prominence and identical structure, and nothing here
-// computes agreement, sums positions, or produces any combined result.
+// Renders one deliberation as the case page: a courtroom, the bench above, the floor below.
+// Pure: data in, HTML out. Used by the static render (fresh clone, file store) and by the live
+// page. No framework, no client bundle; the live script only reveals what this renderer made.
+// Three constraints the design never breaks: the verdict is the largest element in its card and
+// typographically identical whatever it says; the three judge columns are identical in every
+// visual respect; colour marks the seat, never the outcome.
 
 import type { StoredChargeSheet, StoredStance, StoredOpinion, FailureRecord, Reason } from '../protocol/types.ts';
 import type { Job } from '../protocol/run.ts';
@@ -20,22 +22,21 @@ export const isFailureRecord = (o: unknown): o is FailureRecord =>
 const ADVOCATE_ORDER = ['jon', 'tyrion', 'daenerys', 'greyworm'] as const;
 const JUDGE_ORDER = ['judge-1', 'judge-2', 'judge-3'] as const;
 const NAMES: Record<string, string> = { jon: 'Jon Snow', tyrion: 'Tyrion Lannister', daenerys: 'Daenerys Targaryen', greyworm: 'Grey Worm' };
+const SEATS: Record<string, string> = { jon: 'defense', tyrion: 'defense', daenerys: 'prosecution', greyworm: 'prosecution' };
 
-// A citation renders as the advocate's name and the claim text, expandable to the support.
-// A raw id on screen is a failed citation.
 function citation(id: string, stances: Map<string, StoredStance>): string {
   const [role] = id.split('.');
   const stance = stances.get(role ?? '');
   const point = stance?.points.find((p) => p.id === id);
-  if (!point) return `<span class="citation citation-unresolved">an argued point that could not be found</span>`;
-  return `<details class="citation"><summary>${esc(NAMES[role!] ?? role!)}: ${esc(point.claim)}</summary><blockquote>${esc(point.support)}</blockquote></details>`;
+  if (!point) return `<p class="cite cite-unresolved">an argued point that could not be found</p>`;
+  return `<details class="cite"><summary><span class="cite-who">${esc(NAMES[role!] ?? role!)}</span> ${esc(point.claim)}</summary><blockquote>${esc(point.support)}</blockquote></details>`;
 }
 
-function failureCard(rec: FailureRecord, roleTitle: string): string {
+function failureCard(rec: FailureRecord, roleTitle: string, model: string | undefined): string {
   // The one door for a failure record. It never reaches stance or opinion markup.
   return `<article class="failure">
-<h3>${esc(roleTitle)}</h3>
-<p class="failure-label">This role produced no output.</p>
+<header class="card-head"><h3>${esc(roleTitle)}</h3><p class="seat">no output</p>${model ? `<p class="model">${esc(model)}</p>` : ''}</header>
+<p class="failure-label">This seat produced no output.</p>
 <p>${esc(rec.reason)}</p>
 <details><summary>What the model actually returned, attempt by attempt</summary>
 <p class="explain">The text below failed validation. It is not a stance and not an opinion, and nothing in it counts as this role's position.</p>
@@ -44,47 +45,53 @@ ${rec.attempts.map((a, i) => `<details><summary>Attempt ${i + 1}: ${esc(a.outcom
 </article>`;
 }
 
-function panelName(models: Record<string, string> | undefined): string {
-  if (!models || Object.keys(models).length === 0) return '';
-  const distinct = new Set(Object.values(models)).size;
-  return distinct === 1 ? `Panel: one model for all seven roles (${[...new Set(Object.values(models))][0]})` : `Panel: ${distinct} distinct models, one per role`;
-}
-
-function modelLine(models: Record<string, string> | undefined, role: string): string {
-  const m = models?.[role];
-  return m ? `<p class="model">Model: ${esc(m)}</p>` : '';
-}
-
 function stanceCard(s: StoredStance, models?: Record<string, string>): string {
   const against = s.seat === 'defense' ? s.position === 'not_justified' : s.position === 'justified';
-  return `<article class="stance">
-<header class="card-head"><h3>${esc(NAMES[s.role_id] ?? s.role_id)}</h3><p class="seat">${esc(s.seat)} seat</p>${modelLine(models, s.role_id)}</header>
+  return `<article class="stance seat-${esc(s.seat)}">
+<header class="card-head"><h3>${esc(NAMES[s.role_id] ?? s.role_id)}</h3><p class="seat">${esc(s.seat)} seat</p><p class="model">${esc(models?.[s.role_id] ?? '')}</p></header>
 <p class="position">${esc(s.position.replace('_', ' '))}</p>
-${against ? '<p class="against-seat">Concluded against this seat</p>' : ''}
-${s.points.map((p) => `<details class="point"><summary>${esc(p.claim)}</summary><blockquote>${esc(p.support)}</blockquote></details>`).join('\n')}
+${against ? '<p class="against-seat">Against this seat</p>' : ''}
+<ul class="points">
+${s.points.map((p) => `<li><details class="point"><summary>${esc(p.claim)}</summary><blockquote>${esc(p.support)}</blockquote></details></li>`).join('\n')}
+</ul>
 </article>`;
 }
 
-function reasonBlock(r: Reason, stances: Map<string, StoredStance>): string {
-  return `<div class="reason"><p>${esc(r.text)}</p><div class="relies">${r.relies_on.map((id) => citation(id, stances)).join('\n')}</div></div>`;
+function reasonItem(r: Reason, stances: Map<string, StoredStance>): string {
+  return `<li><p>${esc(r.text)}</p><div class="cites">${r.relies_on.map((id) => citation(id, stances)).join('\n')}</div></li>`;
 }
 
 function opinionColumn(o: StoredOpinion, stances: Map<string, StoredStance>, models?: Record<string, string>): string {
+  const cites = o.reasons.reduce((n, r) => n + r.relies_on.length, 0) + o.against.relies_on.length;
   return `<article class="opinion">
-<header class="card-head"><h3>${esc(o.label)}</h3><p class="seat">ruling alone</p>${modelLine(models, o.role_id)}</header>
-<p class="verdict">${esc(o.verdict.replace('_', ' '))}</p>
+<header class="card-head"><h3>${esc(o.label)}</h3><p class="seat">ruling alone</p><p class="model">${esc(models?.[o.role_id] ?? '')}</p></header>
+<div class="verdict-band"><p class="verdict-word">Verdict</p><p class="verdict">${esc(o.verdict.replace('_', ' '))}</p></div>
 <h4>Reasons</h4>
-${o.reasons.map((r) => reasonBlock(r, stances)).join('\n')}
+<ol class="reasons">
+${o.reasons.map((r) => reasonItem(r, stances)).join('\n')}
+</ol>
 <h4>Strongest consideration against this verdict</h4>
-${reasonBlock(o.against, stances)}
+<ul class="reasons against-list">${reasonItem(o.against, stances)}</ul>
+<p class="card-foot">${o.reasons.length} reasons · ${cites} citations</p>
 </article>`;
 }
 
 function roleSection(out: CaseData['outputs'][string], role: string, title: string, stances: Map<string, StoredStance>, kind: 'stance' | 'opinion', jobState: string, models?: Record<string, string>): string {
   const wrap = (state: string, inner: string) => `<div class="role-slot" data-role="${esc(role)}" data-kind="${kind}" data-state="${state}">${inner}</div>`;
-  if (isFailureRecord(out)) return wrap('failed', failureCard(out, title));
-  if (out === undefined) return wrap('absent', `<article class="absent"><h3>${esc(title)}</h3><p>No output yet. Deliberation is ${esc(jobState)}.</p></article>`);
+  if (isFailureRecord(out)) return wrap('failed', failureCard(out, title, models?.[role]));
+  if (out === undefined) {
+    const waiting = kind === 'stance'
+      ? `<article class="stance pending seat-${esc(SEATS[role] ?? 'defense')}"><header class="card-head"><h3>${esc(title)}</h3><p class="seat">${esc(SEATS[role] ?? '')} seat</p><p class="model">${esc(models?.[role] ?? '')}</p></header><p class="waiting">Yet to take the floor. Deliberation is ${esc(jobState)}.</p></article>`
+      : `<article class="opinion pending"><header class="card-head"><h3>${esc(title)}</h3><p class="seat">ruling alone</p><p class="model">${esc(models?.[role] ?? '')}</p></header><p class="waiting">Awaiting argument. Deliberation is ${esc(jobState)}.</p></article>`;
+    return wrap('absent', waiting);
+  }
   return wrap('returned', kind === 'stance' ? stanceCard(out as StoredStance, models) : opinionColumn(out as StoredOpinion, stances, models));
+}
+
+function panelName(models: Record<string, string> | undefined): string {
+  if (!models || Object.keys(models).length === 0) return '';
+  const distinct = new Set(Object.values(models)).size;
+  return distinct === 1 ? `One model for all seven roles: ${[...new Set(Object.values(models))][0]}` : `${distinct} distinct models, one per role`;
 }
 
 export function renderCasePage(data: CaseData): string {
@@ -99,66 +106,98 @@ export function renderCasePage(data: CaseData): string {
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(cs.case_id)}: The Realm v. ${esc(cs.accused)}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,600;6..96,700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>${CSS}</style>
 </head>
 <body>
-<header>
-<p class="crumbs"><a href="/">\u2190 All cases</a></p>
-<h1>Case ${esc(cs.case_id)}</h1>
-<p><strong>Accused:</strong> ${esc(cs.accused)} \u00b7 <strong>Deceased:</strong> ${esc(cs.deceased)}</p>
-<p><strong>Act alleged:</strong> ${esc(cs.act_alleged)}</p>
+<header class="masthead">
+<p class="crumbs"><a href="/">← All cases</a></p>
+<p class="tribunal-name">The Tribunal</p>
+<h1>Case ${esc(cs.case_id)} · The Realm v. ${esc(cs.accused)}</h1>
+<p class="status-line">Accused ${esc(cs.accused)} · Deceased ${esc(cs.deceased)} · ${esc(jobState)}${data.job?.models ? ` · ${esc(panelName(data.job.models))}` : ''}</p>
 <p class="guard">A fictional proceeding. Each judge adapts a judicial method from a real jurist's published opinions; no judge represents the jurist or predicts how they would decide. The panel judges the record as filed.</p>
 </header>
 ${incomplete}
-${data.job?.models ? `<p class="panel">${esc(panelName(data.job.models))}</p>` : ''}
-<section id="opinions"><h2>The three opinions</h2><p class="explain">Three judicial methods, each ruling alone on the same record. The opinions are presented side by side and are not combined.</p>
+<section id="opinions"><h2>The Bench</h2><p class="explain">Three judicial methods, each ruling alone on the same record. The opinions are presented side by side and are not combined.</p>
 <div class="grid grid-3">${JUDGE_ORDER.map((r) => roleSection(data.outputs[r], r, (data.outputs[r] as StoredOpinion | undefined)?.label ?? r.replace('judge-', 'Judge '), stances, 'opinion', jobState, data.job?.models)).join('\n')}</div></section>
-<section id="advocates"><h2>The four advocates</h2><p class="explain">Each seat fixes a procedural role, not a conclusion; each advocate states the position it actually reached. Positions are shown per advocate.</p>
+<hr class="rail">
+<section id="advocates"><h2>The Floor</h2><p class="explain">Each seat fixes a procedural role, not a conclusion; each advocate states the position it actually reached. Positions are shown per advocate.</p>
 <div class="grid grid-4">${ADVOCATE_ORDER.map((r) => roleSection(data.outputs[r], r, NAMES[r] ?? r, stances, 'stance', jobState, data.job?.models)).join('\n')}</div></section>
-<section id="question"><h2>Question for judgment</h2><p>${esc(cs.question)}</p><p class="scope">${esc(cs.scope_note)}</p></section>
-<details id="background"><summary><h2>Background for readers new to the story</h2></summary><p>${esc(cs.base_premises)}</p></details>
-<details id="record"><summary><h2>Agreed factual record</h2></summary><ol>${cs.agreed_record.map((x) => `<li>${esc(x)}</li>`).join('')}</ol></details>
-<footer><p>${esc(cs.scope_note)}</p></footer>
+<details id="sheet"><summary><h2>The charge sheet, the background, and the agreed record</h2></summary>
+<h3>Act alleged</h3><p>${esc(cs.act_alleged)}</p>
+<h3>Question for judgment</h3><p>${esc(cs.question)}</p>
+<h3>Background for readers new to the story</h3><p>${esc(cs.base_premises)}</p>
+<h3>Agreed factual record</h3><ol>${cs.agreed_record.map((x) => `<li>${esc(x)}</li>`).join('')}</ol>
+</details>
+<footer><p>${esc(cs.scope_note)}</p><p class="guard-foot">A fictional proceeding; the panel judges the record as filed.</p></footer>
 </body>
 </html>`;
 }
 
 const CSS = `
-:root{color-scheme:light dark}
-body{margin:0 auto;max-width:80rem;padding:1rem 1.5rem;font:16px/1.55 Georgia,serif;background:Canvas;color:CanvasText}
-header{border-bottom:3px double currentColor;padding-bottom:.75rem;margin-bottom:1rem}
-h1{font-variant:small-caps;letter-spacing:.05em;margin:.2rem 0}
-h2{font-variant:small-caps;border-bottom:1px solid color-mix(in srgb,currentColor 30%,transparent);padding-bottom:.2rem}
-.crumbs{margin:.1rem 0}.crumbs a{color:inherit}
+:root{
+  --ground:#14100c;--panel:#1d1712;--hairline:#3a2f22;--ink:#efe7d8;--ink2:#9b8d76;--muted:#7a6b55;
+  --brass:#c9a227;--defense:#7d8fa3;--prosecution:#a3705d;
+  --display:"Bodoni Moda",Didot,"Playfair Display",Georgia,serif;
+  --text:Spectral,Georgia,"Times New Roman",serif;
+}
+*{box-sizing:border-box}
+body{margin:0 auto;max-width:82rem;padding:1rem 1.5rem 2rem;font:16px/1.6 var(--text);background:var(--ground);color:var(--ink)}
+.masthead{border-bottom:3px double var(--brass);padding-bottom:.8rem;margin-bottom:1.2rem}
+.tribunal-name{font-family:var(--display);font-size:.95rem;letter-spacing:.35em;text-transform:uppercase;color:var(--brass);margin:.2rem 0 0}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(1.5rem,4vw,2.4rem);margin:.15rem 0}
+.status-line{color:var(--ink2);margin:.2rem 0;font-size:.95rem}
+h2{font-family:var(--display);font-variant:small-caps;letter-spacing:.12em;font-size:1.5rem;border-bottom:1px solid var(--hairline);padding-bottom:.25rem}
+h3{font-family:var(--display);margin:.1rem 0;font-size:1.25rem}
+h4{font-family:var(--display);font-variant:small-caps;letter-spacing:.06em;margin:.9rem 0 .3rem;color:var(--ink2)}
+.crumbs{margin:.1rem 0}.crumbs a{color:var(--ink2)}
 .grid{display:grid;gap:1rem;align-items:stretch}
-.grid-4{grid-template-columns:repeat(auto-fit,minmax(15rem,1fr))}
-.grid-3{grid-template-columns:repeat(auto-fit,minmax(18rem,1fr))}
-article{border:1px solid color-mix(in srgb,currentColor 25%,transparent);border-radius:.4rem;padding:.75rem 1rem;height:100%;box-sizing:border-box}
+.grid-4{grid-template-columns:repeat(auto-fit,minmax(15.5rem,1fr))}
+.grid-3{grid-template-columns:repeat(auto-fit,minmax(19rem,1fr))}
+article{background:var(--panel);border:1px solid var(--hairline);border-radius:.45rem;padding:.9rem 1.1rem;height:100%}
 .role-slot{height:100%}
-.opinion{border-width:2px}
-.card-head{min-height:5.2rem;border-bottom:1px solid color-mix(in srgb,currentColor 15%,transparent);margin-bottom:.5rem;padding-bottom:.35rem}
-.card-head h3{margin:.1rem 0}
-.seat{font-size:.85em;font-style:italic;opacity:.75;margin:.1rem 0}
-.model{font-size:.85em;opacity:.8;margin:.1rem 0;font-family:ui-monospace,monospace;overflow-wrap:anywhere}
-.position,.verdict{font-variant:small-caps;font-weight:bold;font-size:1.35em;letter-spacing:.03em;margin:.4rem 0}
-.against-seat{display:inline-block;border:1.5px solid currentColor;border-radius:.3rem;padding:.05rem .5rem;font-size:.85em;font-weight:bold;letter-spacing:.03em;text-transform:uppercase}
-details{margin:.35rem 0}
-summary{cursor:pointer}
-details#background,details#record{border:1px solid color-mix(in srgb,currentColor 20%,transparent);border-radius:.4rem;padding:.3rem .8rem;margin:.8rem 0}
-details#background summary h2,details#record summary h2{display:inline;border:none}
-blockquote{margin:.4rem 0 .4rem 1rem;padding-left:.6rem;border-left:3px solid color-mix(in srgb,currentColor 30%,transparent);opacity:.9}
-.point>summary{list-style:none}
-.point>summary::before{content:'\u2295 ';opacity:.7}
-.point[open]>summary::before{content:'\u2296 '}
-.citation summary{font-size:.92em;opacity:.9;list-style:none}
-.citation summary::before{content:'\u00bb cites ';font-style:italic;opacity:.75}
-.citation-unresolved{opacity:.7;font-style:italic}
-.failure{border-style:dashed;background:color-mix(in srgb,currentColor 6%,transparent)}
-.failure-label{font-weight:bold}
-.failure pre{white-space:pre-wrap;font-size:.85em}
-.notice{border:2px dashed currentColor;padding:.5rem 1rem;font-weight:bold}
-.scope,.explain{font-style:italic;opacity:.85}
-.guard{font-size:.9em;border:1px solid color-mix(in srgb,currentColor 30%,transparent);border-radius:.3rem;padding:.4rem .7rem;opacity:.9;font-weight:normal}
-.panel{font-style:italic;opacity:.85}
-footer{margin-top:2rem;border-top:3px double currentColor;padding-top:.5rem;font-style:italic;opacity:.8}
+.stance.seat-defense{border-top:4px solid var(--defense)}
+.stance.seat-prosecution{border-top:4px solid var(--prosecution)}
+.opinion{border-top:4px solid var(--brass)}
+.card-head{min-height:5.4rem;border-bottom:1px solid var(--hairline);margin-bottom:.6rem;padding-bottom:.4rem}
+.seat{font-size:.85em;font-style:italic;color:var(--ink2);margin:.15rem 0}
+.seat-defense .seat{color:var(--defense)}
+.seat-prosecution .seat{color:var(--prosecution)}
+.model{font-size:.85em;color:var(--ink2);margin:.15rem 0;font-family:ui-monospace,monospace;overflow-wrap:anywhere;min-height:1.2em}
+.verdict-band{border-top:1px solid var(--brass);border-bottom:1px solid var(--brass);margin:.6rem 0 .4rem;padding:.5rem 0 .6rem;text-align:center}
+.verdict-word{font-family:var(--display);font-variant:small-caps;letter-spacing:.3em;font-size:.85rem;color:var(--ink2);margin:0}
+.verdict{font-family:var(--display);font-weight:700;font-size:clamp(2rem,3vw,2.9rem);line-height:1.1;margin:.1rem 0 0;font-variant:small-caps}
+.position{font-family:var(--display);font-weight:600;font-size:1.4rem;font-variant:small-caps;margin:.4rem 0 .2rem}
+.against-seat{display:inline-block;border:1px solid var(--brass);color:var(--brass);border-radius:.3rem;padding:.1rem .55rem;font-size:.78em;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin:.1rem 0 .4rem}
+.reasons{margin:.2rem 0;padding-left:1.3rem}
+.reasons>li{margin:.6rem 0}
+.reasons>li>p{margin:.2rem 0}
+.against-list{list-style:none;padding-left:.2rem}
+.cites{margin:.25rem 0 .1rem}
+.cite{margin:.15rem 0 .15rem 1rem;font-size:.9em;color:var(--ink2)}
+.cite summary{cursor:pointer;list-style:none}
+.cite summary::before{content:'» ';color:var(--brass)}
+.cite-who{font-family:var(--display);font-weight:600}
+.cite-unresolved{font-style:italic}
+.card-foot{border-top:1px solid var(--hairline);margin:.8rem 0 0;padding-top:.4rem;font-size:.85em;color:var(--muted)}
+.points{list-style:none;margin:.4rem 0;padding:0}
+.points>li{margin:.45rem 0}
+.point summary{cursor:pointer;list-style:none}
+.point summary::before{content:'✠ ';color:var(--brass);opacity:.8}
+blockquote{margin:.4rem 0 .4rem 1.1rem;padding-left:.7rem;border-left:3px solid var(--hairline);color:var(--ink2)}
+details#sheet{border:1px solid var(--hairline);background:var(--panel);border-radius:.45rem;padding:.4rem 1rem;margin:1.4rem 0}
+details#sheet summary{cursor:pointer}
+details#sheet summary h2{display:inline;border:none;font-size:1.15rem}
+.rail{border:none;border-top:3px double var(--brass);margin:1.6rem 0}
+.waiting{font-style:italic;color:var(--ink2)}
+.failure{border-style:dashed;border-top:4px dashed var(--muted)}
+.failure-label{font-weight:600}
+.failure pre{white-space:pre-wrap;font-size:.85em;color:var(--ink2)}
+.notice{border:2px dashed var(--brass);border-radius:.4rem;padding:.5rem 1rem;font-weight:600}
+.explain,.scope{font-style:italic;color:var(--ink2)}
+.guard{font-size:.88em;border:1px solid var(--hairline);background:var(--panel);border-radius:.35rem;padding:.45rem .8rem;color:var(--ink2)}
+.guard-foot{font-style:italic;color:var(--muted)}
+footer{margin-top:2rem;border-top:3px double var(--brass);padding-top:.6rem;color:var(--ink2)}
+a{color:var(--brass)}
 `;
