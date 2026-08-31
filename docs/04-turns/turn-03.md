@@ -19,3 +19,17 @@ Order of work: endpoint and renderer first, and the first render of run-02 shown
 The run-02 render was approved 2026-08-31 with one fix, now in: the opinions section carries the dossier's guard in its own terms, a fictional proceeding, each judge adapting a published judicial method, not representing the jurist and not predicting how they would decide, plus the scoping line that the panel judges the record as filed. Failure attempts each sit behind their own disclosure with an explicit caveat, since a raw attempt opening with `"position":"justified"` could read as the advocate's position to a skimming eye.
 
 **Opinion word bound: closed, no bound.** From the rendered evidence (totals 295, 381, 214 words): nothing failed at these lengths, the longest column reads as long rather than broken, `max_output_tokens` is already the logged backstop, and a cap invented for a failure that has not happened is the pattern lessons-learned entry 2 warns about. Revisit only if turn four produces a column that does not fit.
+
+## The polling path, watched live
+
+Filed a second charge sheet on the branch deploy (`docs/04-turns/e2e/t002-filing-transcript.txt`): the system assigned `T-002` and `d-T-002-1788200414013`. The states actually seen, 5-second polls (`t002-polling-transcript.txt`): running/advocates with outputs 0, 1, 2, 3; then judges with outputs 4, 5, 6; complete at 206 s with 7 outputs and 9 calls. The two extra calls were live corrective retries, both recovered: Grey Worm's first response failed validation and his second passed; judge-1's first answer was HTTP 200 with no finish reason and no tokens, an empty provider response, and the retry produced a valid opinion. The page rendered each state as it happened.
+
+**T-002 is specified behaviour, not an accident.** The interview settled that re-asking means filing a new charge sheet and that each filing creates its own case, so a second copy of the same content correctly became a new case. The canonical evidence for the project is `T-001` and deliberation `d-T-001-1788124601994`; `T-002` exists to exercise filing and the polling path.
+
+## Phone layout, measured rather than eyeballed
+
+The window could not be resized below the desktop minimum, so a screenshot would have proven nothing. Instead a 390-px iframe of the live case page was injected same-origin and the geometry read from inside it: viewport 375 px, no horizontal overflow, all four stance cards and all three opinion columns at identical x and identical 327-px width, stacked in document order. Equal prominence and identical structure hold where "three columns" is false; the columns become a sequence and nothing about their internal structure changes.
+
+## Fresh clone
+
+`node scripts/render-static.ts run-02` renders the committed single-model deliberation to `runs/run-02/case.html` through the file store with no key and no network; the offline render tests read the same run. A fresh clone therefore renders a complete T-001 case page from the repository alone (problem.md item 9), and the committed `case.html` for both runs is checked in beside its run.

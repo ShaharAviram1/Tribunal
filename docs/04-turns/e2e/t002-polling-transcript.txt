@@ -1,0 +1,8 @@
+2s  status=running stage=advocates outputs=0 calls=0
+31s  status=running stage=advocates outputs=1 calls=1
+45s  status=running stage=advocates outputs=2 calls=2
+53s  status=running stage=advocates outputs=3 calls=3
+113s  status=running stage=judges outputs=4 calls=5
+139s  status=running stage=judges outputs=5 calls=7
+173s  status=running stage=judges outputs=6 calls=8
+206s  status=complete stage=judges outputs=7 calls=9
