@@ -76,3 +76,10 @@ test('failure attempts each sit behind their own disclosure with the not-a-posit
   const card = html.slice(html.indexOf('class="failure"'));
   assert.ok(card.indexOf('<pre>') > card.indexOf('<details><summary>Attempt 1'), 'raw text is not behind a per-attempt disclosure');
 });
+
+test('the page names the panel and the model behind each card', () => {
+  const html = page();
+  assert.ok(html.includes('Panel: one model for all seven roles'));
+  assert.equal((html.match(/class="model"/g) ?? []).length, 7, 'each of the seven cards carries its model');
+  assert.ok(html.includes('minimax/minimax-m2.7:free'));
+});

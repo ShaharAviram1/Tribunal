@@ -44,12 +44,24 @@ ${rec.attempts.map((a, i) => `<details><summary>Attempt ${i + 1}: ${esc(a.outcom
 </article>`;
 }
 
-function stanceCard(s: StoredStance): string {
+function panelName(models: Record<string, string> | undefined): string {
+  if (!models || Object.keys(models).length === 0) return '';
+  const distinct = new Set(Object.values(models)).size;
+  return distinct === 1 ? `Panel: one model for all seven roles (${[...new Set(Object.values(models))][0]})` : `Panel: ${distinct} distinct models, one per role`;
+}
+
+function modelLine(models: Record<string, string> | undefined, role: string): string {
+  const m = models?.[role];
+  return m ? `<p class="model">Model: ${esc(m)}</p>` : '';
+}
+
+function stanceCard(s: StoredStance, models?: Record<string, string>): string {
   const against = s.seat === 'defense' ? s.position === 'not_justified' : s.position === 'justified';
   return `<article class="stance">
 <h3>${esc(NAMES[s.role_id] ?? s.role_id)} <span class="seat">${esc(s.seat)} seat</span></h3>
 <p class="position">Position reached: <strong>${esc(s.position.replace('_', ' '))}</strong>${against ? ' <em>(against this seat)</em>' : ''}</p>
 ${s.points.map((p) => `<details class="point"><summary>${esc(p.claim)}</summary><blockquote>${esc(p.support)}</blockquote></details>`).join('\n')}
+${modelLine(models, s.role_id)}
 </article>`;
 }
 
@@ -57,7 +69,7 @@ function reasonBlock(r: Reason, stances: Map<string, StoredStance>): string {
   return `<div class="reason"><p>${esc(r.text)}</p><div class="relies">${r.relies_on.map((id) => citation(id, stances)).join('\n')}</div></div>`;
 }
 
-function opinionColumn(o: StoredOpinion, stances: Map<string, StoredStance>): string {
+function opinionColumn(o: StoredOpinion, stances: Map<string, StoredStance>, models?: Record<string, string>): string {
   return `<article class="opinion">
 <h3>${esc(o.label)}</h3>
 <p class="verdict">Verdict: <strong>${esc(o.verdict.replace('_', ' '))}</strong></p>
@@ -65,13 +77,14 @@ function opinionColumn(o: StoredOpinion, stances: Map<string, StoredStance>): st
 ${o.reasons.map((r) => reasonBlock(r, stances)).join('\n')}
 <h4>Strongest consideration against this verdict</h4>
 ${reasonBlock(o.against, stances)}
+${modelLine(models, o.role_id)}
 </article>`;
 }
 
-function roleSection(out: CaseData['outputs'][string], role: string, title: string, stances: Map<string, StoredStance>, kind: 'stance' | 'opinion', jobState: string): string {
+function roleSection(out: CaseData['outputs'][string], role: string, title: string, stances: Map<string, StoredStance>, kind: 'stance' | 'opinion', jobState: string, models?: Record<string, string>): string {
   if (isFailureRecord(out)) return failureCard(out, title);
   if (out === undefined) return `<article class="absent"><h3>${esc(title)}</h3><p>No output yet. Deliberation is ${esc(jobState)}.</p></article>`;
-  return kind === 'stance' ? stanceCard(out as StoredStance) : opinionColumn(out as StoredOpinion, stances);
+  return kind === 'stance' ? stanceCard(out as StoredStance, models) : opinionColumn(out as StoredOpinion, stances, models);
 }
 
 export function renderCasePage(data: CaseData): string {
@@ -98,11 +111,12 @@ ${incomplete}
 <section id="background"><h2>Background for readers new to the story</h2><p>${esc(cs.base_premises)}</p></section>
 <section id="record"><h2>Agreed factual record</h2><ol>${cs.agreed_record.map((x) => `<li>${esc(x)}</li>`).join('')}</ol></section>
 <section id="question"><h2>Question for judgment</h2><p>${esc(cs.question)}</p><p class="scope">${esc(cs.scope_note)}</p></section>
+${data.job?.models ? `<p class="panel">${esc(panelName(data.job.models))}</p>` : ''}
 <section id="advocates"><h2>The four advocates</h2><p class="explain">Each seat fixes a procedural role, not a conclusion; each advocate states the position it actually reached. Positions are shown per advocate.</p>
-<div class="grid grid-4">${ADVOCATE_ORDER.map((r) => roleSection(data.outputs[r], r, NAMES[r] ?? r, stances, 'stance', jobState)).join('\n')}</div></section>
+<div class="grid grid-4">${ADVOCATE_ORDER.map((r) => roleSection(data.outputs[r], r, NAMES[r] ?? r, stances, 'stance', jobState, data.job?.models)).join('\n')}</div></section>
 <section id="opinions"><h2>The three opinions</h2><p class="explain">Three judicial methods, each ruling alone on the same record. The opinions are presented side by side and are not combined.</p>
 <p class="guard">A fictional proceeding. Each judge adapts a judicial method from a real jurist's published opinions; no judge represents the jurist or predicts how they would decide. The panel judges the record as filed.</p>
-<div class="grid grid-3">${JUDGE_ORDER.map((r) => roleSection(data.outputs[r], r, (data.outputs[r] as StoredOpinion | undefined)?.label ?? r.replace('judge-', 'Judge '), stances, 'opinion', jobState)).join('\n')}</div></section>
+<div class="grid grid-3">${JUDGE_ORDER.map((r) => roleSection(data.outputs[r], r, (data.outputs[r] as StoredOpinion | undefined)?.label ?? r.replace('judge-', 'Judge '), stances, 'opinion', jobState, data.job?.models)).join('\n')}</div></section>
 <footer><p>${esc(cs.scope_note)}</p></footer>
 </body>
 </html>`;
@@ -131,6 +145,8 @@ blockquote{margin:.4rem 0 .4rem 1rem;padding-left:.6rem;border-left:3px solid co
 .failure pre{white-space:pre-wrap;font-size:.85em}
 .notice{border:2px dashed currentColor;padding:.5rem 1rem;font-weight:bold}
 .scope,.explain{font-style:italic;opacity:.85}
+.model{font-size:.8em;opacity:.7;margin:.4rem 0 0}
+.panel{font-style:italic;opacity:.85}
 .guard{font-size:.9em;border:1px solid color-mix(in srgb,currentColor 30%,transparent);border-radius:.3rem;padding:.4rem .7rem;opacity:.9}
 footer{margin-top:2rem;border-top:3px double currentColor;padding-top:.5rem;font-style:italic;opacity:.8}
 `;

@@ -1,0 +1,21 @@
+{
+  "comment": "Named panels. single: all seven roles on one model. multi: seven distinct models, no two roles sharing one. The resolved map is stored on the job at filing, so a past case says what it used even after this file changes.",
+  "single": {
+    "jon": "minimax/minimax-m2.7:free",
+    "tyrion": "minimax/minimax-m2.7:free",
+    "daenerys": "minimax/minimax-m2.7:free",
+    "greyworm": "minimax/minimax-m2.7:free",
+    "judge-1": "minimax/minimax-m2.7:free",
+    "judge-2": "minimax/minimax-m2.7:free",
+    "judge-3": "minimax/minimax-m2.7:free"
+  },
+  "multi": {
+    "jon": "openai/gpt-4.1-mini",
+    "tyrion": "anthropic/claude-sonnet-4.5",
+    "daenerys": "google/gemini-2.5-flash-lite",
+    "greyworm": "minimax/minimax-m2.7:free",
+    "judge-1": "deepseek/deepseek-chat-v3.1",
+    "judge-2": "mistralai/mistral-small-3.2-24b-instruct",
+    "judge-3": "qwen/qwen3.8-flash"
+  }
+}
