@@ -7,11 +7,12 @@ runs and how the parts reach each other.
 
 ## The pieces
 
-- **The browser pages.** The home page is a static file, `public/index.html`, with its behaviour
-  in `public/case-ui.js`: choose a case or submit a scenario, choose a panel, convene. A case page
-  is not static: it is server-rendered, and the browser receives finished HTML. While a
-  deliberation is in flight, `public/case-live.js` polls and reveals the server-rendered cards; it
-  renders nothing of its own.
+- **The browser pages.** The home page is a static file, `public/index.html`, its behaviour an
+  inline script in that same file: choose a case or submit a scenario, choose a panel, convene. A
+  case page is not static: it is server-rendered, and the browser receives finished HTML. While a
+  deliberation is in flight, `public/case-live.js`, injected by the page function, polls and
+  reveals the server-rendered cards; `public/case-ui.js` adds the reason stepper on every case
+  page. Neither renders content of its own.
 - **Five Netlify functions**, in `netlify/functions/`:
   - `tribunal-file.mts` — filing and convening. Validates a charge sheet against the rules
     (`src/protocol/validate-charge-sheet.ts`), naming the failed rule; stamps what only the system
@@ -73,9 +74,9 @@ function calls a model except through the client module.
   where the deliberation already lives.
 - **Convening.** POST to `tribunal-file.mts` with a case id: a fresh job row for an existing
   stamped sheet, then the same background invocation. The paid-panel daily cap is enforced here.
-- **Polling a run in progress.** The case page's inline script and `public/case-live.js` GET
-  `tribunal-case.mts`; when the job advances, the page re-fetches the server-rendered HTML and
-  reveals the cards that now exist. The browser holds no protocol state the server does not.
+- **Polling a run in progress.** `public/case-live.js`, injected by `tribunal-case-page.mts`,
+  polls the job and re-fetches the server-rendered HTML when it advances, revealing the cards
+  that now exist. The browser holds no protocol state the server does not.
 - **Opening a past case.** GET `/case/<deliberation_id>`, redirected by `netlify.toml` to
   `tribunal-case-page.mts`, which renders stored objects. The committed runs under `runs/` are the
   same renderer run offline by `scripts/render-static.ts`, with no key in the environment.
@@ -176,8 +177,10 @@ the committed file so a reader can check exactly what is exempt, and the API key
 ## Configuration
 
 - `config/caps.json` — every numeric cap: calls, spend, attempts, timeout, temperature, output
-  ceiling, backoff. Read once when the client module is constructed
-  (`src/client/model-client.ts`); no code path raises them mid-run.
+  ceiling, backoff. Read by `netlify/functions/tribunal-run-background.mts` and
+  `src/protocol/run.ts`, and handed to the client module at construction
+  (`src/client/model-client.ts`). No code path raises the call or spend caps mid-run; the output
+  ceiling alone is raised, once, on a truncation retry, as spec.md criterion 6 requires.
 - `config/models.json` — the named panels, the intake model, and the per-role fallback lists, with
   the decisions that shaped them recorded in its comment. Read by the background function and the
   scripts.
