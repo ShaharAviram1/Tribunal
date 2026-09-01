@@ -344,6 +344,15 @@ box-shadow:inset 0 1px 0 rgba(240,222,180,.075),inset 0 0 0 1px rgba(0,0,0,.35),
 .background summary::-webkit-details-marker{display:none}
 .background p{font-size:14px;line-height:1.6;color:var(--card-ink2)}
 .page-foot{display:flex;justify-content:space-between;gap:20px;border-top:1px solid var(--edge2);margin-top:46px;padding-top:14px;font:400 11px var(--mono);letter-spacing:.08em;color:var(--page-ink3)}
+.gavel-veil{position:fixed;inset:0;z-index:60;display:grid;place-items:center;background:#000;opacity:1;transition:opacity .8s ease}
+.gavel-veil video{width:100%;height:100%;object-fit:cover;grid-area:1/1;opacity:.92}
+.gavel-veil.held video{opacity:0}
+.gavel-veil.rolling video{opacity:.92;transition:opacity .3s ease}
+.gavel-veil.fading{opacity:0}
+.gavel-vignette{grid-area:1/1;width:100%;height:100%;background:radial-gradient(58% 52% at 50% 48%,transparent 0%,rgba(5,4,3,.55) 72%,#000 100%)}
+.gavel-word{position:absolute;bottom:56px;left:0;right:0;text-align:center;font:600 19px var(--display);letter-spacing:.5em;text-transform:uppercase;color:#e8e2d2;opacity:0}
+.gavel-veil.rolling .gavel-word{animation:gv-word 3.6s ease forwards}
+@keyframes gv-word{0%{opacity:0;letter-spacing:.5em}18%{opacity:1;letter-spacing:.28em}88%{opacity:1}100%{opacity:0}}
 .guard-inline{font:400 12px/1.6 var(--mono);color:var(--page-ink3);border-left:1px solid var(--edge2);padding-left:14px;margin:26px 0 0;max-width:64ch}
 @keyframes fade-up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .role-slot[data-state="returned"]>article{animation:fade-up .7s ease both}
