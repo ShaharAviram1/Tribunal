@@ -120,6 +120,27 @@ body{
 .panel-grid .card-title{font-family:var(--display);font-weight:600;font-size:19px;margin:0 0 8px;color:var(--card-ink)}
 .panel-grid .card-sub{font-size:13px;color:var(--card-ink2)}
 
+.intake{margin:26px 0 0;padding-top:22px;border-top:1px solid var(--rule)}
+.intake-note{font-family:var(--mono);font-size:12px;line-height:1.6;color:var(--page-ink2);margin:0 0 12px;max-width:34rem}
+#intake-scenario{
+  display:block;width:100%;box-sizing:border-box;resize:vertical;
+  background:var(--card);border:1px solid var(--edge);border-radius:var(--r);
+  color:var(--card-ink);font-family:var(--mono);font-size:13px;line-height:1.6;
+  padding:14px;margin:0;
+}
+#intake-scenario::placeholder{color:var(--card-ink3)}
+#intake-scenario:focus{outline:none;border-color:var(--accent)}
+#intake-count{font-family:var(--mono);font-size:10px;letter-spacing:.05em;color:var(--page-ink3);margin:8px 0 14px;text-align:right}
+button#intake-submit{
+  display:block;width:100%;font-family:var(--mono);font-weight:500;font-size:12px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--accent);background:transparent;
+  border:1px solid var(--accent);border-radius:var(--r);padding:14px 20px;cursor:pointer;
+  transition:background .15s,color .15s;
+}
+button#intake-submit:hover:not(:disabled){background:var(--accent);color:var(--ground)}
+button#intake-submit:disabled{opacity:.55;cursor:default}
+#intake-status{font-family:var(--mono);font-size:12px;color:var(--page-ink2);min-height:1.4em;margin:8px 0 0;overflow-wrap:anywhere}
+
 .bench{margin:22px 0 0}
 button#convene{
   display:block;width:100%;font-family:var(--display);font-weight:600;font-size:22px;
@@ -178,6 +199,15 @@ footer{width:100%;max-width:1180px;margin:46px auto 0;border-top:1px solid var(-
     <button id="convene">Convene Tribunal</button>
     <p class="duration">Seven calls, about two minutes. The four advocates speak, then the bench rules.</p>
     <p id="status" role="status"></p>
+  </div>
+
+  <div class="intake">
+    <p class="docket-label">Submit a matter</p>
+    <p class="intake-note">Describe a contested act. The tribunal drafts the charge sheet and the four advocates from your scenario, then convenes.</p>
+    <textarea id="intake-scenario" rows="7" placeholder="Describe what happened, who was involved, and what is disputed…"></textarea>
+    <p id="intake-count">0 / 800 words</p>
+    <button id="intake-submit">Draft and Convene</button>
+    <p id="intake-status" role="status"></p>
   </div>
 </div>
 
@@ -249,6 +279,41 @@ document.getElementById('convene').addEventListener('click', async () => {
     location.href = '/case/' + encodeURIComponent(body.deliberation_id);
   } catch (e) {
     status.textContent = 'The filing failed: ' + (e && e.message ? e.message : e);
+    button.disabled = false;
+  }
+});
+
+const wordCount = (s) => { const t = s.trim(); return t === '' ? 0 : t.split(/\s+/).length; };
+const intakeScenario = document.getElementById('intake-scenario');
+const intakeCount = document.getElementById('intake-count');
+intakeScenario.addEventListener('input', () => {
+  intakeCount.textContent = wordCount(intakeScenario.value) + ' / 800 words';
+});
+
+document.getElementById('intake-submit').addEventListener('click', async () => {
+  const status = document.getElementById('intake-status');
+  const button = document.getElementById('intake-submit');
+  const panel = document.querySelector('input[name=panel]:checked').value;
+  button.disabled = true;
+  status.textContent = 'The clerk is drafting…';
+  try {
+    const res = await fetch('/.netlify/functions/tribunal-intake?panel=' + panel, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ scenario: intakeScenario.value }),
+    });
+    const text = await res.text();
+    if (!res.ok) {
+      let message = text;
+      try { const parsed = JSON.parse(text); if (parsed && Array.isArray(parsed.failures)) message = parsed.failures.join('; '); } catch {}
+      status.textContent = message;
+      button.disabled = false;
+      return;
+    }
+    const body = JSON.parse(text);
+    location.href = '/case/' + encodeURIComponent(body.deliberation_id);
+  } catch (e) {
+    status.textContent = 'The drafting failed: ' + (e && e.message ? e.message : e);
     button.disabled = false;
   }
 });
