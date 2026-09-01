@@ -50,15 +50,13 @@ export default async (req: Request): Promise<Response> => {
 async function rateLimit(url: string, key: string, req: Request, panel: 'single' | 'multi'): Promise<{ ok: true; iphash: string } | { ok: false; response: Response }> {
   const base = url.replace(/\/$/, '');
   const headers = { apikey: key, Authorization: `Bearer ${key}` };
-  // The daily cap binds only the paid panel: free-panel deliberations cost nothing and the
-  // free-model chain absorbs per-model limits, so their count is policy-irrelevant (decision,
-  // 2026-09-01). (The per-IP cooldown was removed by decision the same day, as self-limiting.)
-  if (panel === 'multi') {
-    const dayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
-    const day = (await (await fetch(`${base}/rest/v1/jobs?select=models&created_at=gt.${dayAgo}`, { headers })).json()) as { models: Record<string, string> }[];
-    const paid = day.filter((j) => new Set(Object.values(j.models ?? {})).size > 1).length;
-    if (paid >= 10) return { ok: false, response: json({ error: 'the paid panel is limited to 10 deliberations per 24 hours; try again later, or convene the free panel' }, 429) };
-  }
+  // Every deliberation is a paid run (paid only, decision 2026-09-01), so the daily cap counts
+  // them all. Correction, 2026-09-02: the cap once counted only multi-model jobs, a filter from
+  // the free-single-panel era; after paid-only it let single-panel paid runs escape the cap.
+  // (The per-IP cooldown was removed by decision 2026-09-01, as self-limiting.)
+  const dayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+  const day = (await (await fetch(`${base}/rest/v1/jobs?select=deliberation_id&created_at=gt.${dayAgo}`, { headers })).json()) as { deliberation_id: string }[];
+  if (day.length >= 10) return { ok: false, response: json({ error: 'the tribunal is limited to 10 deliberations per 24 hours; try again later' }, 429) };
   const ip = req.headers.get('x-nf-client-connection-ip') ?? req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
   const iphash = createHash('sha256').update(ip).digest('hex').slice(0, 8);
   return { ok: true, iphash };
