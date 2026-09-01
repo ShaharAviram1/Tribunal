@@ -1,0 +1,44 @@
+{
+  "label": "Aharon Barak",
+  "against": {
+    "text": "The strongest countervailing view is that Caesar's permanent dictatorship left no lawful avenue to protect the Republic, and Brutus's oath compelled him to act; the defense argues this made the killing a constitutional duty rather than murder (jon.p1, jon.p2, jon.p4).",
+    "relies_on": [
+      "jon.p1",
+      "jon.p2",
+      "jon.p4"
+    ]
+  },
+  "reasons": [
+    {
+      "text": "The record shows no law or Senate authorization that permitted the killing of a dictator, so the act lacks a lawful purpose. Brutus acted without statutory or constitutional basis, contrary to the requirement that a killing be justified by a recognized legal authority.",
+      "relies_on": [
+        "daenerys.p3",
+        "greyworm.p1"
+      ]
+    },
+    {
+      "text": "There is no evidence that removing Caesar would restore the Republic; the conspirators had no plan and the rational link between the murder and constitutional recovery is speculative, failing the required rational connection.",
+      "relies_on": [
+        "daenerys.p5",
+        "greyworm.p3"
+      ]
+    },
+    {
+      "text": "Before resorting to lethal force, the conspirators could have sought a trial or a deposition, as the record notes no such steps were taken, indicating that less harmful alternatives existed.",
+      "relies_on": [
+        "daenerys.p3",
+        "greyworm.p1"
+      ]
+    },
+    {
+      "text": "Killing an unarmed man in an ambush inflicts the ultimate harm with uncertain benefit, making the loss disproportionate to any purported gain for the Republic.",
+      "relies_on": [
+        "greyworm.p2",
+        "greyworm.p4"
+      ]
+    }
+  ],
+  "role_id": "judge-1",
+  "verdict": "not_justified",
+  "deliberation_id": "d-T-006-1788268372241-744dfe6b"
+}

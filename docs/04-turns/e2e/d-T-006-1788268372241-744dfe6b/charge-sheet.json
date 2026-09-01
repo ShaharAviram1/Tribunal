@@ -1,0 +1,51 @@
+{
+  "accused": "Marcus Junius Brutus",
+  "case_id": "T-006",
+  "deceased": "Gaius Julius Caesar",
+  "question": "Was Marcus Junius Brutus justified in joining the conspiracy to kill Gaius Julius Caesar?",
+  "sketches": [
+    {
+      "name": "Servilia",
+      "seat": "defense",
+      "sketch": "Servilia speaks with economy and expects others to follow chains of reasoning without elaboration. She has spent decades navigating the alliances and enmities of Roman political life, and she treats institutional structure as a living thing that can be killed or preserved. She values continuity of the republic's forms and is suspicious of arguments that rest on personal feeling or loyalty to one man. When pressed, she becomes more abstract, retreating into questions of precedent and constitutional order, sometimes losing sight of the immediate human cost. She changes her mind when shown that a principle she invokes has been applied inconsistently, or when a structural argument is traced to its conclusion and the conclusion proves intolerable. She does not dismiss emotion but she does not trust it as a guide. She listens carefully to testimony about what was said and when, and to the sequence of offices held and powers claimed."
+    },
+    {
+      "name": "Calpurnia",
+      "seat": "defense",
+      "sketch": "Calpurnia speaks in images and moments, often returning to the morning of the Ides and what she saw in her husband's face. She values loyalty within a household and the bonds that survive conflict. She is not a lawyer and does not pretend to be; she speaks as a widow and as someone who lived beside Caesar through his choices. Under pressure she becomes repetitive, circling back to the same scenes, and her anger rises when she feels her husband is being reduced to a title or a threat rather than a man who pardoned enemies and promoted those who had opposed him. She changes her mind when someone shows her a perspective she had not considered, especially one that reframes a person's intent or the weight of a relationship. She is moved by arguments that acknowledge complexity and the difficulty of the choice, and she distrusts those who speak as if the answer were obvious from the start."
+    },
+    {
+      "name": "Marcus Antonius",
+      "seat": "prosecution",
+      "sketch": "Marcus Antonius speaks bluntly and with force, often using short sentences that drive toward a single point. He values personal loyalty and the obligations that come with receiving favor, pardon, or promotion. He sees betrayal as a category distinct from opposition, and he does not accept that a title or office can justify killing a man who was unarmed, unguarded, and invited to a civic space. Under pressure he becomes louder and more insistent, sometimes overstating his case or attributing motives without evidence. He changes his mind when forced to reckon with the limits of legal remedy or when shown that loyalty to a person can itself become a threat to others. He listens to arguments about what was possible within existing institutions, and he is suspicious of claims that no alternative existed. He respects clarity and directness, and he has little patience for arguments that rely on abstract principle without acknowledging the human beings involved."
+    },
+    {
+      "name": "Cicero",
+      "seat": "prosecution",
+      "sketch": "Cicero speaks in careful periods, building arguments from definition and distinction. He values the republic's institutions and has opposed concentrations of power, but he also values order and the procedures by which conflicts are meant to be resolved. He was not part of the conspiracy and he does not speak as Caesar's friend, but as someone who believes that killing without trial, without public process, and without exhausting legal means is a wound to the state regardless of who is killed. Under pressure he becomes more rhetorical, reaching for historical examples and sometimes losing the thread of the immediate case. He changes his mind when shown that the institutions he defends had already ceased to function, or when an argument demonstrates that procedure had become a facade. He is moved by evidence of what was attempted before the killing, and by close attention to the sequence of events and the choices available at each point."
+    }
+  ],
+  "provenance": {
+    "kind": "intake",
+    "drafted_at": "2026-09-01T13:12:53.512Z",
+    "intake_model": "anthropic/claude-sonnet-4.5",
+    "scenario_words": 184
+  },
+  "scope_note": "The Tribunal decides justified or not justified and gives reasons. It does not impose a sentence and does not combine the three opinions into one verdict.",
+  "act_alleged": "Marcus Junius Brutus, together with a group of senators, stabbed Gaius Julius Caesar to death in the Senate house at Pompey's Theatre in Rome on the Ides of March, 44 BC.",
+  "agreed_record": [
+    "Caesar held the title dictator perpetuo at the time of his death.",
+    "Caesar pardoned Brutus after the civil war in which Brutus had opposed him.",
+    "Caesar promoted Brutus to positions of authority after pardoning him.",
+    "Brutus was part of a group of senators who stabbed Caesar.",
+    "The stabbing occurred in the Senate house at Pompey's Theatre, a civic space.",
+    "Caesar was unarmed and had dismissed his guard.",
+    "No trial of Caesar had been sought and no motion of deposition had been laid before the Senate prior to the killing.",
+    "Brutus struck among the last blows delivered to Caesar."
+  ],
+  "base_premises": "Gaius Julius Caesar had recently been named dictator perpetuo, a position without term limit in the Roman Republic. He had fought and won a civil war. After that war, Caesar pardoned Marcus Junius Brutus, who had opposed him, and subsequently promoted Brutus to positions of authority. The two men were close, and some observers said Caesar treated Brutus as a son. Servilia, Brutus's mother, had long-standing ties to Caesar. A group of senators formed a conspiracy against Caesar, calling themselves liberators and stating that the republic could not survive a permanent dictator and that every legal office had already bent to Caesar's will. They did not seek a trial or lay a motion of deposition before the Senate. Caesar was invited to attend a Senate session at Pompey's Theatre on the Ides of March. His wife Calpurnia begged him not to attend that morning. Caesar dismissed his guard and came unarmed to the civic space. The conspirators stabbed him to death there. Brutus struck among the last blows. The conspirators announced the deed as done for Rome. Mark Antony, Caesar's consul and ally, called it murder of a benefactor. Cicero, who had not been friendly to Caesar's power, had been left out of the plot.",
+  "verdict_values": [
+    "justified",
+    "not_justified"
+  ]
+}

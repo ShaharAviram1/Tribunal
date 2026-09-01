@@ -30,7 +30,8 @@ export default async (req: Request): Promise<Response> => {
   const base = url.replace(/\/$/, '');
   const headers = { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' };
 
-  // Same protections as filing: paid-panel daily cap, per-IP cooldown.
+  // Same protection as filing: the paid-panel daily cap. (The per-IP cooldown was removed by
+  // decision, 2026-09-01: it throttled the author before any abuser and was judged self-limiting.)
   if (panel === 'multi') {
     const dayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
     const day = (await (await fetch(`${base}/rest/v1/jobs?select=models&created_at=gt.${dayAgo}`, { headers })).json()) as { models: Record<string, string> }[];
@@ -39,9 +40,6 @@ export default async (req: Request): Promise<Response> => {
   }
   const ip = req.headers.get('x-nf-client-connection-ip') ?? req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
   const iphash = createHash('sha256').update(ip).digest('hex').slice(0, 8);
-  const fiveMinAgo = new Date(Date.now() - 5 * 60 * 1000).toISOString();
-  const recent = (await (await fetch(`${base}/rest/v1/jobs?select=deliberation_id&deliberation_id=like.*-${iphash}&created_at=gt.${fiveMinAgo}`, { headers })).json()) as unknown[];
-  if (recent.length > 0) return json({ error: 'per-IP limit: 5 minutes between convenings from one IP; try again shortly' }, 429);
 
   // Reserve the docket row first: jobs.case_id references charge_sheets, and the intake call is
   // logged as the job's first row, so the row order is forced and honest.

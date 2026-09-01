@@ -1,0 +1,10 @@
+2s  sheet=drafting status=pending stage=advocates outputs=0 calls=0 spend=$0.0000
+23s  sheet=Marcus Junius Brutus status=running stage=advocates outputs=0 calls=0 spend=$0.0000
+61s  sheet=Marcus Junius Brutus status=running stage=advocates outputs=1 calls=2 spend=$0.0261
+110s  sheet=Marcus Junius Brutus status=running stage=advocates outputs=2 calls=3 spend=$0.0261
+160s  sheet=Marcus Junius Brutus status=running stage=advocates outputs=3 calls=3 spend=$0.0261
+170s  sheet=Marcus Junius Brutus status=running stage=advocates outputs=3 calls=6 spend=$0.0261
+276s  sheet=Marcus Junius Brutus status=running stage=judges outputs=4 calls=8 spend=$0.0261
+333s  sheet=Marcus Junius Brutus status=running stage=judges outputs=6 calls=10 spend=$0.0261
+343s  sheet=Marcus Junius Brutus status=complete stage=judges outputs=7 calls=11 spend=$0.0261
+terminal_reason: null

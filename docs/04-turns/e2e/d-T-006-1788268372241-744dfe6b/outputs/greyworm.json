@@ -1,0 +1,28 @@
+{
+  "seat": "prosecution",
+  "points": [
+    {
+      "id": "greyworm.p1",
+      "claim": "The record shows that no trial of Caesar was sought and no motion of deposition was laid before the killing, so Brutus acted without any lawful legal process.",
+      "support": "Fact 7 records that no trial of Caesar had been sought and no motion of deposition had been laid before the killing. The absence of any lawful procedure demonstrates that Brutus acted without legal authority."
+    },
+    {
+      "id": "greyworm.p2",
+      "claim": "Caesar pardoned Brutus after the civil war and later promoted him, establishing a bond of trust that Brutus repaid with murder.",
+      "support": "Facts 2 and 3 state that Caesar pardoned Brutus after the civil war and subsequently promoted him. These acts of clemency created a personal relationship that Brutus violated by joining the conspiracy."
+    },
+    {
+      "id": "greyworm.p3",
+      "claim": "The stabbing occurred in the Senate house at Pompey's Theatre, a civic space, and Caesar was unarmed and unguarded, indicating a premeditated ambush rather than any lawful act.",
+      "support": "Facts 4, 5, and 6 describe the murder as taking place in the Senate house at Pompey's Theatre, a civic forum, while Caesar was unarmed and had dismissed his guard. This shows Brutus participated in an ambush rather than a lawful execution."
+    },
+    {
+      "id": "greyworm.p4",
+      "claim": "Brutus struck among the last blows, showing that he actively participated in the killing and did not act merely as a reluctant defender of the Republic.",
+      "support": "Fact 8 notes that Brutus struck among the last blows delivered to Caesar. This final involvement demonstrates a decisive role, indicating that Brutus was not a reluctant participant but an active perpetrator."
+    }
+  ],
+  "role_id": "greyworm",
+  "position": "not_justified",
+  "deliberation_id": "d-T-006-1788268372241-744dfe6b"
+}
