@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { ModelClient, type Caps, type LogRow, type Transport, type Budget } from '../src/client/model-client.ts';
+import { openRouterTransport } from '../src/client/openrouter-transport.ts';
 
 const caps: Caps = JSON.parse(readFileSync('config/caps.json', 'utf8'));
 const models = { jon: 'test/model-a' };
@@ -139,4 +140,45 @@ test('a paid model outside the chain never rotates', async () => {
   const r = await client.call(req(1));
   assert.equal(r.outcome, 'transport_error');
   assert.ok(client.log.every((x) => x.model_requested === 'paid/model'));
+});
+
+test('an HTTP 403 is its own condition: one row, outcome forbidden, body verbatim, zero retries', async () => {
+  let called = 0;
+  const t: Transport = async () => { called++; return { kind: 'forbidden', http_status: 403, detail: '{"error":{"message":"anything the provider said"}}' }; };
+  const { client } = mk(t);
+  const r = await client.call(req());
+  assert.equal(r.outcome, 'forbidden');
+  assert.equal(called, 1, 'zero retries');
+  assert.equal(client.log.length, 1);
+  assert.equal(client.log[0]!.outcome, 'forbidden');
+  assert.equal(client.log[0]!.http_status, 403);
+  assert.equal(client.log[0]!.detail, '{"error":{"message":"anything the provider said"}}');
+});
+
+test('the real transport maps any 403 to forbidden with the body verbatim, classifying no text', async () => {
+  const bodyText = '{"error":{"message":"wording no heuristic has ever seen"}}';
+  const fake = (async () => new Response(bodyText, { status: 403 })) as typeof fetch;
+  const t = openRouterTransport('k', fake);
+  const res = await t({ model: 'm', prompt: 'p', temperature: 0, timeout_ms: 5000, max_tokens: 10 });
+  assert.equal(res.kind, 'forbidden');
+  assert.equal((res as { detail: string }).detail, bodyText, 'provider body stored verbatim');
+});
+
+test('an ok response through the real transport records temperature_honoured true, never null', async () => {
+  const payload = JSON.stringify({ model: 'm', choices: [{ finish_reason: 'stop', message: { content: '{}' } }], usage: { prompt_tokens: 1, completion_tokens: 1, cost: 0 } });
+  const fake = (async () => new Response(payload, { status: 200 })) as typeof fetch;
+  const t = openRouterTransport('k', fake);
+  const res = await t({ model: 'm', prompt: 'p', temperature: 0, timeout_ms: 5000, max_tokens: 10 });
+  assert.equal(res.kind, 'ok');
+  assert.equal((res as { temperature_honoured: boolean | null }).temperature_honoured, true);
+});
+
+test('a fenced ok response notes fence_stripped on its log row; an unfenced one keeps detail null', async () => {
+  const fenced = '```json\n{"a":1}\n```';
+  const one = mk(ok(fenced));
+  await one.client.call(req());
+  assert.match(one.client.log[0]!.detail ?? '', /fence_stripped/, 'the log detail notes the strip');
+  const two = mk(ok('{"a":1}'));
+  await two.client.call(req());
+  assert.equal(two.client.log[0]!.detail, null);
 });

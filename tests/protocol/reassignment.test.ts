@@ -81,3 +81,20 @@ test('a role that succeeds is never reassigned: content is not a reason', async 
   await runDeliberation({ client, store, chargeSheet, deliberation_id: 'd-f', models: { ...primaries }, caps });
   assert.deepEqual(client.reassigns, []);
 });
+
+test('a refused role is terminal: no fallback pass, no second model in its attempt history', async () => {
+  const script = happy();
+  script['judge-3'] = [{ outcome: 'refusal' } as CallOutcome];
+  const store = makeStore();
+  const client = fallbackClient(script, { 'judge-3': ['c/backup'] }, { ...primaries });
+  const job = await runDeliberation({ client, store, chargeSheet, deliberation_id: 'd-f', models: { ...primaries }, caps });
+  assert.equal(job.status, 'incomplete');
+  assert.deepEqual(client.reassigns, [], 'a refusal never reaches the fallback');
+  const rows = client.log.filter((c) => c.role_id === 'judge-3');
+  assert.equal(rows.length, 1, 'zero retries after a refusal');
+  assert.deepEqual([...new Set(rows.map((c) => c.model))], ['q/dead'], 'one model only in the attempt history');
+  const rec = store.getOutput('judge-3') as { failed?: boolean; reason?: string; model_reassigned_from?: string };
+  assert.equal(rec.failed, true);
+  assert.equal(rec.reason, 'refusal');
+  assert.equal(rec.model_reassigned_from, undefined, 'no reassignment on the record');
+});

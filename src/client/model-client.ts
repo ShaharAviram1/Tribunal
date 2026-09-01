@@ -5,6 +5,7 @@
 // No provider-side JSON mode; fallback routing disabled; served model logged beside requested.
 
 import { createHash } from 'node:crypto';
+import { stripOuterFence } from '../protocol/parse-object.ts';
 
 export type Caps = {
   max_calls_per_deliberation: number;
@@ -32,7 +33,7 @@ export type LogRow = {
   tokens_out: number | null;
   cost_usd: number | null;
   latency_ms: number;
-  outcome: 'ok' | 'refusal' | 'transport_error' | 'cap_exceeded' | 'timeout';
+  outcome: 'ok' | 'refusal' | 'forbidden' | 'transport_error' | 'cap_exceeded' | 'timeout';
   max_output_tokens: number;
   finish_reason: string | null;
   http_status: number | null;
@@ -44,6 +45,7 @@ export type CallRequest = { role_id: string; prompt: string; hash: string; attem
 export type CallResult =
   | { outcome: 'ok'; text: string; truncated: boolean; row: LogRow }
   | { outcome: 'refusal'; row: LogRow }
+  | { outcome: 'forbidden'; row: LogRow }
   | { outcome: 'transport_error'; row: LogRow }
   | { outcome: 'cap_exceeded'; row: LogRow };
 
@@ -59,6 +61,7 @@ export type Transport = (req: {
 }) => Promise<
   | { kind: 'ok'; text: string; model_served: string | null; tokens_in: number | null; tokens_out: number | null; cost_usd: number | null; http_status: number; temperature_honoured: boolean | null; finish_reason: string | null }
   | { kind: 'refusal'; model_served: string | null; http_status: number; detail: string }
+  | { kind: 'forbidden'; http_status: number; detail: string }
   | { kind: 'transport_error'; http_status: number | null; detail: string }
   | { kind: 'timeout' }
 >;
@@ -116,8 +119,9 @@ export class ModelClient {
   }
 
   // Reassign a seat to its next configured fallback model. Called by the protocol ONLY after a
-  // role has failed all its retries; never because of what a stance said. Returns the new model
-  // or null when the chain is exhausted.
+  // role has failed all its retries; never because of what a stance said, and never on a
+  // provider-signalled refusal (correction, 2026-09-02: the fallback ruling covered failure,
+  // not refusal). Returns the new model or null when the chain is exhausted.
   reassignToFallback(role_id: string): string | null {
     const used = (this.#reassigned[role_id] ??= []);
     const next = (this.#roleFallbacks[role_id] ?? []).find((m) => !used.includes(m) && m !== this.#models[role_id]);
@@ -156,7 +160,7 @@ export class ModelClient {
       if (res.kind === 'ok') {
         const row: LogRow = { ...base, outcome: 'ok', model_served: res.model_served, model_mismatch: res.model_served !== null && res.model_served !== model,
           tokens_in: res.tokens_in, tokens_out: res.tokens_out, cost_usd: res.cost_usd, http_status: res.http_status, temperature_honoured: res.temperature_honoured,
-          finish_reason: res.finish_reason, detail: null };
+          finish_reason: res.finish_reason, detail: stripOuterFence(res.text).fence_stripped ? 'fence_stripped: a single outer code fence was stripped before parsing' : null };
         await this.#record(row);
         return { outcome: 'ok', text: res.text, truncated: res.finish_reason === 'length', row };
       }
@@ -164,6 +168,12 @@ export class ModelClient {
         const row: LogRow = { ...base, outcome: 'refusal', model_served: res.model_served, model_mismatch: res.model_served !== null && res.model_served !== model, http_status: res.http_status, detail: res.detail };
         await this.#record(row);
         return { outcome: 'refusal', row };
+      }
+      if (res.kind === 'forbidden') {
+        // Its own condition: one row, the provider body verbatim, zero retries of any kind.
+        const row: LogRow = { ...base, outcome: 'forbidden', http_status: res.http_status, detail: res.detail };
+        await this.#record(row);
+        return { outcome: 'forbidden', row };
       }
       const row: LogRow = res.kind === 'timeout'
         ? { ...base, outcome: 'timeout', detail: `no response within ${this.#caps.call_timeout_ms}ms` }

@@ -17,12 +17,15 @@ export function openRouterTransport(apiKey: string, fetchImpl: typeof fetch = fe
           provider: { allow_fallbacks: false }, usage: { include: true },
         }),
       });
+      const rawBody = await res.text();
       let body: any = null;
-      try { body = await res.json(); } catch { /* fall through */ }
+      try { body = JSON.parse(rawBody); } catch { /* fall through */ }
       if (!res.ok) {
-        const detail = body?.error?.message ?? `HTTP ${res.status}`;
-        if (res.status === 403 && /moderation|flagged|refus/i.test(detail)) return { kind: 'refusal', model_served: null, http_status: res.status, detail };
-        return { kind: 'transport_error', http_status: res.status, detail };
+        // A 403 is its own condition: nothing classifies the provider's prose to decide what
+        // the status meant (spec.md criterion 6, revision 2026-09-02). Body verbatim, and the
+        // client gives it zero retries.
+        if (res.status === 403) return { kind: 'forbidden', http_status: 403, detail: rawBody || 'HTTP 403, empty body' };
+        return { kind: 'transport_error', http_status: res.status, detail: body?.error?.message ?? `HTTP ${res.status}` };
       }
       const choice = body?.choices?.[0];
       const finish = choice?.finish_reason ?? null;
@@ -31,10 +34,12 @@ export function openRouterTransport(apiKey: string, fetchImpl: typeof fetch = fe
       if (REFUSAL_FINISH.has(finish) || (text.trim() === '' && choice?.message?.refusal)) {
         return { kind: 'refusal', model_served: served, http_status: res.status, detail: choice?.message?.refusal ?? `finish_reason=${finish}` };
       }
+      // The provider accepted the request carrying the temperature parameter; a provider that
+      // rejects the parameter fails the whole call, and that failure is its own non-ok row.
       return {
         kind: 'ok', text, model_served: served, http_status: res.status, finish_reason: finish,
         tokens_in: body?.usage?.prompt_tokens ?? null, tokens_out: body?.usage?.completion_tokens ?? null,
-        cost_usd: body?.usage?.cost ?? null, temperature_honoured: null,
+        cost_usd: body?.usage?.cost ?? null, temperature_honoured: true,
       };
     } catch (e: any) {
       if (e?.name === 'AbortError') return { kind: 'timeout' };
