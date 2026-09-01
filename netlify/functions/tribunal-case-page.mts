@@ -23,7 +23,7 @@ export default async (req: Request): Promise<Response> => {
   const outputs: CaseData['outputs'] = {};
   for (const r of ROLES) { const o = await store.getOutput(r); if (o !== undefined) outputs[r] = o as never; }
   let page = renderCasePage({ chargeSheet, job, outputs });
-  const assets = '<link rel="stylesheet" href="/case-live.css">';
+  const assets = '';
   if (job.status === 'pending' || job.status === 'running') {
     page = page.replace('</body>', assets + `<script src="/case-live.js" data-id="${deliberation_id}"></script>\n</body>`);
   } else if (['complete', 'incomplete'].includes(job.status) && ROLES.some((r) => r.startsWith('judge') && outputs[r] !== undefined) && u.searchParams.has('live')) {

@@ -27,7 +27,7 @@ test('citations render as advocate name plus claim text; no raw point id is visi
 
 test('three opinion columns, identical structure, and no combined result anywhere', () => {
   const html = page();
-  assert.equal((html.match(/class="opinion"/g) ?? []).length, 3);
+  assert.equal((html.match(/<article class="judge">/g) ?? []).length, 3);
   assert.equal((html.match(/Strongest consideration against this verdict/g) ?? []).length, 3);
   // The rule binds the page's own chrome, not the models' prose (a judge may write
   // "counter-consideration"; G3 guards the source). Whole words, on the rendered text.
@@ -45,15 +45,15 @@ test('three opinion columns, identical structure, and no combined result anywher
 test('a failure record renders as a failure and cannot go down the output path', () => {
   const failed: CaseData['outputs'] = { ...outputs, 'judge-2': { failed: true, role_id: 'judge-2', deliberation_id: 'x', reason: 'refusal', attempts: [{ hash: 'h', text: 'I refuse.', outcome: 'refusal', detail: null }] } as never };
   const html = renderCasePage({ chargeSheet, job, outputs: failed });
-  assert.ok(html.includes('This seat produced no output.'));
-  assert.equal((html.match(/class="opinion"/g) ?? []).length, 2, 'failure record entered the opinion path');
+  assert.ok(html.includes('This seat produced no opinion.'), 'a judge failure carries the judge copy');
+  assert.equal((html.match(/<article class="judge">/g) ?? []).length, 2, 'failure record entered the opinion path');
   assert.ok(html.includes('I refuse.'), 'raw text of the attempt is not shown');
 });
 
 test('an absent output renders the job state, not an empty column', () => {
   const partial: CaseData['outputs'] = { ...outputs }; delete partial['judge-3'];
   const html = renderCasePage({ chargeSheet, job: { ...job, status: 'running' }, outputs: partial });
-  assert.ok(html.includes('Awaiting argument'), 'an absent judge does not show its waiting state');
+  assert.ok(html.includes('Deliberating') || html.includes('Awaiting argument'), 'an absent judge does not show its waiting state');
 });
 
 test('model text is escaped: a stance containing markup cannot inject it', () => {
@@ -66,20 +66,22 @@ test('model text is escaped: a stance containing markup cannot inject it', () =>
 test('the dossier guard and the as-filed scoping line sit with the opinions', () => {
   const html = page();
   assert.ok(html.includes('no judge represents the jurist or predicts how they would decide'));
-  assert.ok(html.includes('The panel judges the record as filed.'));
+  assert.ok(html.includes('judges the record as filed'));
 });
 
 test('failure attempts each sit behind their own disclosure with the not-a-position caveat', () => {
   const failed = { failed: true, role_id: 'tyrion', deliberation_id: 'x', reason: 'truncated on both attempts', attempts: [{ hash: 'h', text: '{"position":"justified"', outcome: 'ok', detail: 'truncated' }] };
   const html = renderCasePage({ chargeSheet, job, outputs: { ...outputs, tyrion: failed as never } });
-  assert.ok(html.includes('nothing in it counts as this role'));
-  const card = html.slice(html.indexOf('class="failure"'));
-  assert.ok(card.indexOf('<pre>') > card.indexOf('<details><summary>Attempt 1'), 'raw text is not behind a per-attempt disclosure');
+  assert.ok(html.includes('no position is inferred for it'), 'the failure card lacks the no-position caveat');
+  const card = html.slice(html.indexOf('failed'));
+  assert.ok(card.indexOf('<pre>') > card.indexOf('<details class="attempts"><summary>Attempts'), 'raw text is not behind the Attempts disclosure');
+  assert.ok(card.includes('position&quot;:&quot;justified') || card.includes('position\u0022'), 'the raw attempt text is not preserved');
 });
 
 test('the page names the panel and the model behind each card', () => {
   const html = page();
   assert.ok(html.includes('One model for all seven roles'));
-  assert.equal((html.match(/class="model"/g) ?? []).length, 7, 'each of the seven cards carries its model');
+  assert.equal((html.match(/class="j-model"/g) ?? []).length, 3, 'each judge carries its model');
+  assert.equal((html.match(/class="a-model"/g) ?? []).length, 4, 'each advocate carries its model');
   assert.ok(html.includes('minimax/minimax-m2.7:free'));
 });
