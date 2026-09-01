@@ -26,6 +26,8 @@ export default async (req: Request): Promise<Response> => {
   const chargeSheet = ((await sheetRes.json()) as { body: unknown }[])[0]?.body ?? null;
   const outputs: Record<string, unknown> = {};
   for (const r of ROLES) { const o = await store.getOutput(r); if (o !== undefined) outputs[r] = o; }
-  return json({ chargeSheet, job, outputs }, 200);
+  const { usageFromLog } = await import('../../src/page/usage.ts');
+  const usage = usageFromLog(await store.readLog());
+  return json({ chargeSheet, job, outputs, usage }, 200);
 };
 const json = (b: unknown, status: number) => new Response(JSON.stringify(b), { status, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' } });

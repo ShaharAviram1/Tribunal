@@ -3,6 +3,7 @@
 // lines of plain JS poll the JSON endpoint and reload when the job advances.
 import { SupabaseStore } from '../../src/store/supabase-store.ts';
 import { renderCasePage, type CaseData } from '../../src/page/render-case.ts';
+import { usageFromLog } from '../../src/page/usage.ts';
 import { checkEnv } from '../../src/functions-env.ts';
 
 const ROLES = ['jon', 'tyrion', 'daenerys', 'greyworm', 'judge-1', 'judge-2', 'judge-3'];
@@ -22,7 +23,8 @@ export default async (req: Request): Promise<Response> => {
   if (!chargeSheet) return html('<p>Unknown case.</p>', 404);
   const outputs: CaseData['outputs'] = {};
   for (const r of ROLES) { const o = await store.getOutput(r); if (o !== undefined) outputs[r] = o as never; }
-  let page = renderCasePage({ chargeSheet, job, outputs });
+  const usage = usageFromLog(await store.readLog());
+  let page = renderCasePage({ chargeSheet, job, outputs, usage });
   const assets = '';
   if (job.status === 'pending' || job.status === 'running') {
     page = page.replace('</body>', assets + `<script src="/case-live.js" data-id="${deliberation_id}"></script>\n</body>`);

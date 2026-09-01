@@ -104,3 +104,13 @@ test('a reassigned seat says so on its card', () => {
   const html = renderCasePage({ chargeSheet, job, outputs: { ...outputs, 'judge-3': re } });
   assert.ok(html.includes('reassigned from q/dead after its failure'));
 });
+
+test('each seat shows its cost and tokens beside the model, from the log', () => {
+  const usage = Object.fromEntries(['jon', 'tyrion', 'daenerys', 'greyworm', 'judge-1', 'judge-2', 'judge-3'].map((r, i) => [r, { cost_usd: 0.001 * (i + 1), tokens_in: 1000 + i, tokens_out: 300 + i, attempts: i === 1 ? 2 : 1 }]));
+  const html = renderCasePage({ chargeSheet, job, outputs, usage });
+  assert.ok(html.includes('$0.0010 · 1,000 in / 300 out'), 'advocate usage line missing');
+  assert.ok(html.includes('$0.0020 · 1,001 in / 301 out · 2 attempts'), 'attempts not shown when more than one');
+  assert.equal((html.match(/ in \/ /g) ?? []).length, 7, 'all seven seats carry a usage line');
+  const noUsage = renderCasePage({ chargeSheet, job, outputs });
+  assert.ok(!noUsage.includes(' in / '), 'usage renders without data');
+});
