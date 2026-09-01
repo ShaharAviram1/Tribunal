@@ -1,0 +1,6 @@
+{
+  "case_id": "T-006",
+  "deliberation_id": "d-T-006-1788268372241-744dfe6b",
+  "status": "pending"
+}
+http=202 time=1.882241s

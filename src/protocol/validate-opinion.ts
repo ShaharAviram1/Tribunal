@@ -1,6 +1,6 @@
 // docs/judicial-opinion.schema.md sections 1 and 4. Exact-match id resolution; malformed wins over unresolvable.
 import type { EmittedOpinion, Reason } from './types.ts';
-import { VERDICTS } from './types.ts';
+import { VERDICTS, words } from './types.ts';
 import { parseObject, isNonEmptyString } from './parse-object.ts';
 
 export type OpinionResult =
@@ -29,6 +29,7 @@ export function validateOpinion(raw: string, validIds: string[]): OpinionResult 
       const q = r as Record<string, unknown>;
       for (const k of Object.keys(q)) if (k !== 'text' && k !== 'relies_on') problems.push(`reasons[${i}] has unexpected field "${k}"`);
       if (!isNonEmptyString(q.text)) problems.push(`reasons[${i}].text must be a non-empty string`);
+      else if (words(q.text) > 90) problems.push(`reasons[${i}].text is ${words(q.text)} words, at most 90`);
       checkIds(q.relies_on, `reasons[${i}]`, 1);
     });
   }
@@ -38,6 +39,7 @@ export function validateOpinion(raw: string, validIds: string[]): OpinionResult 
     const q = o.against as Record<string, unknown>;
     for (const k of Object.keys(q)) if (k !== 'text' && k !== 'relies_on') problems.push(`against has unexpected field "${k}"`);
     if (!isNonEmptyString(q.text)) problems.push('against.text must be a non-empty string');
+    else if (words(q.text) > 90) problems.push(`against.text is ${words(q.text)} words, at most 90`);
     checkIds(q.relies_on, 'against', 0);
   }
   if (problems.length) {

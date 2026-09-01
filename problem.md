@@ -12,7 +12,6 @@ A contested act admits several defensible readings, but someone trying to unders
 - **The people whose methods are adapted.** The three judge profiles derive from real jurists' published opinions. The dossier's own qualification (fictional proceeding; adapts methods, does not impersonate) is a constraint the product inherits.
 
 Unsure, flagged rather than added:
-- *Whoever holds the access code besides the builder.* Nothing on record says anyone does.
 - *A course grader as cold reader.* Whether a grader counts as the test person is an open item in the assumptions file.
 - *OpenRouter and the model providers.* Their terms constrain the build, but nothing on record makes them a stakeholder in the outcome.
 
@@ -23,7 +22,7 @@ Each item is a fact a second reader can check by looking at the repository, a lo
 1. A completed deliberation of T-001 contains exactly seven agent outputs, produced by seven separate model calls: four advocate stances and three judicial opinions.
 2. Each advocate stance is a structured set of three to five points, each point a one-sentence claim with supporting prose, and each point carries an id assigned by the system.
 3. Each judicial opinion contains a verdict whose value is one of exactly two strings, `justified` or `not_justified`, and every point id the opinion relies on resolves to a point that exists in the same deliberation.
-4. The case page shows the three judicial opinions side by side with equal prominence and identical structure, and nowhere on the page, in the stored deliberation, or in the code is there a combined, majority, aggregate, or counted verdict.
+4. The case page shows the three judicial opinions side by side, three columns of equal prominence and identical structure, and nowhere on the page, in the stored deliberation, or in the code is there a combined, majority, aggregate, or counted verdict.
 5. A charge sheet that fails any validation rule is rejected before any model call is made, and the rejection names the rule that failed.
 6. Every model call made during a deliberation appears in a log with, at minimum, the role, the model identifier, the temperature, tokens in, tokens out, cost, latency, and the outcome.
 7. A model call that fails, including a refusal, appears in the log as a failure and appears on the case page as a failure; no failed call is rendered as a verdict or a stance.

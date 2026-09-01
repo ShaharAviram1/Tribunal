@@ -1,0 +1,36 @@
+{
+  "label": "Aharon Barak",
+  "against": {
+    "text": "Jon exploited Daenerys's trust during an intimate embrace to kill her while she was unarmed and not posing an immediate threat, violating the principles of confrontation and proportionality that should govern any claim of necessary defense.",
+    "relies_on": [
+      "daenerys.p2",
+      "greyworm.p5"
+    ]
+  },
+  "reasons": [
+    {
+      "text": "Daenerys had demonstrated both the capacity and willingness to commit mass atrocity against defenseless populations, making future harm not speculative but certain. Her destruction of a surrendered city and promise of further campaigns established a clear and ongoing threat to countless lives.",
+      "relies_on": [
+        "tyrion.p1",
+        "jon.p1"
+      ]
+    },
+    {
+      "text": "No institutional mechanism remained capable of restraining Daenerys or removing her from power through lawful means. Her absolute rule, refusal to show mercy, and imprisonment of dissenters closed off all peaceful alternatives, leaving Jon with no viable option but to act.",
+      "relies_on": [
+        "tyrion.p2",
+        "jon.p2"
+      ]
+    },
+    {
+      "text": "The scale of threatened harm—thousands of lives in future campaigns—made the calculus of one life against many not merely permissible but morally required. The proportionality of the act is defensible given the vast destruction it sought to prevent.",
+      "relies_on": [
+        "tyrion.p3",
+        "jon.p4"
+      ]
+    }
+  ],
+  "role_id": "judge-1",
+  "verdict": "justified",
+  "deliberation_id": "d-T-001-1788255489724-b4847b2d"
+}

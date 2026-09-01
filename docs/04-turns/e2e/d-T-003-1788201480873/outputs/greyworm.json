@@ -1,0 +1,33 @@
+{
+  "seat": "prosecution",
+  "points": [
+    {
+      "id": "greyworm.p1",
+      "claim": "Jon had no lawful authority to execute Daenerys.",
+      "support": "The record shows Jon was not appointed ruler, judge, or commander of any body that could order her death. He acted as an individual without the sanction of any council or legal authority."
+    },
+    {
+      "id": "greyworm.p2",
+      "claim": "Daenerys was unarmed and not attacking at the moment of the killing.",
+      "support": "The agreed facts state she was unarmed and not engaging Jon physically when he stabbed her. No immediate threat existed that required lethal force."
+    },
+    {
+      "id": "greyworm.p3",
+      "claim": "Safer alternatives existed and were not attempted.",
+      "support": "Jon could have convened a council, detained her, or sought a public surrender of power. The record notes he did none of these, choosing a lethal strike without exhausting other options."
+    },
+    {
+      "id": "greyworm.p4",
+      "claim": "Jon used personal intimacy to gain access, violating the trust placed in him.",
+      "support": "He exploited the intimate relationship to approach Daenerys unseen and strike, a breach of loyalty and the bond that gave him proximity, not a lawful act of defense."
+    },
+    {
+      "id": "greyworm.p5",
+      "claim": "The killing did not stop an imminent harm; Daenerys' threat was future, not immediate.",
+      "support": "After the surrender, her announced campaign was planned for later. The record shows no ongoing attack that required immediate lethal response to protect others at that instant."
+    }
+  ],
+  "role_id": "greyworm",
+  "position": "not_justified",
+  "deliberation_id": "d-T-003-1788201480873"
+}

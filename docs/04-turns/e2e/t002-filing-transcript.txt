@@ -1,0 +1,7 @@
+$ curl -X POST $BASE/.netlify/functions/tribunal-file (access code from .env) --data @fixtures/charge-sheets/T-001.filed.json
+{
+  "case_id": "T-002",
+  "deliberation_id": "d-T-002-1788200414013",
+  "status": "pending"
+}
+http=202

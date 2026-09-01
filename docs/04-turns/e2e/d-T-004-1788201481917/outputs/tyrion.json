@@ -1,0 +1,33 @@
+{
+  "seat": "defense",
+  "points": [
+    {
+      "id": "tyrion.p1",
+      "claim": "The scale of threatened harm was catastrophic and immediate, based on what Jon had witnessed and what Daenerys declared she would continue.",
+      "support": "Jon had seen King's Landing burn after surrender. The agreed record confirms the city had capitulated—bells rang, resistance ceased—yet Daenerys incinerated streets and civilians anyway. This was not collateral damage in battle; it was deliberate slaughter of the defenseless. Then she promised more of the same: her speech announced the campaign would continue beyond King's Landing. Jon knew her dragon remained operational, her army loyal, and her judgment absolute. The record shows she refused to let others choose what was good. A ruler who burns surrendered cities and rejects all moral counsel, who commands the only weapon of mass destruction on the continent, presents a threat no ordinary process can contain in time. The harm was not speculative. It had already happened once, and she had announced it would happen again."
+    },
+    {
+      "id": "tyrion.p2",
+      "claim": "No safer alternative existed that would not itself require force, and none that Jon could credibly execute given his position and resources.",
+      "support": "The record is silent on whether Jon commanded troops, held office, or could convene a council with power to act. That silence matters. I was imprisoned. Grey Worm was executing prisoners in the streets. Daenerys's forces controlled the city and had just demonstrated willingness to kill en masse. Jon could not detain her—she commanded the loyalty of an army and a dragon. He could not convene a trial—there was no neutral authority, no institution she recognized above herself. He could not negotiate her surrender—she had refused mercy and declared her judgment final. Could he have walked away? Only by abandoning everyone in her path. The record shows he asked her to forgive, to show mercy, to share judgment. She refused. That was the safer alternative. He tried it. It failed. What remained was either killing her or waiting for the next city to burn."
+    },
+    {
+      "id": "tyrion.p3",
+      "claim": "Jon's lack of formal authority cuts both ways: it denied him lawful alternatives, but it also made him the only person positioned to act.",
+      "support": "Yes, Jon held no office that authorized him to execute a queen. But that same lack of formal role meant he was not bound by the institutional paralysis that trapped everyone else. I was Hand, and I was in a cell. Grey Worm was her instrument, not a check. Her army followed her. The record confirms Jon used intimacy to get close—because intimacy was all he had. He was her lover, her ally, someone she trusted enough to be alone with. That access was not a betrayal of some neutral duty; it was the only resource available to stop what was coming. If we say he needed formal authority, we are saying that only someone already empowered by Daenerys could stop Daenerys. That is circular. It makes her immune. The question is not whether Jon had the right office, but whether anyone with the knowledge he had and the access he had could permissibly do nothing."
+    },
+    {
+      "id": "tyrion.p4",
+      "claim": "The moral weight of Jon's choice is that he killed someone he loved to protect people he would never meet, which argues for rather than against justification.",
+      "support": "This was not revenge, ambition, or fear for himself. Jon had bent the knee. He had pledged loyalty. The record does not suggest he wanted the throne—his parentage gave him a claim he never pursued. He killed someone he had fought beside, slept beside, someone he asked for mercy even in that final conversation. That personal cost does not make the act lawful by itself, but it does reveal motive. He acted against his own interest, his own heart, and his own prior oaths. Why? Because he believed the alternative was more burning, more cities, more children dead in the streets. We can argue he was wrong about the future—the record does not tell us what Daenerys would actually have done next—but we cannot argue he acted from corrupt motive. He gave up everything. That matters when we ask whether the act was necessary defense or something else."
+    },
+    {
+      "id": "tyrion.p5",
+      "claim": "If we rule this unjustified, we create a standard that forbids stopping a tyrant until after the next atrocity, which is no standard at all.",
+      "support": "Daenerys had already committed mass murder. She had announced more to come. She commanded the means and rejected all restraint. If Jon was required to wait for her next attack, then we are saying the first city does not count, only the second one does—and by then it is too late for the second city. If he was required to exhaust institutional alternatives, then we are saying tyrants who dismantle institutions are immune. If he was required to have formal authority, we are saying power can only be checked by those it has already approved. None of those rules protect anyone. They protect only the person at the top. I do not say every assassination of a ruler is justified. I say this one was, because the threat was real, demonstrated, and ongoing; because no other person could act; and because Jon tried the alternative and it failed. We can wish he had more choices. He did not. The question is whether he was justified in making the choice he had, not the choice we wish he had."
+    }
+  ],
+  "role_id": "tyrion",
+  "position": "justified",
+  "deliberation_id": "d-T-004-1788201481917"
+}

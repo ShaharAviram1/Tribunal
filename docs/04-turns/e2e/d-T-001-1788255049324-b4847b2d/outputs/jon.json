@@ -1,0 +1,33 @@
+{
+  "seat": "defense",
+  "points": [
+    {
+      "id": "jon.p1",
+      "claim": "Daenerys had already ordered the massacre of a surrendered city and declared she would continue such campaigns, making further mass killing imminent.",
+      "support": "The agreed record states that after the bells rang and resistance ceased, Daenerys burned streets and civilians. She then told her forces the campaign of liberation would continue beyond King's Landing. Jon witnessed this and heard her speech, confirming an explicit intent to repeat large‑scale violence."
+    },
+    {
+      "id": "jon.p2",
+      "claim": "Jon had no legal authority, no council, and no means to detain her; her refusal of counsel left only lethal intervention as a realistic option.",
+      "support": "The record shows no convened council, no formal arrest procedure, and no guards willing to act. Daenerys rejected appeals for mercy and insisted her judgment was final. In the throne room, with no allies present, Jon possessed only his own body and a blade—essentially the sole instrument capable of stopping her immediately."
+    },
+    {
+      "id": "jon.p3",
+      "claim": "The destruction already wrought—thousands dead, the city in ruins—created a moral imperative that outweighed any procedural constraint.",
+      "support": "Daenerys's attack produced massive civilian casualties and reduced a surrendered capital to ash. The scale of harm already inflicted established a clear and present danger that any further delay would result in more death. Procedural channels could not be activated quickly enough to prevent additional atrocities."
+    },
+    {
+      "id": "jon.p4",
+      "claim": "Jon’s duty to protect the innocent, his family, and the realm, compelled him to act when all other paths were closed.",
+      "support": "Jon had pledged to defend the North and the people of Westeros. He was aware of Daenerys’s threat to his sisters and to any she deemed an obstacle. His oath to safeguard those who could not defend themselves, combined with the knowledge that she would not relent, left moral responsibility as the only guide."
+    },
+    {
+      "id": "jon.p5",
+      "claim": "He acted alone in a room with no allies, using the only means available to stop a tyrant who had demonstrated a willingness to kill indiscriminately.",
+      "support": "The throne room held only Jon, Daenerys, and her dragon Drogon. No other soldiers or advisors were present to intervene. Faced with a ruler who had already used her dragon on unarmed civilians and who refused any counsel, Jon’s act was the sole immediate method to prevent further mass murder."
+    }
+  ],
+  "role_id": "jon",
+  "position": "justified",
+  "deliberation_id": "d-T-001-1788255049324-b4847b2d"
+}

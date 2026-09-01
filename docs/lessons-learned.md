@@ -21,3 +21,7 @@ Platform configuration declared in a repository file may reach only the build. N
 ## 5. Do not mark a non-secret value secret
 
 A value marked secret cannot be read back, so masking a public value costs verification and buys nothing. SUPABASE_URL is a public API endpoint; masked, it hid for an hour that it was the dashboard URL rather than the API host, and no one could notice by looking. Mark secret what is secret; leave readable what is public, so a wrong value is visible. (2026-08-31, turn two)
+
+## 6. Re-cut the bound at the moment work crosses it, not at merge time
+
+A turn's bound is a recorded promise, and work that crosses it must force the record open before the crossing commit lands: amend the bound in the turns table, in the same commit or the one before, with the reason the line moved. Turn three's bound said no new model behaviour, and three model-behaviour changes were committed against it over two days; each was individually recorded and reasoned, but the bound sat unamended until merge, so the record briefly promised one thing while the branch did another. The check that would have caught it costs one question at commit time: does this change do something the current turn row says this turn does not do? (2026-09-01, turn three)

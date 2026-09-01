@@ -1,0 +1,36 @@
+{
+  "label": "Meir Shamgar",
+  "against": {
+    "text": "Jon bypassed possible non‑lethal options such as detention, trial, or council action, and exploited intimacy to kill an unarmed ruler, undermining the claim that lethal force was the only realistic recourse.",
+    "relies_on": [
+      "daenerys.p4",
+      "daenerys.p5",
+      "greyworm.p5"
+    ]
+  },
+  "reasons": [
+    {
+      "text": "Daenerys had just burned a surrendered city and announced continuation of such campaigns, creating an imminent threat of further mass casualties.",
+      "relies_on": [
+        "jon.p1",
+        "tyrion.p1"
+      ]
+    },
+    {
+      "text": "All formal institutions capable of restraining Daenerys had been dismantled; no council, no loyal guard, no means of detention existed, leaving lethal action as the sole realistic method to stop her.",
+      "relies_on": [
+        "jon.p2",
+        "tyrion.p2"
+      ]
+    },
+    {
+      "text": "Jon had no formal authority and could not activate any legal process; his only instrument was his own body in that moment.",
+      "relies_on": [
+        "jon.p5"
+      ]
+    }
+  ],
+  "role_id": "judge-3",
+  "verdict": "justified",
+  "deliberation_id": "d-T-001-1788255049324-b4847b2d"
+}

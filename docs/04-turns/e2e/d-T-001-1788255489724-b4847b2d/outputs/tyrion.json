@@ -1,0 +1,33 @@
+{
+  "seat": "defense",
+  "points": [
+    {
+      "id": "tyrion.p1",
+      "claim": "Daenerys had demonstrated both the capacity and willingness to commit mass atrocity against defenseless populations, making future harm not speculative but certain.",
+      "support": "The agreed record establishes that King's Landing had surrendered—bells rang, resistance ceased—yet Daenerys used Drogon against streets and civilians on a vast scale. This was not collateral damage in battle; it was deliberate slaughter after victory. She possessed the only dragon in the world and commanded an army that had proven willing to massacre the helpless, as Grey Worm demonstrated on the ground. Her speech afterward promised further campaigns of 'liberation,' a term now defined by what Jon had witnessed in the ashes. When a ruler with absolute military superiority and no institutional restraint has already burned a surrendered city and promises more of the same, the threat is not hypothetical. It is a demonstrated pattern. The question is not whether she would kill again, but only when and where."
+    },
+    {
+      "id": "tyrion.p2",
+      "claim": "No institutional mechanism remained capable of restraining Daenerys or removing her from power through lawful means.",
+      "support": "Consider what was absent: no council with authority over her, no law she recognized above her own judgment, no military force capable of opposing Drogon, no political process for transfer of power. When Tyrion renounced his office and urged mercy, she imprisoned him. When Jon asked her to forgive and to share moral judgment with others, she explicitly refused, declaring that she alone would choose what was good. This was not mere stubbornness; it was the assertion of absolute rule by someone who had just proven willing to use absolute force against the defenseless. The record is silent on whether any formal institution survived the fall of King's Landing with both legitimacy and power, but the silence itself is telling. If such an institution existed, why did Jon not appeal to it? The absence of any mention suggests the absence of any alternative. One cannot defer to a process that does not exist."
+    },
+    {
+      "id": "tyrion.p3",
+      "claim": "The scale of threatened harm—thousands or tens of thousands in future campaigns—made the calculus of one life against many not merely permissible but morally required.",
+      "support": "Proportionality demands comparing the harm inflicted against the harm prevented. Jon killed one person. Daenerys had already killed on a vast scale in a single afternoon and promised explicitly to continue beyond King's Landing. Her 'liberation' would extend to every city she deemed insufficiently loyal, every region that resisted her vision of good. The record confirms she told her forces the campaign would continue; Jon had seen the city and heard the speech. He knew what 'liberation' meant in her vocabulary. If we assume conservatively that her future campaigns would kill even a fraction of what she killed in King's Landing, we are speaking of thousands of lives. The arithmetic is brutal but unavoidable: one death to prevent thousands is not merely justified but obligatory for anyone in a position to act. To demand Jon wait for more bodies before acting is to treat the already-dead as insufficient evidence and the not-yet-dead as acceptable losses."
+    },
+    {
+      "id": "tyrion.p4",
+      "claim": "Jon's lack of formal authority is irrelevant when all formal authority has collapsed and the threat is immediate, leaving only the moral duty to protect the defenseless.",
+      "support": "The objection that Jon lacked authority to execute Daenerys assumes a functioning legal order in which roles are defined and processes available. No such order existed. King's Landing had just fallen; its queen was dead; its institutions were ash. Daenerys recognized no authority above herself. Jon could not convene a council because no council had power over her. He could not attempt detention because her army answered to her alone and would have killed him for trying. He could not seek public surrender because she had just declared her intention to continue. Formal authority is a peacetime luxury. When a building is burning and someone has a bucket, we do not ask to see their firefighting license. Jon was perhaps the only person with both access to Daenerys and the will to act. His lack of a title did not erase his moral agency or his duty to prevent mass murder when he alone could do so. The alternative—waiting for someone with proper credentials—means waiting while cities burn."
+    },
+    {
+      "id": "tyrion.p5",
+      "claim": "Jon exhausted the only alternative realistically available to him—direct appeal to Daenerys's mercy—before resorting to lethal force.",
+      "support": "The record confirms Jon asked Daenerys to forgive Tyrion and to show mercy. He asked her to let others share in moral judgment. She refused on both counts, asserting that she alone would decide what was good. This was not a conversation cut short; it was a clear answer. What other alternative existed? He could not rally her army against her—they had just followed her in massacre and cheered her promise of more. He could not appeal to her advisers; Tyrion was imprisoned, and Grey Worm was complicit. He could not wait for her to change her mind; she had just articulated her position with perfect clarity after burning a city. Some will say he should have attempted arrest or convened a trial, but these are fantasies that ignore the reality of absolute power backed by a dragon. The only remaining alternative was inaction—allowing her to proceed with the campaigns she had promised. That is not an alternative; it is complicity. Jon used the last tool available to him only after the first tool—persuasion—failed completely."
+    }
+  ],
+  "role_id": "tyrion",
+  "position": "justified",
+  "deliberation_id": "d-T-001-1788255489724-b4847b2d"
+}

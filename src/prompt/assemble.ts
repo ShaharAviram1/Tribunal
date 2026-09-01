@@ -11,6 +11,22 @@ export const ADVOCATES = ['jon', 'tyrion', 'daenerys', 'greyworm'] as const;
 export const JUDGES = ['judge-1', 'judge-2', 'judge-3'] as const;
 export type RoleId = (typeof ADVOCATES)[number] | (typeof JUDGES)[number];
 
+export type SketchPersona = { name: string; seat: 'defense' | 'prosecution'; sketch: string };
+
+// Intake cases carry four representative sketches; the two defense sketches fill the jon and
+// tyrion seats in order, the two prosecution sketches the daenerys and greyworm seats. The
+// hand-written frame prompts/_advocate-frame.md carries the standing argument rules; the sketch
+// carries the character. T-001 keeps its dossier prompts untouched.
+export function personaForRole(role: string, sketches: SketchPersona[] | undefined): SketchPersona | null {
+  if (!sketches || sketches.length !== 4) return null;
+  const bySeat = (seat: string) => sketches.filter((x) => x.seat === seat);
+  const map: Record<string, SketchPersona | undefined> = {
+    jon: bySeat('defense')[0], tyrion: bySeat('defense')[1],
+    daenerys: bySeat('prosecution')[0], greyworm: bySeat('prosecution')[1],
+  };
+  return map[role] ?? null;
+}
+
 export type AssembledPrompt = {
   role_id: RoleId;
   blocks: string[];
@@ -44,6 +60,7 @@ export function assemblePrompt(opts: {
   stances?: unknown[];
   corrective?: string;
   promptsDir?: string;
+  sketches?: SketchPersona[];
 }): AssembledPrompt {
   const promptsDir = opts.promptsDir ?? join(process.cwd(), 'prompts');
   const isJudge = (JUDGES as readonly string[]).includes(opts.role_id);
@@ -52,7 +69,13 @@ export function assemblePrompt(opts: {
   const blocks: string[] = [];
   blocks.push(renderChargeSheetBlock(opts.chargeSheet));
   if (isJudge) blocks.push(readPromptFile(promptsDir, '_judge-preamble'));
-  blocks.push(readPromptFile(promptsDir, opts.role_id));
+  const persona = isJudge ? null : personaForRole(opts.role_id, opts.sketches);
+  if (persona) {
+    const frame = readPromptFile(promptsDir, '_advocate-frame');
+    blocks.push(frame.replaceAll('{{name}}', persona.name).replaceAll('{{seat}}', persona.seat).replaceAll('{{sketch}}', persona.sketch));
+  } else {
+    blocks.push(readPromptFile(promptsDir, opts.role_id));
+  }
   if (isJudge) {
     if (!opts.stances || opts.stances.length !== 4) throw new Error('a judge prompt requires exactly four stances');
     blocks.push(['Advocate stances', ...opts.stances.map((s) => JSON.stringify(s, null, 2))].join('\n\n'));

@@ -1,0 +1,33 @@
+{
+  "seat": "prosecution",
+  "points": [
+    {
+      "id": "daenerys.p1",
+      "claim": "Daenerys was not attacking when Jon killed her; the record shows she was unarmed and posed no immediate threat.",
+      "support": "The agreed facts state that Daenerys was unarmed and was not attacking Jon at the moment of the killing. This absence of an imminent threat defeats any claim of necessary defense."
+    },
+    {
+      "id": "daenerys.p2",
+      "claim": "Jon had safer alternatives; he could have convened a council, sought her surrender of power, or detained her.",
+      "support": "The record notes that Jon 'had not convened a council, attempted detention, or sought a public surrender of power.' These options remained available, making lethal force not the only viable response."
+    },
+    {
+      "id": "daenerys.p3",
+      "claim": "The threatened future harm was speculative, not an imminent danger justifying preemptive killing.",
+      "support": "Although Daenerys announced continued campaigns, the record does not establish a concrete, immediate plan to harm others. Anticipated future violence does not meet the imminence requirement for a necessity defense."
+    },
+    {
+      "id": "daenerys.p4",
+      "claim": "Jon exploited intimacy to approach Daenerys, indicating premeditation rather than urgent necessity.",
+      "support": "The facts say Jon 'used their intimacy to get close enough to strike.' This shows deliberate planning, inconsistent with a sudden, necessary act of defense."
+    },
+    {
+      "id": "daenerys.p5",
+      "claim": "Jon lacked formal authority to execute anyone, rendering his act an unlawful vigilante killing.",
+      "support": "No record indicates Jon possessed judicial or military authority to order or carry out an execution. His lack of legal standing makes the killing an impermissible private act of justice."
+    }
+  ],
+  "role_id": "daenerys",
+  "position": "not_justified",
+  "deliberation_id": "d-T-001-1788202422638"
+}

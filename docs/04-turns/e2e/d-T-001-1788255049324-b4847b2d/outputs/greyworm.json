@@ -1,0 +1,33 @@
+{
+  "seat": "prosecution",
+  "points": [
+    {
+      "id": "greyworm.p1",
+      "claim": "King's Landing had surrendered and organized resistance had ceased when Daenerys unleashed destruction, eliminating any claim of immediate ongoing threat to justify lethal force.",
+      "support": "The record states the bells rang and the city surrendered. Daenerys then attacked civilians from the air. This sequence shows the immediate danger had passed, making lethal action not required for self‑defence."
+    },
+    {
+      "id": "greyworm.p2",
+      "claim": "Daenerys was unarmed and not physically attacking Jon at the moment he stabbed her, so he faced no immediate physical danger from her.",
+      "support": "Fact 5 of the record confirms Daenerys was unarmed and not attacking Jon when he killed her. An unarmed, non‑assaulting person cannot be said to present a lethal threat that necessitates killing."
+    },
+    {
+      "id": "greyworm.p3",
+      "claim": "Jon exploited his intimate relationship and trust to get close to Daenerys, violating his oath of loyalty and using betrayal as a tactical advantage.",
+      "support": "Jon and Daenerys were lovers and he had pledged loyalty to her. He used their intimacy to approach her undetected, turning trust into a weapon against the person he had sworn to serve."
+    },
+    {
+      "id": "greyworm.p4",
+      "claim": "Jon did not pursue any non‑lethal alternatives before killing Daenerys; no council was convened, no arrest was attempted, and no demand for surrender of power was made.",
+      "support": "The record notes Jon made no effort to convene a council, seek her detention, or compel her to relinquish power. He proceeded directly to lethal action despite available peaceful options."
+    },
+    {
+      "id": "greyworm.p5",
+      "claim": "The threatened future campaigns of liberation were not an imminent harm that could only be prevented by immediate lethal action, and Jon had authority to act through lawful channels.",
+      "support": "Daenerys announced future campaigns after the city fell. This is a prospective threat, not an immediate one. Jon, as a former king and commander, could have used political or military channels rather than a covert stabbing."
+    }
+  ],
+  "role_id": "greyworm",
+  "position": "not_justified",
+  "deliberation_id": "d-T-001-1788255049324-b4847b2d"
+}

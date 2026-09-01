@@ -85,11 +85,11 @@ test('the spend cap refuses the call that would follow reaching it', async () =>
   assert.match(client.log[2]!.detail!, /spend cap/);
 });
 
-test('the per-role attempt ceiling refuses a fifth attempt', async () => {
+test('the per-role attempt ceiling refuses a seventh attempt', async () => {
   const { client } = mk(ok());
-  const r = await client.call(req(5));
+  const r = await client.call(req(7));
   assert.equal(r.outcome, 'cap_exceeded');
-  assert.match(r.row.detail!, /per-role ceiling 4/);
+  assert.match(r.row.detail!, /per-role ceiling 6/);
 });
 
 test('budget is read from the job, not process memory: a fresh client sees prior spend', async () => {
@@ -114,4 +114,29 @@ test('the row carries the ceiling sent and the finish reason; a length finish is
   assert.equal(r.outcome, 'ok'); if (r.outcome === 'ok') assert.equal(r.truncated, true);
   assert.equal(client.log[0]!.max_output_tokens, 777);
   assert.equal(client.log[0]!.finish_reason, 'length');
+});
+
+test('a 429 on a free model advances to the next in the chain, each attempt logged under its own model', async () => {
+  const chain = ['free/a:free', 'free/b:free', 'free/c:free'];
+  const budget = memBudget();
+  let n = 0;
+  const transport: Transport = async ({ model }) => {
+    n++;
+    if (model === 'free/a:free') return { kind: 'transport_error', http_status: 429, detail: 'rate-limited' };
+    return { kind: 'ok', text: '{}', model_served: model, tokens_in: 1, tokens_out: 1, cost_usd: 0, http_status: 200, temperature_honoured: null, finish_reason: 'stop' };
+  };
+  const client = new ModelClient({ caps, models: { jon: 'free/a:free' }, freeFallbacks: chain, deliberation_id: 'd-test', budget, transport, sleep: async () => {}, random: () => 0, now: () => 0 });
+  const r = await client.call(req(1));
+  assert.equal(r.outcome, 'ok');
+  assert.deepEqual(client.log.map((x) => x.model_requested), ['free/a:free', 'free/b:free']);
+  assert.match(client.log[0]!.detail!, /advancing to free\/b:free/);
+  assert.equal(client.modelFor('jon'), 'free/b:free', 'the role stays on the model that served');
+});
+
+test('a paid model outside the chain never rotates', async () => {
+  const transport: Transport = async () => ({ kind: 'transport_error', http_status: 429, detail: 'rate-limited' });
+  const client = new ModelClient({ caps, models: { jon: 'paid/model' }, freeFallbacks: ['free/a:free'], deliberation_id: 'd-test', budget: memBudget(), transport, sleep: async () => {}, random: () => 0, now: () => 0 });
+  const r = await client.call(req(1));
+  assert.equal(r.outcome, 'transport_error');
+  assert.ok(client.log.every((x) => x.model_requested === 'paid/model'));
 });

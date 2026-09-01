@@ -1,0 +1,41 @@
+{
+  "label": "Elon model",
+  "against": {
+    "text": "Daenerys had just devastated King's Landing after its surrender and publicly declared that the campaign of liberation would continue, creating a credible and imminent danger of further mass casualties that could have justified lethal intervention under a necessity or self‑defence theory.",
+    "relies_on": [
+      "tyrion.p1",
+      "tyrion.p2",
+      "tyrion.p4",
+      "jon.p1"
+    ]
+  },
+  "reasons": [
+    {
+      "text": "Daenerys was unarmed and not presently attacking when Jon killed her, so the immediate, imminent threat required for a necessity defense did not exist.",
+      "relies_on": [
+        "daenerys.p1",
+        "greyworm.p1"
+      ]
+    },
+    {
+      "text": "Jon did not exhaust lawful alternatives such as convening a council, seeking her surrender of power, or detaining her before resorting to lethal force, leaving the necessity of his act unestablished.",
+      "relies_on": [
+        "jon.p2",
+        "jon.p4",
+        "jon.p5",
+        "daenerys.p2",
+        "greyworm.p3"
+      ]
+    },
+    {
+      "text": "Jon possessed no formal legal authority to execute anyone, making his act an unauthorized vigilante killing rather than a legitimate exercise of state power.",
+      "relies_on": [
+        "jon.p3",
+        "greyworm.p2"
+      ]
+    }
+  ],
+  "role_id": "judge-2",
+  "verdict": "not_justified",
+  "deliberation_id": "d-T-001-1788202422638"
+}

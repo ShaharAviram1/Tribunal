@@ -1,0 +1,36 @@
+{
+  "deliberation_id": "d-T-004-1788201481917",
+  "case_id": "T-004",
+  "status": "incomplete",
+  "stage": "advocates",
+  "terminal_reason": "fewer than four stances succeeded in the advocates stage (3 of 4); judges not called",
+  "calls": 6,
+  "spend_usd": 0.045560100000000006,
+  "attempts_by_role": {
+    "jon": 1,
+    "tyrion": 2,
+    "daenerys": 2,
+    "greyworm": 1
+  },
+  "claimed_at": "2026-08-31T18:38:04.225+00:00",
+  "heartbeat_at": null,
+  "completed_roles": [
+    "jon",
+    "greyworm",
+    "tyrion"
+  ],
+  "failed_roles": [
+    "daenerys"
+  ],
+  "models": {
+    "jon": "openai/gpt-4.1-mini",
+    "tyrion": "anthropic/claude-sonnet-4.5",
+    "judge-1": "deepseek/deepseek-chat-v3.1",
+    "judge-2": "mistralai/mistral-small-3.2-24b-instruct",
+    "judge-3": "qwen/qwen3.8-flash",
+    "daenerys": "google/gemini-2.5-flash-lite",
+    "greyworm": "minimax/minimax-m2.7:free"
+  },
+  "created_at": "2026-08-31T18:38:02.201986+00:00",
+  "updated_at": "2026-08-31T18:39:14.38+00:00"
+}

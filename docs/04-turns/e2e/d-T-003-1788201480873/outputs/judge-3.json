@@ -1,0 +1,31 @@
+{
+  "label": "Shamgar model",
+  "against": {
+    "text": "The scale of Daenerys's prior destruction and her announced continuation of mass‑casualty campaigns created a credible, imminent risk to countless lives that no lawful authority could promptly counter, potentially justifying lethal action under necessity.",
+    "relies_on": [
+      "tyrion.p1",
+      "tyrion.p3",
+      "tyrion.p4"
+    ]
+  },
+  "reasons": [
+    {
+      "text": "The killing was not necessary because Daenerys was unarmed and not presenting an immediate threat at the moment of the act.",
+      "relies_on": [
+        "jon.p1",
+        "daenerys.p1"
+      ]
+    },
+    {
+      "text": "Jon lacked any formal authority to execute or depose a ruler, and he did not exhaust available non‑lethal alternatives such as convening a council or seeking her surrender.",
+      "relies_on": [
+        "jon.p2",
+        "jon.p3",
+        "greyworm.p1"
+      ]
+    }
+  ],
+  "role_id": "judge-3",
+  "verdict": "not_justified",
+  "deliberation_id": "d-T-003-1788201480873"
+}

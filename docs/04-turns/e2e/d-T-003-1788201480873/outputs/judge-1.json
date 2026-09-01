@@ -1,0 +1,36 @@
+{
+  "label": "Barak model",
+  "against": {
+    "text": "The strongest consideration against justification is that Daenerys was unarmed and not actively attacking at the moment of the killing, and no immediate threat was occurring, which undermines the claim that lethal force was necessary at that precise instant.",
+    "relies_on": [
+      "jon.p1",
+      "daenerys.p1",
+      "greyworm.p2"
+    ]
+  },
+  "reasons": [
+    {
+      "text": "Daenerys had just burned a surrendered city and declared that her campaign of liberation would continue beyond King's Landing, presenting a clear and imminent threat of further mass casualties that required immediate action to prevent additional loss of life. This gave Jon Snow a lawful purpose to act in defense of others and the realm, satisfying the requirement of a rational connection between his act and the prevention of harm.",
+      "relies_on": [
+        "tyrion.p1",
+        "tyrion.p2"
+      ]
+    },
+    {
+      "text": "Given Daenerys's absolute control over the only effective military force and her demonstrated willingness to execute dissenters, no realistic less harmful means—such as convening a council, detaining her, or seeking a public surrender—could have reliably prevented her from ordering further destruction. The lethal strike was therefore the only viable option to neutralize the threat, satisfying the requirement of the absence of a less harmful alternative.",
+      "relies_on": [
+        "tyrion.p3",
+        "tyrion.p4"
+      ]
+    },
+    {
+      "text": "The harm prevented by removing a ruler who had just committed mass murder and intended to continue such acts outweighs the harm of killing a single individual, making the act proportionate under the principle of necessity.",
+      "relies_on": [
+        "tyrion.p5"
+      ]
+    }
+  ],
+  "role_id": "judge-1",
+  "verdict": "justified",
+  "deliberation_id": "d-T-003-1788201480873"
+}

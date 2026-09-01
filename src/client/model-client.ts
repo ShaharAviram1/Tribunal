@@ -66,6 +66,8 @@ export type Transport = (req: {
 export type ModelClientOptions = {
   caps: Caps;
   models: Record<string, string>;
+  freeFallbacks?: string[];
+  roleFallbacks?: Record<string, string[]>;
   deliberation_id: string;
   budget: Budget;
   transport: Transport;
@@ -81,7 +83,10 @@ export function hashPrompt(text: string): string {
 export class ModelClient {
   readonly log: LogRow[] = [];
   readonly #caps: Readonly<Caps>;
-  readonly #models: Readonly<Record<string, string>>;
+  readonly #models: Record<string, string>;
+  readonly #fallbacks: readonly string[];
+  readonly #roleFallbacks: Record<string, string[]>;
+  readonly #reassigned: Record<string, string[]> = {};
   readonly #id: string;
   readonly #budget: Budget;
   readonly #transport: Transport;
@@ -91,7 +96,9 @@ export class ModelClient {
 
   constructor(o: ModelClientOptions) {
     this.#caps = Object.freeze({ ...o.caps });
-    this.#models = Object.freeze({ ...o.models });
+    this.#models = { ...o.models };
+    this.#fallbacks = o.freeFallbacks ?? [];
+    this.#roleFallbacks = o.roleFallbacks ?? {};
     this.#id = o.deliberation_id;
     this.#budget = o.budget;
     this.#transport = o.transport;
@@ -108,10 +115,34 @@ export class ModelClient {
     return m;
   }
 
+  // Reassign a seat to its next configured fallback model. Called by the protocol ONLY after a
+  // role has failed all its retries; never because of what a stance said. Returns the new model
+  // or null when the chain is exhausted.
+  reassignToFallback(role_id: string): string | null {
+    const used = (this.#reassigned[role_id] ??= []);
+    const next = (this.#roleFallbacks[role_id] ?? []).find((m) => !used.includes(m) && m !== this.#models[role_id]);
+    if (!next) return null;
+    used.push(next);
+    this.#models[role_id] = next;
+    return next;
+  }
+
+  // A rate or quota status on a free model advances the role to the next free model in the
+  // configured chain. Explicit, ordered, and never silent: every attempt logs the model it
+  // actually requested, and the caller records the model that finally served the role.
+  #rotate(role_id: string, current: string, status: number | null): string | null {
+    if (![429, 402, 404, 503].includes(status ?? 0)) return null;
+    const i = this.#fallbacks.indexOf(current);
+    if (i < 0 || i + 1 >= this.#fallbacks.length) return null;
+    const next = this.#fallbacks[i + 1]!;
+    this.#models[role_id] = next;
+    return next;
+  }
+
   // One logical call. Transport failures are retried here with backoff and jitter, each attempt
   // writing its own row and counting toward the call cap. Refusal and ok return immediately.
   async call(req: CallRequest): Promise<CallResult> {
-    const model = this.modelFor(req.role_id);
+    let model = this.modelFor(req.role_id);
     let last: CallResult | null = null;
     for (let t = 0; t <= this.#caps.transport_retries_per_call; t++) {
       if (t > 0) await this.#sleep(this.#backoff(t));
@@ -137,6 +168,8 @@ export class ModelClient {
       const row: LogRow = res.kind === 'timeout'
         ? { ...base, outcome: 'timeout', detail: `no response within ${this.#caps.call_timeout_ms}ms` }
         : { ...base, outcome: 'transport_error', http_status: res.http_status, detail: res.detail };
+      const rotated = res.kind === 'transport_error' ? this.#rotate(req.role_id, model, res.http_status) : null;
+      if (rotated) { row.detail = `${row.detail} — advancing to ${rotated}`; model = rotated; }
       await this.#record(row);
       last = { outcome: 'transport_error', row };
     }

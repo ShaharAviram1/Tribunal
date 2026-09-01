@@ -1,0 +1,28 @@
+{
+  "seat": "defense",
+  "points": [
+    {
+      "id": "jon.p1",
+      "claim": "Brutus's oath to preserve the Republic supersedes personal gratitude, making his participation a constitutional duty.",
+      "support": "The record shows Caesar held the title dictator perpetuo, a position without term limit, and that no trial or deposition motion had been brought. Under these conditions, Caesar's power threatened the constitutional order; Brutus, as a Roman senator, was bound by his oath to defend that order."
+    },
+    {
+      "id": "jon.p2",
+      "claim": "No lawful avenue remained to curb Caesar's permanent dictatorship, leaving extralegal action as the sole constitutional recourse.",
+      "support": "The agreed facts state that no trial was sought and no motion for deposition was laid before the Senate. This silence indicates the Senate could not, or would not, act legally against Caesar, leaving the conspirators with no constitutional alternative."
+    },
+    {
+      "id": "jon.p3",
+      "claim": "Brutus acted to restore the Republic's traditional balance of powers, not for personal gain or revenge.",
+      "support": "The conspirators styled themselves liberators and announced the killing as a blow for Rome. The record contains no evidence of personal motive; Brutus's subsequent role in the Senate after the act aligns with a goal of restoring republican institutions."
+    },
+    {
+      "id": "jon.p4",
+      "claim": "The permanent dictatorship destroyed the checks essential to the Republic, and its removal was necessary for the survival of the constitutional system.",
+      "support": "Caesar's title and his ability to dismiss his guard and act without Senate approval demonstrate that the normal restraints of office had been eliminated. The record shows no mechanism to restore those restraints other than the removal of the dictator."
+    }
+  ],
+  "role_id": "jon",
+  "position": "justified",
+  "deliberation_id": "d-T-006-1788268372241-744dfe6b"
+}

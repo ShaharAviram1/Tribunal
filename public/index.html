@@ -1,2 +1,322 @@
-<!-- Placeholder so the publish directory exists. The case page arrives in turn three. -->
-<p>The Tribunal. The case page arrives in turn three.</p>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Tribunal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,600;6..96,700&family=Spectral:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#181008;
+  --ground2:#0d0906;
+  --card:#1c1510;
+  --card2:#261d14;
+  --edge:#3b2e20;
+  --edge2:#54412b;
+  --rule:#35291c;
+  --card-ink:#f2ead9;
+  --card-ink2:#a3937a;
+  --card-ink3:#776650;
+  --page-ink:#f2ead9;
+  --page-ink2:#a3937a;
+  --page-ink3:#776650;
+  --accent:#c9a227;
+  --accent-soft:rgba(201,162,39,.35);
+  --defense:#8ba0b5;
+  --prosecution:#b5806a;
+  --sheen:255,240,205;
+  --r:3px;
+  --wood:
+    repeating-linear-gradient(93deg,
+      rgba(255,236,196,.075) 0 1px, rgba(0,0,0,0) 1px 4px,
+      rgba(0,0,0,.11) 4px 5px, rgba(0,0,0,0) 5px 11px,
+      rgba(255,236,196,.05) 11px 13px, rgba(0,0,0,0) 13px 19px,
+      rgba(0,0,0,.07) 19px 21px, rgba(0,0,0,0) 21px 29px),
+    repeating-linear-gradient(88deg, rgba(0,0,0,.05) 0 2px, rgba(0,0,0,0) 2px 47px);
+  --stone:
+    linear-gradient(112deg,
+      rgba(226,232,240,.055) 0%, rgba(226,232,240,0) 9%,
+      rgba(226,232,240,.03) 13%, rgba(226,232,240,0) 21%,
+      rgba(0,0,0,.22) 44%, rgba(226,232,240,.045) 49%,
+      rgba(226,232,240,0) 58%, rgba(0,0,0,.16) 71%,
+      rgba(226,232,240,.028) 78%, rgba(226,232,240,0) 88%,
+      rgba(226,232,240,.038) 93%, rgba(226,232,240,0) 100%),
+    linear-gradient(28deg, rgba(255,255,255,.02) 0%, rgba(255,255,255,0) 40%, rgba(0,0,0,.14) 100%);
+  --lift: inset 0 1px 0 rgba(240,222,180,.075),
+          0 2px 3px rgba(0,0,0,.5),
+          0 30px 60px -34px rgba(0,0,0,1);
+  --display:"Bodoni Moda",Didot,Georgia,serif;
+  --text:Spectral,Georgia,serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+html{overflow-x:hidden}
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  padding:132px 40px 34px;
+  font:16px/1.6 var(--text);
+  color:var(--page-ink);
+  background:
+    radial-gradient(110% 62% at 50% -6%, var(--accent-soft) 0%, rgba(0,0,0,0) 52%),
+    var(--stone),
+    radial-gradient(150% 128% at 50% -8%, var(--ground) 0%, var(--ground) 34%, var(--ground2) 100%);
+  background-color:var(--ground2);
+  background-attachment:fixed;
+  overflow-wrap:break-word;
+}
+
+.stage{flex:1;display:flex;align-items:center;width:100%;max-width:1180px;margin:0 auto}
+.grid{display:grid;grid-template-columns:1.15fr 1fr;gap:64px;width:100%}
+
+/* left column */
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--page-ink3);margin:0 0 22px}
+.wordmark{font-family:var(--display);font-weight:600;font-size:clamp(58px,7.4vw,116px);line-height:.9;letter-spacing:-.015em;margin:0 0 26px;
+  background:linear-gradient(176deg,#fff6e2,var(--page-ink) 42%,#8d7c62);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.wordmark span{display:block}
+.brass-rule{height:5px;width:100%;max-width:420px;margin:0 0 26px;
+  background:linear-gradient(180deg,var(--accent) 0 1px,rgba(201,162,39,.4) 1px 4px,var(--accent-soft) 4px 5px)}
+.lede{font-size:19px;line-height:1.5;color:var(--page-ink2);margin:0 0 18px;max-width:38rem}
+.lede2{font-size:15px;line-height:1.55;color:var(--page-ink3);margin:0 0 34px;max-width:38rem}
+.guard{font-family:var(--mono);font-size:12px;line-height:1.7;color:var(--page-ink2);border-left:1px solid var(--edge2);padding:2px 0 2px 20px;margin:0;max-width:34rem}
+
+/* right column */
+.docket-label{font-family:var(--mono);font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--page-ink3);margin:0 0 10px}
+
+#cases{margin:0}
+#cases>.card-sub{color:var(--page-ink2);font-size:15px;margin:0}
+
+#cases>.card,.panel-grid .card{
+  display:block;text-align:left;cursor:pointer;
+  border:1px solid var(--edge);border-radius:var(--r);background:var(--card);
+}
+#cases>.card{border-top:2px solid var(--accent);box-shadow:var(--lift);padding:26px;margin:0}
+#cases>.card:has(input:checked),.panel-grid .card:has(input:checked){border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+#cases>.card:has(input:checked){box-shadow:var(--lift),0 0 0 1px var(--accent)}
+
+.card input[type=radio]{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;clip-path:inset(50%);overflow:hidden;white-space:nowrap}
+
+.docket{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--card-ink3);margin:0 0 6px}
+.card-title{font-family:var(--display);font-weight:600;font-size:32px;line-height:1.2;color:var(--card-ink);margin:0 0 10px}
+.card-sub{color:var(--card-ink2);font-size:15px;line-height:1.5;margin:0}
+.case-name{display:block}
+
+.runs{list-style:none;margin:18px 0 0;padding:18px 0 0;border-top:1px solid var(--rule);font-family:var(--mono);font-size:11px;line-height:1.6}
+.runs::before{content:"Past hearings";display:block;font-family:var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--card-ink3);font-size:10px;margin:0 0 10px}
+.runs li{margin:.35rem 0;color:var(--card-ink2);overflow-wrap:anywhere}
+.runs a{color:var(--card-ink)}
+.more-runs{margin:8px 0 0}.more-runs summary{cursor:pointer;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--card-ink3);list-style:none}.more-runs summary::-webkit-details-marker{display:none}.runs.more{margin-top:8px;padding-top:8px}.runs.more::before{content:none}
+.no-runs{margin:18px 0 0;padding-top:18px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:11px;font-style:italic;color:var(--card-ink3)}
+
+
+.panel-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:22px 0 0}
+.panel-grid .card{padding:18px}
+.panel-grid .card-title{font-family:var(--display);font-weight:600;font-size:19px;margin:0 0 8px;color:var(--card-ink)}
+.panel-grid .card-sub{font-size:13px;color:var(--card-ink2)}
+
+.intake{margin:26px 0 0;padding-top:22px;border-top:1px solid var(--rule)}
+.intake-note{font-family:var(--mono);font-size:12px;line-height:1.6;color:var(--page-ink2);margin:0 0 12px;max-width:34rem}
+#intake-scenario{
+  display:block;width:100%;box-sizing:border-box;resize:vertical;
+  background:var(--card);border:1px solid var(--edge);border-radius:var(--r);
+  color:var(--card-ink);font-family:var(--mono);font-size:13px;line-height:1.6;
+  padding:14px;margin:0;
+}
+#intake-scenario::placeholder{color:var(--card-ink3)}
+#intake-scenario:focus{outline:none;border-color:var(--accent)}
+#intake-count{font-family:var(--mono);font-size:10px;letter-spacing:.05em;color:var(--page-ink3);margin:8px 0 14px;text-align:right}
+button#intake-submit{
+  display:block;width:100%;font-family:var(--mono);font-weight:500;font-size:12px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--accent);background:transparent;
+  border:1px solid var(--accent);border-radius:var(--r);padding:14px 20px;cursor:pointer;
+  transition:background .15s,color .15s;
+}
+button#intake-submit:hover:not(:disabled){background:var(--accent);color:var(--ground)}
+button#intake-submit:disabled{opacity:.55;cursor:default}
+#intake-status{font-family:var(--mono);font-size:12px;color:var(--page-ink2);min-height:1.4em;margin:8px 0 0;overflow-wrap:anywhere}
+
+.bench{margin:22px 0 0}
+button#convene{
+  display:block;width:100%;font-family:var(--display);font-weight:600;font-size:22px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ground);background:var(--accent);
+  border:none;border-radius:var(--r);padding:20px 24px;box-shadow:var(--lift);cursor:pointer;
+  transition:filter .15s;
+}
+button#convene:hover:not(:disabled){filter:brightness(1.06)}
+button#convene:disabled{opacity:.55;cursor:default}
+.duration{font-family:var(--mono);font-size:11px;line-height:1.6;color:var(--page-ink2);margin:10px 0 0}
+#status{font-family:var(--mono);font-size:12px;color:var(--page-ink2);min-height:1.4em;margin:6px 0 0;overflow-wrap:anywhere}
+
+a{color:var(--accent)}
+
+footer{width:100%;max-width:1180px;margin:46px auto 0;border-top:1px solid var(--edge);padding-top:18px;
+  font-family:var(--mono);font-size:11px;color:var(--page-ink3)}
+
+@media (max-width:780px){
+  body{padding:58px 20px 26px}
+  .grid{grid-template-columns:1fr;gap:34px}
+  .panel-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="stage">
+<div class="grid">
+
+<div class="left">
+  <p class="kicker">Sitting in one session · seven separate model calls</p>
+  <h1 class="wordmark"><span>The</span><span>Tribunal</span></h1>
+  <div class="brass-rule"></div>
+  <p class="lede">Four advocates and three judges deliberate one charge sheet in seven separate model calls.</p>
+  <p class="lede2">The three opinions are presented side by side and are never combined.</p>
+  <p class="guard">A fictional proceeding. Each judge adapts a judicial method from a real jurist's published opinions; no judge represents the jurist or predicts how they would decide.</p>
+</div>
+
+<div class="right">
+  <p class="docket-label">The matter before the bench</p>
+  <div id="cases"><p class="card-sub">Retrieving the docket…</p></div>
+
+  <div class="panel-grid">
+    <label class="card">
+      <input type="radio" name="panel" value="single" checked>
+      <p class="card-title">One model</p>
+      <p class="card-sub">All seven roles argued and judged by a single model.</p>
+    </label>
+    <label class="card">
+      <input type="radio" name="panel" value="multi">
+      <p class="card-title">Seven models</p>
+      <p class="card-sub">Every role a distinct model, no two shared.</p>
+    </label>
+  </div>
+
+  <div class="bench">
+    <button id="convene">Convene Tribunal</button>
+    <p class="duration">Seven calls, about two minutes. The four advocates speak, then the bench rules.</p>
+    <p id="status" role="status"></p>
+  </div>
+
+  <div class="intake">
+    <p class="docket-label">Submit a matter</p>
+    <p class="intake-note">Describe a contested act. The tribunal drafts the charge sheet and the four advocates from your scenario, then convenes.</p>
+    <textarea id="intake-scenario" rows="7" placeholder="Describe what happened, who was involved, and what is disputed…"></textarea>
+    <p id="intake-count">0 / 800 words</p>
+    <button id="intake-submit">Draft and Convene</button>
+    <p id="intake-status" role="status"></p>
+  </div>
+</div>
+
+</div>
+</div>
+
+<footer>The record of each deliberation is kept in full; opinions are read one beside another.</footer>
+
+<script>
+'use strict';
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const fmt = (iso) => { try { return new Date(iso).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' }); } catch { return iso; } };
+const runLine = (d) => '<li><a href="/case/' + encodeURIComponent(d.deliberation_id) + '">Convened ' + esc(fmt(d.convened_at)) + '</a> — ' + esc(d.panel) + ' — ' + esc(d.status) + '</li>';
+const caseCard = (c, checked) => '<label class="card">' +
+  '<input type="radio" name="case_id" value="' + esc(c.case_id) + '"' + (checked ? ' checked' : '') + '>' +
+  '<p class="docket">Docket ' + esc(c.case_id) + '</p>' +
+  '<p class="card-title case-name">The Realm v. ' + esc(c.accused) + '</p>' +
+  '<p class="card-sub">In the matter of the death of ' + esc(c.deceased) + '.</p>' +
+  (c.deliberations && c.deliberations.length
+    ? (function () {
+        const runs = c.deliberations.slice().reverse();
+        const head = '<ul class="runs">' + runs.slice(0, 3).map(runLine).join('') + '</ul>';
+        const rest = runs.slice(3);
+        return head + (rest.length ? '<details class="more-runs"><summary>See all ' + runs.length + ' hearings</summary><ul class="runs more">' + rest.map(runLine).join('') + '</ul></details>' : '');
+      })()
+    : '<p class="no-runs">Not yet deliberated.</p>') +
+  '</label>';
+
+(async () => {
+  const box = document.getElementById('cases');
+  try {
+    const res = await fetch('/.netlify/functions/tribunal-case?list=1');
+    if (!res.ok) throw new Error('the registry answered ' + res.status);
+    const { cases } = await res.json();
+    if (!cases || !cases.length) { box.innerHTML = '<p class="card-sub">The docket is empty.</p>'; return; }
+    const [first, ...rest] = cases;
+    box.innerHTML = caseCard(first, true) +
+      (rest.length
+        ? ''
+        : '');
+  } catch (e) {
+    box.innerHTML = '<p class="card-sub">The docket could not be retrieved: ' + esc(e && e.message ? e.message : e) + '</p>';
+  }
+})();
+
+document.getElementById('convene').addEventListener('click', async () => {
+  const status = document.getElementById('status');
+  const button = document.getElementById('convene');
+  const picked = document.querySelector('input[name=case_id]:checked');
+  if (!picked) { status.textContent = 'Select a case to bring before the bench.'; return; }
+  const panel = document.querySelector('input[name=panel]:checked').value;
+  button.disabled = true;
+  status.textContent = 'Convening… the advocates are taking their seats.';
+  try {
+    const res = await fetch('/.netlify/functions/tribunal-file?panel=' + panel, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ case_id: picked.value }),
+    });
+    const text = await res.text();
+    if (!res.ok) {
+      let message = text;
+      try { const parsed = JSON.parse(text); if (parsed && parsed.error) message = parsed.error; } catch {}
+      status.textContent = message;
+      button.disabled = false;
+      return;
+    }
+    const body = JSON.parse(text);
+    location.href = '/case/' + encodeURIComponent(body.deliberation_id);
+  } catch (e) {
+    status.textContent = 'The filing failed: ' + (e && e.message ? e.message : e);
+    button.disabled = false;
+  }
+});
+
+const wordCount = (s) => { const t = s.trim(); return t === '' ? 0 : t.split(/\s+/).length; };
+const intakeScenario = document.getElementById('intake-scenario');
+const intakeCount = document.getElementById('intake-count');
+intakeScenario.addEventListener('input', () => {
+  intakeCount.textContent = wordCount(intakeScenario.value) + ' / 800 words';
+});
+
+document.getElementById('intake-submit').addEventListener('click', async () => {
+  const status = document.getElementById('intake-status');
+  const button = document.getElementById('intake-submit');
+  const panel = document.querySelector('input[name=panel]:checked').value;
+  button.disabled = true;
+  status.textContent = 'The clerk is drafting…';
+  try {
+    const res = await fetch('/.netlify/functions/tribunal-intake?panel=' + panel, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ scenario: intakeScenario.value }),
+    });
+    const text = await res.text();
+    if (!res.ok) {
+      let message = text;
+      try { const parsed = JSON.parse(text); if (parsed && Array.isArray(parsed.failures)) message = parsed.failures.join('; '); } catch {}
+      status.textContent = message;
+      button.disabled = false;
+      return;
+    }
+    const body = JSON.parse(text);
+    location.href = '/case/' + encodeURIComponent(body.deliberation_id);
+  } catch (e) {
+    status.textContent = 'The drafting failed: ' + (e && e.message ? e.message : e);
+    button.disabled = false;
+  }
+});
+</script>
+</body>
+</html>

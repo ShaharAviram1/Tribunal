@@ -1,0 +1,33 @@
+{
+  "seat": "defense",
+  "points": [
+    {
+      "id": "jon.p1",
+      "claim": "Daenerys had just destroyed a surrendered city, killing many civilians.",
+      "support": "The record shows King's Landing had surrendered, yet Daenerys used her dragon to burn streets and civilians on a vast scale. This was not a battle but an attack on people who had ceased resistance, threatening countless innocent lives."
+    },
+    {
+      "id": "jon.p2",
+      "claim": "Daenerys declared she would continue her campaign of 'liberation' by force.",
+      "support": "After the destruction, she told her forces the campaign would go beyond King's Landing. This meant more violence and death to come, not peace or mercy. I had to consider the future harm she intended to cause."
+    },
+    {
+      "id": "jon.p3",
+      "claim": "Tyrion warned me Daenerys would kill anyone she saw as an obstacle, including my family.",
+      "support": "Tyrion, her trusted adviser, resigned and was imprisoned because he feared her judgment. He warned me she would treat my sisters and others as enemies. This was a direct threat to those I swore to protect."
+    },
+    {
+      "id": "jon.p4",
+      "claim": "I asked Daenerys to show mercy and share judgment, but she refused.",
+      "support": "I tried to prevent further bloodshed by asking her to forgive Tyrion and to let others help decide what was right. She rejected this, insisting on her own absolute judgment, leaving no peaceful way to stop her."
+    },
+    {
+      "id": "jon.p5",
+      "claim": "I killed Daenerys to prevent greater harm, without formal authority but out of necessity.",
+      "support": "She was unarmed and not attacking me, but I had no safer alternatives recorded: no council, no arrest, no public surrender. I acted to protect others and the realm from the destruction she threatened, even if it meant breaking laws and promises."
+    }
+  ],
+  "role_id": "jon",
+  "position": "justified",
+  "deliberation_id": "d-T-004-1788201481917"
+}

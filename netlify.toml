@@ -5,3 +5,8 @@
 [build.environment]
   NODE_VERSION = "24.11.1"
   SECRETS_SCAN_OMIT_KEYS = "TRIBUNAL_STORE,TRIBUNAL_FILING_ENABLED"
+
+[[redirects]]
+  from = "/case/*"
+  to = "/.netlify/functions/tribunal-case-page?deliberation_id=:splat"
+  status = 200

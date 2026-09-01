@@ -1,0 +1,33 @@
+{
+  "seat": "prosecution",
+  "points": [
+    {
+      "id": "greyworm.p1",
+      "claim": "Jon was Daenerys's sworn man with no legal authority to execute her, and the record shows no order or council that authorized the killing.",
+      "support": "The agreed factual record states Jon was a loyal ally and lover, bound by his oath to Daenerys. No document, testimony, or command chain in the record authorizes Jon to act as judge, jury, or executioner. His role was subordinate, not sovereign."
+    },
+    {
+      "id": "greyworm.p2",
+      "claim": "Daenerys was unarmed and not attacking Jon when he struck her, so the killing was not a response to an imminent lethal threat.",
+      "support": "The record says Daenerys was unarmed and not attacking Jon at the moment of the killing. Jon used their intimacy to approach and strike. An imminent threat is absent; the act therefore lacks the justification of self‑defence."
+    },
+    {
+      "id": "greyworm.p3",
+      "claim": "Jon could have convened a council, demanded her surrender, or ordered her detention; the record shows he attempted none of these before killing her.",
+      "support": "The facts list no council, no arrest, no demand for surrender. Jon’s own account and the agreed record indicate he did not explore any legal or procedural alternative. He chose the most extreme action without exhausting safer options."
+    },
+    {
+      "id": "greyworm.p4",
+      "claim": "Daenerys's announced continuation of liberation was a future policy, not an immediate violent act against Jon or others, so preemptive killing was not necessary defense.",
+      "support": "Daenerys’s speech declared future campaigns; the record contains no evidence of an imminent attack on Jon or his sisters at the moment of the killing. A future threat does not meet the threshold of immediate necessity required for justified preemptive force."
+    },
+    {
+      "id": "greyworm.p5",
+      "claim": "Jon used Daenerys's trust to get close, exploiting the intimacy of their relationship rather than confronting her openly, violating the principle of proportionality.",
+      "support": "Jon approached Daenerys while she was vulnerable and trusting, using their personal bond to strike. This exploitation of trust undermines any claim of proportionality and shows the act was calculated, not a necessary reaction to violence."
+    }
+  ],
+  "role_id": "greyworm",
+  "position": "not_justified",
+  "deliberation_id": "d-T-001-1788255489724-b4847b2d"
+}

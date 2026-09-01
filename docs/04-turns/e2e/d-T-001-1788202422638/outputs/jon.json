@@ -1,0 +1,33 @@
+{
+  "seat": "defense",
+  "points": [
+    {
+      "id": "jon.p1",
+      "claim": "Daenerys had just burned civilians after surrender and announced further campaigns, posing a credible, imminent threat to many lives.",
+      "support": "The agreed record states the city surrendered, the bells rang, organized resistance ceased, yet Daenerys used Drogon against streets and civilians and told her forces the campaign would continue beyond King's Landing. This establishes she intended further mass harm."
+    },
+    {
+      "id": "jon.p2",
+      "claim": "Jon did not attempt any lawful alternative before killing her, which the record shows he skipped.",
+      "support": "The record notes Jon had not convened a council, attempted detention, or sought a public surrender of power. These are recognized, safer options for stopping a ruler and should have been pursued before resorting to lethal force."
+    },
+    {
+      "id": "jon.p3",
+      "claim": "Jon lacked the formal authority to execute Daenerys.",
+      "support": "He was not appointed by a council, king, or law as a judge or executioner. The record gives no indication that any body authorized him to kill her."
+    },
+    {
+      "id": "jon.p4",
+      "claim": "Bypassing due process undermines any claim of necessary defense of the realm.",
+      "support": "Even if the threat was severe, the law requires that force be used only when no lawful alternative exists. The record shows alternatives existed but were not tried, so his act cannot be justified on that ground."
+    },
+    {
+      "id": "jon.p5",
+      "claim": "The record provides no evidence that lesser measures would have failed.",
+      "support": "Because Jon did not attempt detention, council, or any other non‑lethal option, we cannot know whether those would have succeeded. The absence of such evidence means necessity is not proven."
+    }
+  ],
+  "role_id": "jon",
+  "position": "not_justified",
+  "deliberation_id": "d-T-001-1788202422638"
+}

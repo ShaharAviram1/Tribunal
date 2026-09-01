@@ -1,0 +1,33 @@
+{
+  "seat": "defense",
+  "points": [
+    {
+      "id": "tyrion.p1",
+      "claim": "Caesar showed personal loyalty by pardoning Brutus after the civil war and then promoting him, creating a bond that should have precluded betrayal.",
+      "support": "The record notes that Caesar pardoned Brutus after the civil war (record 2) and later elevated him to positions of authority (record 3). This sequence created a personal bond of gratitude and trust. In a household, such loyalty is paramount; betraying a benefactor who offered mercy undermines the very fabric of Roman familial and political relationships."
+    },
+    {
+      "id": "tyrion.p2",
+      "claim": "The conspirators did not seek any legal process—no trial, no motion for deposition—before killing an unarmed man in a civic space, making the act extrajudicial.",
+      "support": "The record shows that no trial was sought and no motion for deposition was placed before the Senate (record 7). The killing took place in a civic space (record 5) while Caesar was unarmed and had dismissed his guard (record 6). Acting without lawful authority transforms a political grievance into murder."
+    },
+    {
+      "id": "tyrion.p3",
+      "claim": "Caesar's appointment as dictator perpetuo, while unprecedented, did not of itself constitute an immediate threat that required immediate lethal action without lawful deliberation.",
+      "support": "The record states only that Caesar held the title dictator perpetuo (record 1). No evidence in the record indicates an imminent danger to the Republic or that Caesar was taking steps that could not be reversed through lawful means. The absence of a deposition motion (record 7) shows the conspirators did not view the situation as requiring immediate lethal intervention."
+    },
+    {
+      "id": "tyrion.p4",
+      "claim": "Brutus struck among the last blows, indicating that the killing was not a desperate act of self‑defense but a deliberate finish of a defenseless victim.",
+      "support": "The record notes Brutus struck among the last blows delivered to Caesar (record 8). Since Caesar was already unarmed and without guard (record 6), the final blows were not a reaction to a continuing threat but a deliberate act of execution."
+    },
+    {
+      "id": "tyrion.p5",
+      "claim": "The murder of a benefactor who had pardoned and elevated his assassin violates the principles of gratitude and loyalty that held Roman households together.",
+      "support": "The record shows Caesar pardoned and promoted Brutus (records 2 and 3), establishing a benefactor‑assassin relationship. Calpurnia’s perspective stresses that loyalty within a household demands repayment of mercy; killing a patron who gave you life and rank betrays that sacred bond."
+    }
+  ],
+  "role_id": "tyrion",
+  "position": "not_justified",
+  "deliberation_id": "d-T-006-1788268372241-744dfe6b"
+}

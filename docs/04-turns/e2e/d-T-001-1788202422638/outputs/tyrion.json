@@ -1,0 +1,28 @@
+{
+  "seat": "defense",
+  "points": [
+    {
+      "id": "tyrion.p1",
+      "claim": "Daenerys had just devastated King's Landing and declared her campaign would continue, creating an imminent threat of further mass casualties.",
+      "support": "The agreed record states she burned the city after surrender and announced the campaign would extend beyond. Jon witnessed both. This demonstrates a clear and present danger of further destruction on a scale comparable to the recent attack."
+    },
+    {
+      "id": "tyrion.p2",
+      "claim": "Jon attempted appeal and was rebuffed, and no viable institutional process existed to remove Daenerys without bloodshed.",
+      "support": "The record shows Jon asked for mercy and was refused. Daenerys insisted her judgment was final. The record does not indicate any council, trial, or process that could have been convened; Grey Worm's loyalty and the recent imprisonment of Tyrion show Daenerys's intolerance of dissent, making less lethal options unrealistic."
+    },
+    {
+      "id": "tyrion.p3",
+      "claim": "In extremis, private individuals may act to prevent catastrophic harm when established authority has failed or is complicit.",
+      "support": "Jon was not a reigning monarch at the moment, but the realm's legitimate institutions had collapsed or been compromised. Daenerys's own council was imprisoned or silenced, leaving no lawful body to act. Necessity justifies the act."
+    },
+    {
+      "id": "tyrion.p4",
+      "claim": "Killing one person to prevent the deaths of thousands is proportionate when the threat is ongoing and no lesser means can stop it.",
+      "support": "Daenerys's announced continuation meant thousands more were at risk. Jon's action was the only means to neutralize the threat immediately. Proportionality is satisfied because the harm prevented vastly outweighs the harm of the act."
+    }
+  ],
+  "role_id": "tyrion",
+  "position": "justified",
+  "deliberation_id": "d-T-001-1788202422638"
+}

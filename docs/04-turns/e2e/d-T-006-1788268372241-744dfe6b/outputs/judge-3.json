@@ -1,0 +1,36 @@
+{
+  "label": "Meir Shamgar",
+  "against": {
+    "text": "The most compelling argument for justification is that Caesar's unprecedented perpetual dictatorship had dismantled the ordinary checks on power, leaving no constitutional mechanism to curb his authority; this concern is grounded in the assertions that no lawful avenue remained and that the Republic's balance of powers was destroyed.",
+    "relies_on": [
+      "jon.p2",
+      "jon.p4"
+    ]
+  },
+  "reasons": [
+    {
+      "text": "Brutus lacked any lawful authority to kill Caesar because the legal order gave the Senate the power to try, depose, or limit a dictator; he did not invoke those mechanisms.",
+      "relies_on": [
+        "greyworm.p1",
+        "daenerys.p3"
+      ]
+    },
+    {
+      "text": "The killing took place in a civic space while Caesar was unarmed and unguarded, making it an ambush rather than a lawful execution; Brutus's participation was therefore extrajudicial.",
+      "relies_on": [
+        "daenerys.p2",
+        "greyworm.p3"
+      ]
+    },
+    {
+      "text": "Personal gratitude to a benefactor does not override the requirement that political change be pursued through lawful means; Brutus's betrayal of Caesar's trust cannot justify murder.",
+      "relies_on": [
+        "tyrion.p1",
+        "daenerys.p1"
+      ]
+    }
+  ],
+  "role_id": "judge-3",
+  "verdict": "not_justified",
+  "deliberation_id": "d-T-006-1788268372241-744dfe6b"
+}

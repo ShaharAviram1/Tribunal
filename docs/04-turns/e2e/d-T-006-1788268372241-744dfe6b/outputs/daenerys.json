@@ -1,0 +1,33 @@
+{
+  "seat": "prosecution",
+  "points": [
+    {
+      "id": "daenerys.p1",
+      "claim": "Brutus repaid Caesar's pardon and promotion with a knife, betraying a man who saved his life and raised him to power.",
+      "support": "The agreed facts list the pardon, the subsequent promotions, and the close relationship between the two men. No other factor in the record explains why Brutus would owe Caesar loyalty, only that he received those benefits."
+    },
+    {
+      "id": "daenerys.p2",
+      "claim": "Caesar was unarmed, unguarded, and invited to a Senate session; killing him there was an ambush, not a legal act.",
+      "support": "The record says Caesar dismissed his guard, came without weapons, and attended a session at Pompey's Theatre. The conspirators set the meeting; there was no trial, no motion of deposition."
+    },
+    {
+      "id": "daenerys.p3",
+      "claim": "No legal remedy was pursued; the conspirators did not seek a trial or a deposition before the Senate.",
+      "support": "The agreed facts state explicitly that no trial of Caesar had been sought and no motion of deposition had been laid before the Senate. They acted without constitutional authority."
+    },
+    {
+      "id": "daenerys.p4",
+      "claim": "Brutus struck among the last blows, showing his resolve to finish the murder rather than to prevent an immediate threat.",
+      "support": "The record notes Brutus struck among the last blows delivered to Caesar, indicating he participated fully and knowingly in the killing, not merely as a reluctant follower."
+    },
+    {
+      "id": "daenerys.p5",
+      "claim": "Personal loyalty to a benefactor outweighs abstract claims of political necessity when the act is premeditated murder.",
+      "support": "The record shows Caesar was unarmed, invited, and unthreatening at the moment of the killing; the conspirators' claim of saving the Republic is unsupported by any evidence in the file."
+    }
+  ],
+  "role_id": "daenerys",
+  "position": "not_justified",
+  "deliberation_id": "d-T-006-1788268372241-744dfe6b"
+}

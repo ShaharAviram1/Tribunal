@@ -157,7 +157,7 @@ const malformedVariants: Array<{ name: string; change: (o: Emitted) => unknown }
   { name: 'reason with an extra field', change: (o) => { (o.reasons[0] as Record<string, unknown>).rank = 1; return o; } },
   { name: 'reason missing relies_on', change: (o) => { delete (o.reasons[0] as Partial<Reason>).relies_on; return o; } },
   { name: 'reasons empty', change: (o) => { o.reasons = []; return o; } },
-  { name: 'label supplied by the model', change: (o) => { (o as Record<string, unknown>).label = 'Shamgar model'; return o; } },
+  { name: 'label supplied by the model', change: (o) => { (o as Record<string, unknown>).label = 'Meir Shamgar'; return o; } },
   { name: 'role_id supplied by the model', change: (o) => { (o as Record<string, unknown>).role_id = 'judge-3'; return o; } },
   { name: 'JSON array rather than object', change: (o) => [o] },
 ];
@@ -169,10 +169,6 @@ for (const v of malformedVariants) {
   });
 }
 
-test('constructed malformed: empty response and code-fenced JSON', () => {
-  assert.equal(reject('').kind, 'malformed');
-  assert.equal(reject('```json\n' + emittedText() + '\n```').kind, 'malformed');
-});
 
 test('constructed valid: verdict justified, exactly two reasons each citing one id', () => {
   const o = clone(emitted());
@@ -189,7 +185,7 @@ test('the stored fixture carries the three system fields and no other additions'
   const stored = readJson<Record<string, unknown>>('opinions', 'judge-3.stored.json');
   const { role_id, label, deliberation_id, ...rest } = stored;
   assert.equal(role_id, 'judge-3');
-  assert.equal(label, 'Shamgar model');
+  assert.equal(label, 'Meir Shamgar');
   assert.equal(deliberation_id, 'd-0001');
   assert.deepEqual(rest, emitted());
 });

@@ -1,0 +1,6 @@
+{
+  "case_id": "T-003",
+  "deliberation_id": "d-T-003-1788201480873",
+  "status": "pending"
+}
+http=202

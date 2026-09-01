@@ -12,12 +12,12 @@
     "seat": "prosecution"
   },
   "judge-1": {
-    "label": "Barak model"
+    "label": "Aharon Barak"
   },
   "judge-2": {
-    "label": "Elon model"
+    "label": "Menachem Elon"
   },
   "judge-3": {
-    "label": "Shamgar model"
+    "label": "Meir Shamgar"
   }
 }

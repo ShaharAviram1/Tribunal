@@ -30,6 +30,7 @@ The model emits no ids. Models are unreliable at maintaining unique identifiers;
 | `role_id` | string | one of `jon`, `tyrion`, `daenerys`, `greyworm` |
 | `seat` | string | `defense` or `prosecution`, from configuration; `jon` and `tyrion` are defense, `daenerys` and `greyworm` are prosecution |
 | `deliberation_id` | string | the deliberation this stance belongs to |
+| `model_reassigned_from` | string, optional | present only when the seat failed on its primary model and was reassigned to a configured fallback (revision 2026-09-01); records the model that failed, so the reassignment is visible on the record |
 | `points[].id` | string | `<role_id>.p<index>`, index starting at 1 in array order, so `tyrion.p1` through `tyrion.p5` |
 
 `seat` is stored alongside the emitted `position` so that "concluded against the seat" is a comparison of two stored values, not something the interface derives.
@@ -44,7 +45,7 @@ Retry rules are those of spec.md, part two, criterion 6.
 |---|---|
 | Provider signals a refusal (finish or stop reason) | refusal: zero retries, recorded as failed |
 | Provider reports the response cut off at the output ceiling (`finish_reason: length`) | truncated: one retry of the same prompt at a raised ceiling, no corrective text; a second truncation fails the role |
-| Response is not a parseable JSON object, whatever it says | malformed: one corrective retry restating the format and naming what failed |
+| Response is not a parseable JSON object after unwrapping at most one outer code fence (revision 2026-09-01: a fence is an envelope, not a value, and is stripped with a log note) | malformed: corrective retry restating the format and naming what failed |
 | A required field is missing, or an extra field is present | malformed |
 | `position` outside the two values | malformed |
 | `points` count outside 3–5 | malformed |

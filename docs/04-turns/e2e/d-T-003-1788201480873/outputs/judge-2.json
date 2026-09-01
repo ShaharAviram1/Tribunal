@@ -1,0 +1,38 @@
+{
+  "label": "Elon model",
+  "against": {
+    "text": "Daenerys had just destroyed a surrendered city and announced continued campaigns of liberation, creating a credible and massive future threat to many lives that could not be reliably prevented by any practical alternative short of immediate action.",
+    "relies_on": [
+      "tyrion.p1",
+      "tyrion.p3"
+    ]
+  },
+  "reasons": [
+    {
+      "text": "Daenerys was unarmed and not actively attacking Jon at the moment of the killing, so there was no immediate physical threat that would justify lethal defensive action under the doctrine requiring imminent danger.",
+      "relies_on": [
+        "jon.p1",
+        "daenerys.p1",
+        "greyworm.p2"
+      ]
+    },
+    {
+      "text": "Jon did not pursue available non‑lethal options such as convening a council, detaining Daenerys, or seeking her public surrender of power, leaving safer alternatives untried before resorting to lethal force.",
+      "relies_on": [
+        "jon.p2",
+        "daenerys.p2",
+        "greyworm.p3"
+      ]
+    },
+    {
+      "text": "Jon lacked any formal legal authority to execute a ruler, and the principle of necessity does not override the requirement of authority when less harmful means are available.",
+      "relies_on": [
+        "jon.p3",
+        "greyworm.p1"
+      ]
+    }
+  ],
+  "role_id": "judge-2",
+  "verdict": "not_justified",
+  "deliberation_id": "d-T-003-1788201480873"
+}

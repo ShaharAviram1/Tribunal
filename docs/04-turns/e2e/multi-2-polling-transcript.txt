@@ -1,0 +1,7 @@
+2s  status=running stage=advocates outputs=2 calls=2 spend=$0.0032
+21s  status=running stage=advocates outputs=3 calls=3 spend=$0.0257
+59s  status=running stage=judges outputs=4 calls=4 spend=$0.0257
+78s  status=running stage=judges outputs=5 calls=7 spend=$0.0271
+87s  status=running stage=judges outputs=6 calls=8 spend=$0.0275
+145s  status=incomplete stage=judges outputs=7 calls=10 spend=$0.0275
+terminal_reason: judge column(s) judge-3 produced no opinion; the others stand

@@ -1,0 +1,39 @@
+{
+  "label": "Menachem Elon",
+  "against": {
+    "text": "The strongest counter‑argument is that Brutus was bound by his oath to preserve the Republic and that no lawful channel remained to curb Caesar’s permanent dictatorship; in that view, the killing was a constitutional duty rather than murder.",
+    "relies_on": [
+      "jon.p1",
+      "jon.p2"
+    ]
+  },
+  "reasons": [
+    {
+      "text": "Brutus killed an unarmed man in a civic space without any trial, bypassing lawful procedure. Lethal force is justified only when an immediate threat exists; here Caesar posed no present danger, so the act was an extrajudicial execution that the rule of law forbids.",
+      "relies_on": [
+        "greyworm.p1",
+        "greyworm.p3",
+        "tyrion.p2"
+      ]
+    },
+    {
+      "text": "Brutus repaid Caesar's pardon and promotion with murder, violating the duty of gratitude owed to a benefactor. The moral bond created by mercy demands loyalty; betraying it undermines communal responsibility and human dignity.",
+      "relies_on": [
+        "tyrion.p1",
+        "daenerys.p1",
+        "greyworm.p2"
+      ]
+    },
+    {
+      "text": "Brutus struck among the last blows, showing deliberate, decisive participation rather than reluctant defense. His intent was to finish the killing, not to halt an ongoing threat, confirming premeditated murder rather than justified protection.",
+      "relies_on": [
+        "tyrion.p4",
+        "daenerys.p4",
+        "greyworm.p4"
+      ]
+    }
+  ],
+  "role_id": "judge-2",
+  "verdict": "not_justified",
+  "deliberation_id": "d-T-006-1788268372241-744dfe6b"
+}

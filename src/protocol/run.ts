@@ -11,12 +11,13 @@ import { validateOpinion } from './validate-opinion.ts';
 import type { StoredChargeSheet, StoredStance, StoredOpinion, FailureRecord } from './types.ts';
 
 export type CallOutcome =
-  | { outcome: 'ok'; text: string; truncated?: boolean }
+  | { outcome: 'ok'; text: string; truncated?: boolean; row?: { model_requested?: string } }
   | { outcome: 'refusal' }
   | { outcome: 'transport_error' }
   | { outcome: 'cap_exceeded' };
 export type ModelClient = {
   call(req: { role_id: string; prompt: string; hash: string; attempt: number; max_output_tokens?: number }): Promise<CallOutcome>;
+  reassignToFallback?(role_id: string): string | null;
   log: unknown[];
 };
 type MaybePromise<T> = T | Promise<T>;
@@ -88,49 +89,67 @@ export async function runDeliberation(deps: RunDeps): Promise<Job> {
     await markDone(role, false);
   };
 
-  // One role, start to finish: at most one corrective retry, then a failure record.
+  // One role, start to finish. Judges: one corrective retry. Advocates: two, because a failed
+  // advocate aborts the whole deliberation before the bench, and one transient flake should not
+  // be the first thing a visitor sees (spec revision, 2026-09-01). The abort stays as last resort.
   const runRole = async (role: RoleId, stances?: StoredStance[]) => {
     const already = await stored(role);
     if (already !== undefined) return; // re-entry: never call a stored role again
     const isJudge = (JUDGES as readonly string[]).includes(role);
     const validIds = stances ? stances.flatMap((s) => s.points.map((p) => p.id)) : [];
     const attempts: FailureRecord['attempts'] = [];
-    let corrective: string | undefined;
-    let ceiling = caps.max_output_tokens;
-    for (let round = 0; round < 2; round++) {
-      if (capHit) { await fail(role, `not dispatched: ${capHit}`, attempts); return; }
-      const attempt = (job.attempts_by_role[role] ?? 0) + 1;
-      job.attempts_by_role[role] = attempt;
-      const p = assemblePrompt({ role_id: role, chargeSheet, stances, corrective, promptsDir: deps.promptsDir });
-      const res = await client.call({ role_id: role, prompt: p.text, hash: p.hash, attempt, max_output_tokens: ceiling });
-      syncBudget();
-      if (res.outcome === 'cap_exceeded') {
-        capHit = capHit ?? `cap exceeded at ${job.calls} calls, ${job.spend_usd.toFixed(4)} USD`;
-        attempts.push({ hash: p.hash, text: null, outcome: 'cap_exceeded', detail: capHit });
-        await fail(role, capHit, attempts); return;
+    const primaryModel = job.models[role];
+    let reassignedFrom: string | null = null;
+    let lastFailReason = 'failed';
+    // Model passes: the primary, then each configured fallback. Reassignment happens ONLY here,
+    // after a full pass has failed; a valid stance is never re-rolled for its content.
+    for (let pass = 0; ; pass++) {
+      let corrective: string | undefined;
+      let ceiling = caps.max_output_tokens;
+      const rounds = isJudge ? 2 : 3;
+      let passFailed = false;
+      for (let round = 0; round < rounds; round++) {
+        if (capHit) { await fail(role, `not dispatched: ${capHit}`, attempts); return; }
+        const attempt = (job.attempts_by_role[role] ?? 0) + 1;
+        job.attempts_by_role[role] = attempt;
+        const p = assemblePrompt({ role_id: role, chargeSheet, stances, corrective, promptsDir: deps.promptsDir, sketches: (chargeSheet as unknown as { sketches?: import('../prompt/assemble.ts').SketchPersona[] }).sketches });
+        const res = await client.call({ role_id: role, prompt: p.text, hash: p.hash, attempt, max_output_tokens: ceiling });
+        syncBudget();
+        if (res.outcome === 'cap_exceeded') {
+          capHit = capHit ?? `cap exceeded at ${job.calls} calls, ${job.spend_usd.toFixed(4)} USD`;
+          attempts.push({ hash: p.hash, text: null, outcome: 'cap_exceeded', detail: capHit });
+          await fail(role, capHit, attempts); return;
+        }
+        if (res.outcome === 'refusal') { attempts.push({ hash: p.hash, text: null, outcome: 'refusal', detail: 'provider signalled a refusal' }); lastFailReason = 'refusal'; passFailed = true; break; }
+        if (res.outcome === 'transport_error') { attempts.push({ hash: p.hash, text: null, outcome: 'transport_error', detail: 'transport retries exhausted' }); lastFailReason = 'transport_error'; passFailed = true; break; }
+        if (res.truncated) {
+          attempts.push({ hash: p.hash, text: res.text, outcome: 'ok', detail: `truncated at ${ceiling} output tokens` });
+          if (round === rounds - 1) { lastFailReason = `truncated on all attempts`; passFailed = true; break; }
+          ceiling = ceiling * caps.truncation_retry_ceiling_multiplier;
+          continue;
+        }
+        const v = isJudge ? validateOpinion(res.text, validIds) : validateStance(res.text);
+        if (v.ok) {
+          const used = (res as { row?: { model_requested?: string } }).row?.model_requested;
+          if (used && job.models[role] !== used) job.models[role] = used; // the map records the model that actually served
+          const base = isJudge
+            ? { role_id: role, label: roles[role]?.label ?? role, deliberation_id, ...(v as { opinion: StoredOpinion }).opinion }
+            : ingestStance((v as { stance: StoredStance }).stance, role, roles[role]?.seat ?? 'defense', deliberation_id);
+          const out = reassignedFrom ? { ...base, model_reassigned_from: reassignedFrom } : base;
+          await store.putOutput(role, out);
+          await markDone(role, true);
+          return;
+        }
+        attempts.push({ hash: p.hash, text: res.text, outcome: 'ok', detail: `${v.kind}: ${v.detail}` });
+        if (round === rounds - 1) { lastFailReason = `${v.kind} on all attempts`; passFailed = true; break; }
+        corrective = correctiveBlock(isJudge, v.kind, v.detail, 'unresolved' in v ? v.unresolved : undefined, validIds, deps.promptsDir);
       }
-      if (res.outcome === 'refusal') { attempts.push({ hash: p.hash, text: null, outcome: 'refusal', detail: 'provider signalled a refusal' }); await fail(role, 'refusal', attempts); return; }
-      if (res.outcome === 'transport_error') { attempts.push({ hash: p.hash, text: null, outcome: 'transport_error', detail: 'transport retries exhausted' }); await fail(role, 'transport_error', attempts); return; }
-      if (res.truncated) {
-        // Truncation is the ceiling's failure, not the text's: one retry at a raised ceiling, same prompt,
-        // no corrective text. A second truncation fails the role as truncated (spec.md criterion 6).
-        attempts.push({ hash: p.hash, text: res.text, outcome: 'ok', detail: `truncated at ${ceiling} output tokens` });
-        if (round === 1) { await fail(role, 'truncated on both attempts', attempts); return; }
-        ceiling = ceiling * caps.truncation_retry_ceiling_multiplier;
-        continue;
-      }
-      const v = isJudge ? validateOpinion(res.text, validIds) : validateStance(res.text);
-      if (v.ok) {
-        const out: StoredStance | StoredOpinion = isJudge
-          ? { role_id: role, label: roles[role]?.label ?? role, deliberation_id, ...(v as { opinion: StoredOpinion }).opinion }
-          : ingestStance((v as { stance: StoredStance }).stance, role, roles[role]?.seat ?? 'defense', deliberation_id);
-        await store.putOutput(role, out);
-        await markDone(role, true);
-        return;
-      }
-      attempts.push({ hash: p.hash, text: res.text, outcome: 'ok', detail: `${v.kind}: ${v.detail}` });
-      if (round === 1) { await fail(role, `${v.kind} on both attempts`, attempts); return; }
-      corrective = correctiveBlock(isJudge, v.kind, v.detail, 'unresolved' in v ? v.unresolved : undefined, validIds, deps.promptsDir);
+      if (!passFailed) return;
+      const next = client.reassignToFallback?.(role) ?? null;
+      if (!next) { await fail(role, lastFailReason, attempts); return; }
+      reassignedFrom = reassignedFrom ?? primaryModel ?? null;
+      job.models[role] = next;
+      await store.putJob({ ...job }); // the reassignment is on the job before the next call
     }
   };
 

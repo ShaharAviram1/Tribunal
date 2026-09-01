@@ -1,0 +1,33 @@
+{
+  "seat": "defense",
+  "points": [
+    {
+      "id": "jon.p1",
+      "claim": "Daenerys had just destroyed a surrendered city, killing many civilians.",
+      "support": "The record shows King's Landing had surrendered, its bells rang, and organized resistance ceased. Despite this, Daenerys used her dragon to burn streets and civilians on a vast scale. This act was not a battle but a massacre of people who no longer resisted."
+    },
+    {
+      "id": "jon.p2",
+      "claim": "Daenerys declared she would continue her campaign of 'liberation' by force.",
+      "support": "After the destruction, Daenerys told her forces the campaign would continue beyond King's Landing. This meant more cities and people would face the same fate, threatening countless lives and the realm's stability."
+    },
+    {
+      "id": "jon.p3",
+      "claim": "Safer alternatives to killing Daenerys were not available or attempted.",
+      "support": "I did not convene a council, seek a public surrender, or attempt detention. The record is silent on any other safer means being possible or effective. Daenerys refused mercy and shared judgment, making negotiation or peaceful removal unlikely."
+    },
+    {
+      "id": "jon.p4",
+      "claim": "Daenerys was unarmed and not attacking me when I acted to stop her.",
+      "support": "I used our intimacy to get close enough to kill her. This was necessary because she was not attacking me directly, and I had no formal authority to detain or arrest her. The killing was a last resort to prevent further harm."
+    },
+    {
+      "id": "jon.p5",
+      "claim": "I acted to protect others and the realm from imminent and large-scale harm.",
+      "support": "Given the destruction already wrought, the promise of more, and the refusal to share power or mercy, I believed killing Daenerys was necessary to defend innocent people and the realm itself from tyranny and further bloodshed."
+    }
+  ],
+  "role_id": "jon",
+  "position": "justified",
+  "deliberation_id": "d-T-001-1788247753913-b4847b2d"
+}

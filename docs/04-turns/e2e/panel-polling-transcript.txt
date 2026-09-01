@@ -1,0 +1,12 @@
+2s  T-003 status=running stage=advocates outputs=0 calls=0
+4s  T-004 status=running stage=advocates outputs=2 calls=3
+14s  T-003 status=running stage=advocates outputs=1 calls=1
+38s  T-004 status=running stage=advocates outputs=3 calls=5
+48s  T-003 status=running stage=advocates outputs=3 calls=3
+59s  T-003 status=running stage=judges outputs=4 calls=4
+61s  T-004 status=incomplete stage=advocates outputs=4 calls=6
+d-T-004-1788201481917 terminal_reason: fewer than four stances succeeded in the advocates stage (3 of 4); judges not called
+80s  T-003 status=running stage=judges outputs=6 calls=6
+118s  T-003 status=running stage=judges outputs=7 calls=6
+128s  T-003 status=complete stage=judges outputs=7 calls=7
+d-T-003-1788201480873 terminal_reason: null
