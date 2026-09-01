@@ -24,7 +24,8 @@ export default async (req: Request): Promise<Response> => {
   if (!sheet) return new Response('unknown case', { status: 404 });
 
   const caps: Caps = JSON.parse(readFileSync(join(process.cwd(), 'config/caps.json'), 'utf8'));
-  const client = new ModelClient({ caps, models: job.models, deliberation_id, budget: store, transport: openRouterTransport(requireEnv('OPENROUTER_API_KEY')) });
+  const freeFallbacks = (JSON.parse(readFileSync(join(process.cwd(), 'config/models.json'), 'utf8')) as { free_fallbacks?: string[] }).free_fallbacks ?? [];
+  const client = new ModelClient({ caps, models: job.models, deliberation_id, budget: store, transport: openRouterTransport(requireEnv('OPENROUTER_API_KEY')), freeFallbacks });
   (client.log as unknown[]).push(...(await store.readLog()));
   const beat = setInterval(() => { void store.heartbeat().catch(() => {}); }, 30_000);
   try {

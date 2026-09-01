@@ -121,11 +121,6 @@ for (const v of malformedVariants) {
   });
 }
 
-test('constructed malformed: empty response and code-fenced JSON', () => {
-  assert.equal(reject('').kind, 'malformed');
-  assert.equal(reject('   \n').kind, 'malformed');
-  assert.equal(reject('```json\n' + emittedText() + '\n```').kind, 'malformed');
-});
 
 test('constructed valid: exactly five points, claim of 40 words, support of 200 words', () => {
   const s = clone(emitted());

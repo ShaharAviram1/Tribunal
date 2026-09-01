@@ -1,5 +1,5 @@
 {
-  "comment": "Named panels. single: all seven roles on one model. multi: seven distinct models, no two roles sharing one. The resolved map is stored on the job at filing, so a past case says what it used even after this file changes.",
+  "comment": "Named panels. single: all seven roles on one model. multi: seven distinct models, no two roles sharing one. free_fallbacks: an ordered chain; when a call to a free model fails with a rate or quota status, the client advances to the next free model in the chain, each attempt logged under the model actually requested, and the job map records the model that finally served the role.",
   "single": {
     "jon": "minimax/minimax-m2.7:free",
     "tyrion": "minimax/minimax-m2.7:free",
@@ -17,5 +17,13 @@
     "judge-1": "deepseek/deepseek-chat-v3.1",
     "judge-2": "mistralai/mistral-small-3.2-24b-instruct",
     "judge-3": "qwen/qwen3.8-flash"
-  }
+  },
+  "free_fallbacks": [
+    "minimax/minimax-m2.7:free",
+    "minimax/minimax-m3:free",
+    "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "nvidia/nemotron-3-super-120b-a12b:free",
+    "z-ai/glm-5.2:free",
+    "thinkingmachines/inkling:free"
+  ]
 }

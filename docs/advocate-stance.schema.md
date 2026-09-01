@@ -44,7 +44,7 @@ Retry rules are those of spec.md, part two, criterion 6.
 |---|---|
 | Provider signals a refusal (finish or stop reason) | refusal: zero retries, recorded as failed |
 | Provider reports the response cut off at the output ceiling (`finish_reason: length`) | truncated: one retry of the same prompt at a raised ceiling, no corrective text; a second truncation fails the role |
-| Response is not a parseable JSON object, whatever it says | malformed: one corrective retry restating the format and naming what failed |
+| Response is not a parseable JSON object after unwrapping at most one outer code fence (revision 2026-09-01: a fence is an envelope, not a value, and is stripped with a log note) | malformed: corrective retry restating the format and naming what failed |
 | A required field is missing, or an extra field is present | malformed |
 | `position` outside the two values | malformed |
 | `points` count outside 3–5 | malformed |
