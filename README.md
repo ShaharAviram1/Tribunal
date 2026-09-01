@@ -57,7 +57,7 @@ deliberation stopped before the bench, and the page renders each failure as a fa
 ## The live site
 
 The site is https://incomparable-hotteok-4da2cf.netlify.app. A deliberation takes about two minutes
-from filing to the third opinion. The one-model panel is free and needs no access code.
+from filing to the third opinion. Every panel runs on paid models; convening needs no access code, only room under the daily cap.
 
 Deployments sleep: the free Supabase project pauses when idle, so the site may be unavailable when
 you open it. The committed runs are the durable evidence.

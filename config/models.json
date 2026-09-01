@@ -13,7 +13,7 @@
     "jon": "openai/gpt-4.1-mini",
     "tyrion": "anthropic/claude-sonnet-4.5",
     "daenerys": "google/gemini-2.5-flash",
-    "greyworm": "qwen/qwen3.8-27b",
+    "greyworm": "google/gemini-2.5-flash-lite",
     "judge-1": "deepseek/deepseek-chat-v3.1",
     "judge-2": "mistralai/mistral-small-3.2-24b-instruct",
     "judge-3": "cohere/command-r-08-2024"
@@ -30,7 +30,7 @@
       "google/gemini-2.5-flash-lite"
     ],
     "greyworm": [
-      "google/gemini-2.5-flash-lite"
+      "mistralai/mistral-small-2603"
     ],
     "judge-1": [
       "google/gemini-2.5-flash-lite"

@@ -5,14 +5,14 @@ record under `docs/04-turns/`, and a merge pack under `docs/06-merge-packs/`. A 
 by what it may not do, not by what it should. This file says where the spiral stands and what
 remains; the turn records say what each turn taught.
 
-Last revised 1 September 2026.
+Last revised 2 September 2026.
 
 ## Where it stands
 
 | | |
 |---|---|
-| Merged to `main` | Turns 0, 1, 2, 3, 4 — the spiral is complete |
-| Open | none |
+| Merged to `main` | Turns 0, 1, 2, 3, 4 — the planned spiral |
+| Open | 5 — maintenance |
 | Remaining | none |
 | Deployed | Netlify, live convening, no access code |
 
@@ -67,10 +67,15 @@ that never answered was replaced by one that always did, and the first convening
 panel ran to complete — seven first-call answers, $0.0444, three verdicts. Both logs sit in the
 repository; the $0.25 backstop stands re-affirmed as a dated line.
 
-### 5 — cut
+### 5 — Maintenance · open
 
-There is no turn five. The intake clerk, the advocate prompt rewrite and model fallback were built
-inside turn three and are recorded there rather than given a turn of their own.
+First declared cut — the intake clerk, the advocate prompt rewrite and model fallback were built
+inside turn three, and no fifth turn of building was owed. Then the live site reopened it: after
+the merge-ready close, running the courtroom kept teaching. Bound: no new capability; every change
+repairs what a live run exposed or makes visible a cost already spent. The paid-only roster, the
+background-tab wake, per-seat cost and tokens, and the gavel saga all live here. Record:
+`docs/04-turns/turn-05.md`, which also names a branch drift caught and closed mid-turn. Open until
+the strike passes the eye that measured it.
 
 ## Closing items
 
