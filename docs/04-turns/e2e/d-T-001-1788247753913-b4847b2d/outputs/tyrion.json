@@ -1,0 +1,33 @@
+{
+  "seat": "defense",
+  "points": [
+    {
+      "id": "tyrion.p1",
+      "claim": "The scale of threatened harm was catastrophic and immediate, based on what Daenerys had just demonstrated and what she promised to continue.",
+      "support": "King's Landing had surrendered. The bells rang, resistance ceased, and Daenerys burned streets and civilians anyway. This was not collateral damage in battle; it was deliberate slaughter after victory. Then she promised more of the same: liberation would continue beyond King's Landing. Jon had seen the city. He knew the scale. He heard the promise. The record gives us destruction on a vast scale already inflicted, and a declared intention to repeat it. If we require Jon to wait for the next city to burn before acting, we are saying that defense of others begins only after they are ash. That is not a standard of necessity; it is a standard of paralysis."
+    },
+    {
+      "id": "tyrion.p2",
+      "claim": "Daenerys explicitly rejected any constraint on her judgment, making institutional alternatives unavailable.",
+      "support": "Jon asked her to show mercy and to let others share in deciding what was good. She refused. She would not let others choose. Her judgment was final. This is not inference; it is what she said. A ruler who will not be constrained by council, by law, or by the moral claims of others cannot be constrained by anything except force. Jon had no formal authority to convene a trial or demand her abdication. Her own forces were loyal to her. Grey Worm had joined the killing. Tyrion was imprisoned for objecting. The record is silent on whether any coalition existed that could have detained her safely, but silence on that point favors Jon: if such a coalition were obvious, the prosecution would have named it."
+    },
+    {
+      "id": "tyrion.p3",
+      "claim": "The threat extended to identified individuals Jon had a duty to protect, including his sisters.",
+      "support": "Tyrion warned Jon that Daenerys would treat Jon's sisters as enemies, along with anyone else she saw as an obstacle. Daenerys had already shown what she did to enemies: she burned them. Jon's sisters were not abstract future victims; they were specific people under specific threat from a ruler who had just demonstrated her willingness to kill on a massive scale. The fact that Jon had pledged loyalty to Daenerys complicates his position but does not erase his duty to prevent murder. Loyalty is not a license to enable atrocity. If it were, every subordinate who ever served a tyrant would be blameless."
+    },
+    {
+      "id": "tyrion.p4",
+      "claim": "Jon used deception to kill someone who trusted him, which is damning, but the alternative was failure.",
+      "support": "Daenerys was unarmed and not attacking. Jon exploited intimacy to get close. This is ugly, and I will not pretend otherwise. It makes the act harder to justify, not easier. But the question is not whether Jon's method was honorable; it is whether the killing was necessary. If Daenerys had been warned, she would have been guarded. If she had been guarded, Jon would have failed. If Jon had failed, the burning would have continued. The record does not tell us whether a fair fight or a public confrontation was possible. It tells us Jon acted in private. That suggests he believed no other method would succeed. We can condemn the deception and still recognize that it was the only way to stop her."
+    },
+    {
+      "id": "tyrion.p5",
+      "claim": "Jon acted without authority, which matters, but someone had to act and no one with authority was willing or able.",
+      "support": "Jon was not a judge, not a lawful executioner, not a council with jurisdiction. He was a military commander who had sworn loyalty. His lack of formal authority is a serious problem. It means he took on himself a decision that should belong to institutions, to law, to something larger than one man's judgment. But Daenerys had destroyed the institutional alternative by rejecting any limit on her power. Tyrion, who held formal authority as Hand, objected and was imprisoned. No council existed that could check her. The realm faced a choice: wait for someone with proper authority who would never come, or act through someone without authority who was there. Jon chose to act. That makes him a killer, but I think it does not make him a murderer."
+    }
+  ],
+  "role_id": "tyrion",
+  "position": "justified",
+  "deliberation_id": "d-T-001-1788247753913-b4847b2d"
+}

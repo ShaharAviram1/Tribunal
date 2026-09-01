@@ -1,0 +1,4 @@
+2s  status=running stage=advocates outputs=2 calls=3 spend=$0.0048
+30s  status=running stage=advocates outputs=3 calls=5 spend=$0.0243
+50s  status=incomplete stage=advocates outputs=4 calls=6 spend=$0.0430
+terminal_reason: fewer than four stances succeeded in the advocates stage (3 of 4); judges not called

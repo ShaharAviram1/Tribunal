@@ -1,0 +1,33 @@
+{
+  "seat": "prosecution",
+  "points": [
+    {
+      "id": "greyworm.p1",
+      "claim": "Daenerys was unarmed and not attacking Jon at the moment he stabbed her, so there was no immediate threat to justify lethal force.",
+      "support": "The record states Daenerys was unarmed and not engaged in an attack when Jon killed her. Justified defense requires an imminent threat; without active violence, deadly force cannot be considered necessary."
+    },
+    {
+      "id": "greyworm.p2",
+      "claim": "Jon possessed knowledge of Daenerys's future plans but no evidence of an imminent attack; the threat was speculative, not immediate.",
+      "support": "Fact 2 shows Daenerys announced continued campaigns, and Fact 3 records warnings about future actions. However, no order or movement toward immediate violence existed at the time of the killing. A future possibility does not satisfy the imminence requirement."
+    },
+    {
+      "id": "greyworm.p3",
+      "claim": "Jon had safer alternatives to lethal force that he did not pursue, including convening a council, detaining Daenerys, or demanding public surrender.",
+      "support": "Fact 5 notes Jon did not convene a council, attempt detention, or seek a public surrender of power. These less‑drastic options were available and could have prevented further harm without resorting to killing."
+    },
+    {
+      "id": "greyworm.p4",
+      "claim": "Jon lacked formal authority to execute a queen; his act was extrajudicial and not sanctioned by any law or command.",
+      "support": "Jon held no legal warrant, trial, or order from any recognized authority. Executing a monarch without lawful mandate violates established legal principles, making the act an extrajudicial killing rather than a lawful defense."
+    },
+    {
+      "id": "greyworm.p5",
+      "claim": "Jon used intimacy to approach Daenerys, indicating premeditation rather than an urgent defensive response.",
+      "support": "Fact 5 specifies Jon used their intimacy to get close enough to strike. This reveals planning and deliberate choice, contradicting the spontaneity required for a claim of necessary defense."
+    }
+  ],
+  "role_id": "greyworm",
+  "position": "not_justified",
+  "deliberation_id": "d-T-001-1788247753913-b4847b2d"
+}
