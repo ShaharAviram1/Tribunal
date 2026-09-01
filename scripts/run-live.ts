@@ -17,8 +17,8 @@ const models: Record<string, string> = modelArg.endsWith('.json')
   : Object.fromEntries([...ADVOCATES, ...JUDGES].map((r) => [r, modelArg]));
 const chargeSheet = JSON.parse(readFileSync(join(process.cwd(), 'fixtures/charge-sheets/T-001.stored.json'), 'utf8'));
 const store = new FileStore(join(process.cwd(), 'runs'), id);
-const freeFallbacks = (JSON.parse(readFileSync(join(process.cwd(), 'config/models.json'), 'utf8')) as { free_fallbacks?: string[] }).free_fallbacks ?? [];
-const client = new ModelClient({ caps, models, deliberation_id: id, budget: store, transport: openRouterTransport(key), freeFallbacks });
+const modelsCfg = JSON.parse(readFileSync(join(process.cwd(), 'config/models.json'), 'utf8')) as { free_fallbacks?: string[]; role_fallbacks?: Record<string, string[]> };
+const client = new ModelClient({ caps, models, deliberation_id: id, budget: store, transport: openRouterTransport(key), freeFallbacks: modelsCfg.free_fallbacks ?? [], roleFallbacks: modelsCfg.role_fallbacks ?? {} });
 // The client's own rows are the log of record; the protocol reads client.log for budget sync.
 const priorRows = store.readLog(); (client.log as unknown[]).push(...priorRows);
 const t0 = Date.now();

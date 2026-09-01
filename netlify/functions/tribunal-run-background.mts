@@ -33,8 +33,8 @@ export default async (req: Request): Promise<Response> => {
     if (!drafted.ok) return new Response(JSON.stringify({ status: 'failed', failures: drafted.failures }), { status: 200 });
     sheet = drafted.sheet; // the stamped sheet, not the stale reservation
   }
-  const freeFallbacks = (JSON.parse(readFileSync(join(process.cwd(), 'config/models.json'), 'utf8')) as { free_fallbacks?: string[] }).free_fallbacks ?? [];
-  const client = new ModelClient({ caps, models: job.models, deliberation_id, budget: store, transport: openRouterTransport(requireEnv('OPENROUTER_API_KEY')), freeFallbacks });
+  const modelsCfg = JSON.parse(readFileSync(join(process.cwd(), 'config/models.json'), 'utf8')) as { free_fallbacks?: string[]; role_fallbacks?: Record<string, string[]> };
+  const client = new ModelClient({ caps, models: job.models, deliberation_id, budget: store, transport: openRouterTransport(requireEnv('OPENROUTER_API_KEY')), freeFallbacks: modelsCfg.free_fallbacks ?? [], roleFallbacks: modelsCfg.role_fallbacks ?? {} });
   (client.log as unknown[]).push(...(await store.readLog()));
   const beat = setInterval(() => { void store.heartbeat().catch(() => {}); }, 30_000);
   try {
