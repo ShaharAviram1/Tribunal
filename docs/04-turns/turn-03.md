@@ -77,3 +77,13 @@ The first live submission then taught the deliberation's own lesson a second tim
 T-006 is the landmark: from a neutral two-hundred-word account of the Ides of March, the clerk drafted a charge sheet that passed every rule first try and seated Servilia and Calpurnia for the defense, Marcus Antonius and Cicero for the prosecution, real figures from the scenario, none invented. The floor split, the Servilia seat arguing justified and Calpurnia concluding against her own seat; the bench ruled not_justified three times over. One intake call, $0.026, eleven calls end to end, complete in 5:43, every row on the one job so the cost is still the sum of the rows.
 
 The per-IP cooldown was removed by decision after it throttled its own author twice in one afternoon; the paid-panel daily cap, the spend caps, and the provider-side credit limit remain.
+
+## What is now locked
+
+- A single well-formed outer code fence is an envelope, not a value, and is stripped with a log note: spec.md criterion 6 revision, `src/protocol/parse-object.ts`, drilled in `tests/protocol/fence.test.ts`.
+- The per-run spend backstop is the measured $0.25, five times the worst observed paid run: spec.md criterion 2 revision, `config/caps.json`.
+- Judge reasons and the counter-consideration are bounded at 90 words; opinions have no other length bound and none is added without new rendered evidence: spec.md criterion 8 revisions, `src/protocol/validate-opinion.ts`.
+- The door is guarded by caps, not a code: filing and intake are public; the paid panel is capped at 10 per 24 hours counted from the job maps; the per-IP cooldown is removed; the background function keeps its shared secret: `netlify/functions/tribunal-file.mts`, `tribunal-intake.mts`, spec.md part three.
+- One renderer serves the static render and the live page, and the client builds no content, only reveals server-rendered cards: `src/page/render-case.ts`, `public/case-live.js`, the sealed-bench drill in `tests/render.test.ts`.
+- A failed seat reassigns to its configured fallback only after all its retries, never for content, and the reassignment is visible on log, job, and card: `config/models.json` role_fallbacks, `src/protocol/run.ts`, `tests/protocol/reassignment.test.ts`.
+- The clerk drafts inside the background function, the docket row is reserved first, and the intake call is its job's first rows, so a deliberation's cost stays the sum of its rows: spec.md criterion 7 revision, `src/protocol/intake.ts`.
