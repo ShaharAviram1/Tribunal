@@ -180,7 +180,8 @@ the committed file so a reader can check exactly what is exempt, and the API key
   ceiling, backoff. Read by `netlify/functions/tribunal-run-background.mts` and
   `src/protocol/run.ts`, and handed to the client module at construction
   (`src/client/model-client.ts`). No code path raises the call or spend caps mid-run; the output
-  ceiling alone is raised, once, on a truncation retry, as spec.md criterion 6 requires.
+  ceiling alone is raised mid-run, doubling on each truncation retry, the truncation remedy of
+  spec.md criterion 6.
 - `config/models.json` — the named panels, the intake model, and the per-role fallback lists, with
   the decisions that shaped them recorded in its comment. Read by the background function and the
   scripts.

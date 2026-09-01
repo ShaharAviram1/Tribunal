@@ -4,7 +4,7 @@
 
 ## What this is
 
-Four advocates and three judges deliberate a charge sheet in seven separate model calls: T-001 from the dossier, or a case the intake clerk drafts from a submitted scenario, as T-006 proved. The judges' opinions are shown side by side, unreconciled. Run one put all seven roles on one model; run two spread them across several; both are committed with their logs. That is the whole project.
+Four advocates and three judges deliberate a charge sheet in seven separate model calls: T-001 from the dossier, or a case the intake clerk drafts from a submitted scenario, as T-006 proved. The judges' opinions are shown side by side, unreconciled. One committed deliberation ran all seven roles on one model; another ran them across seven; both logs are in the repository. That is the whole project.
 
 ## The documents, and what each is for
 
