@@ -116,8 +116,9 @@ export class ModelClient {
   }
 
   // Reassign a seat to its next configured fallback model. Called by the protocol ONLY after a
-  // role has failed all its retries; never because of what a stance said. Returns the new model
-  // or null when the chain is exhausted.
+  // role has failed all its retries; never because of what a stance said, and never on a
+  // provider-signalled refusal (correction, 2026-09-02: the fallback ruling covered failure,
+  // not refusal). Returns the new model or null when the chain is exhausted.
   reassignToFallback(role_id: string): string | null {
     const used = (this.#reassigned[role_id] ??= []);
     const next = (this.#roleFallbacks[role_id] ?? []).find((m) => !used.includes(m) && m !== this.#models[role_id]);

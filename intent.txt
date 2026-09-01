@@ -1,0 +1,7 @@
+When something contested happens, whoever is trying to understand it is handed a single answer. The readings that could compete with it are either never produced, or are collapsed into one conclusion before the reader sees them. What is lost is the disagreement itself: which readings exist, on what grounds, and where they part. Without that, there is no basis for judging the answer you were handed.
+
+So I want to build a tribunal for one fictional case from the course dossier, T-001. Four advocates and three judges: seven prompts, seven separate model calls. Each advocate returns its stance as structured points, in its character's voice. Each judge reads the record the four advocates produced and returns its own opinion and verdict. The separate calls are what make the readings independent; in one conversation, later text continues earlier text, and I would get one voice several times with a synthesis at the end.
+
+The three verdicts are presented side by side and are never combined. That rule was there before anything else. No majority, no count, no line that says what the panel found. If someone asks what was decided, the honest answer is that three judges decided three things, and here they are.
+
+First run, all seven roles on the same model in different calls. Second run, the seven roles across several models. That is the whole project.

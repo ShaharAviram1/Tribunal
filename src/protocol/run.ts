@@ -102,7 +102,9 @@ export async function runDeliberation(deps: RunDeps): Promise<Job> {
     let reassignedFrom: string | null = null;
     let lastFailReason = 'failed';
     // Model passes: the primary, then each configured fallback. Reassignment happens ONLY here,
-    // after a full pass has failed; a valid stance is never re-rolled for its content.
+    // after a full pass has failed; a valid stance is never re-rolled for its content, and a
+    // provider-signalled refusal never reaches a fallback at all (correction, 2026-09-02: the
+    // fallback ruling covered failure, not refusal).
     for (let pass = 0; ; pass++) {
       let corrective: string | undefined;
       let ceiling = caps.max_output_tokens;
@@ -120,7 +122,9 @@ export async function runDeliberation(deps: RunDeps): Promise<Job> {
           attempts.push({ hash: p.hash, text: null, outcome: 'cap_exceeded', detail: capHit });
           await fail(role, capHit, attempts); return;
         }
-        if (res.outcome === 'refusal') { attempts.push({ hash: p.hash, text: null, outcome: 'refusal', detail: 'provider signalled a refusal' }); lastFailReason = 'refusal'; passFailed = true; break; }
+        // Terminal for the role: zero retries and never a fallback (spec.md criterion 6,
+        // revision 2026-09-02: the fallback ruling covered failure, not refusal).
+        if (res.outcome === 'refusal') { attempts.push({ hash: p.hash, text: null, outcome: 'refusal', detail: 'provider signalled a refusal' }); await fail(role, 'refusal', attempts); return; }
         if (res.outcome === 'transport_error') { attempts.push({ hash: p.hash, text: null, outcome: 'transport_error', detail: 'transport retries exhausted' }); lastFailReason = 'transport_error'; passFailed = true; break; }
         if (res.truncated) {
           attempts.push({ hash: p.hash, text: res.text, outcome: 'ok', detail: `truncated at ${ceiling} output tokens` });
