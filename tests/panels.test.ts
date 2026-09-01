@@ -20,10 +20,12 @@ test('multi is seven distinct models, no two roles sharing one', () => {
   assert.equal(new Set(Object.values(panels.multi)).size, 7);
 });
 
-test('the free fallback chain is ordered, free-only, and starts from the single panel model', () => {
+test('the free fallback chain is ordered, free-only, and duplicate-free', () => {
+  // The chain once started from the single panel's model; that premise retired on 2026-09-01
+  // when the single panel moved to a paid model. The chain now only governs whatever free
+  // models appear anywhere, and rotation still requires the current model to be in the chain.
   const chain: string[] = panels.free_fallbacks;
   assert.ok(chain.length >= 3);
   for (const m of chain) assert.match(m, /:free$/, m);
-  assert.equal(chain[0], panels.single.jon, 'the chain starts where the single panel starts');
   assert.equal(new Set(chain).size, chain.length, 'no duplicates');
 });
