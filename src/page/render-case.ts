@@ -20,6 +20,11 @@ export type CaseData = {
 
 // The usage line beside each model name: what the seat cost and what it read and wrote,
 // summed across every attempt the log holds for the role. Chrome, not model content.
+export function usageSum(usage: Record<string, RoleUsage>): string {
+  const t = Object.values(usage).reduce((a, u) => ({ cost_usd: a.cost_usd + u.cost_usd, tokens_in: a.tokens_in + u.tokens_in, tokens_out: a.tokens_out + u.tokens_out }), { cost_usd: 0, tokens_in: 0, tokens_out: 0 });
+  return `Spend $${t.cost_usd.toFixed(4)} \u00b7 ${t.tokens_in.toLocaleString('en-US')} in / ${t.tokens_out.toLocaleString('en-US')} out`;
+}
+
 export function usageLine(u: RoleUsage | undefined): string {
   if (!u || u.attempts === 0) return '';
   const tok = u.tokens_in || u.tokens_out ? ` · ${u.tokens_in.toLocaleString('en-US')} in / ${u.tokens_out.toLocaleString('en-US')} out` : '';
@@ -191,6 +196,7 @@ export function renderCasePage(data: CaseData): string {
 <p>${esc(stageWord)}</p>
 <p>${esc(panelName(job?.models))}</p>
 <p class="head-meta" data-meta>Calls ${job ? job.calls : 0} of 20</p>
+${data.usage ? `<p class="head-usage">${esc(usageSum(data.usage))}</p>` : ''}
 </div>
 </header>
 ${stoppedNotice}
@@ -231,7 +237,7 @@ const CSS = `
 --lift:inset 0 1px 0 rgba(240,222,180,.075),0 2px 3px rgba(0,0,0,.5),0 30px 60px -34px rgba(0,0,0,1);
 }
 *{box-sizing:border-box}
-body{margin:0 auto;max-width:1560px;padding:196px 34px 60px;font:16.5px/1.58 var(--text);color:var(--page-ink);
+body{margin:0 auto;max-width:1560px;padding:56px 34px 60px;font:16.5px/1.58 var(--text);color:var(--page-ink);
 background:radial-gradient(110% 62% at 50% -6%,var(--accent-soft) 0%,rgba(0,0,0,0) 52%),var(--stone),radial-gradient(150% 128% at 50% -8%,var(--ground) 0%,var(--ground) 34%,var(--ground2) 100%);
 background-color:var(--ground2);background-attachment:fixed;text-wrap:pretty}
 .atmosphere{position:fixed;inset:0;z-index:30;pointer-events:none;
@@ -239,7 +245,7 @@ background:radial-gradient(58% 42% at 50% -4%,rgba(var(--sheen),.10) 0%,rgba(var
 box-shadow:inset 0 0 200px 10px rgba(0,0,0,.5),inset 0 -160px 150px -130px rgba(0,0,0,.85)}
 .micro{font:400 10px var(--mono);letter-spacing:.25em;text-transform:uppercase;color:var(--card-ink3);margin:.3em 0}
 .case-head{position:relative;display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:20px;border-bottom:3px double var(--accent-soft);padding-bottom:20px}
-.watermark{position:absolute;right:-6px;top:-58px;font:700 210px/1 var(--display);color:rgba(255,255,255,.028);pointer-events:none;user-select:none}
+.watermark{position:absolute;right:-6px;top:-40px;font:700 210px/1 var(--display);color:rgba(255,255,255,.028);pointer-events:none;user-select:none}
 .crumb{letter-spacing:.3em;font-size:11px}.crumb a{color:var(--page-ink3);text-decoration:none}
 h1{font:700 clamp(40px,4.8vw,70px)/0.96 var(--display);letter-spacing:-.02em;margin:.1em 0;text-shadow:0 2px 0 rgba(0,0,0,.5)}
 .head-sub{font-size:15px;color:var(--page-ink2);margin:.3em 0}

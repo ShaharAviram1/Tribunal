@@ -110,7 +110,13 @@ test('each seat shows its cost and tokens beside the model, from the log', () =>
   const html = renderCasePage({ chargeSheet, job, outputs, usage });
   assert.ok(html.includes('$0.0010 · 1,000 in / 300 out'), 'advocate usage line missing');
   assert.ok(html.includes('$0.0020 · 1,001 in / 301 out · 2 attempts'), 'attempts not shown when more than one');
-  assert.equal((html.match(/ in \/ /g) ?? []).length, 7, 'all seven seats carry a usage line');
+  assert.equal((html.match(/ in \/ /g) ?? []).length, 8, 'seven seat lines plus the header sum');
   const noUsage = renderCasePage({ chargeSheet, job, outputs });
   assert.ok(!noUsage.includes(' in / '), 'usage renders without data');
+});
+
+test('the header sums the whole run: spend and tokens across every seat', () => {
+  const usage = Object.fromEntries(['jon', 'tyrion', 'daenerys', 'greyworm', 'judge-1', 'judge-2', 'judge-3'].map((r) => [r, { cost_usd: 0.001, tokens_in: 1000, tokens_out: 300, attempts: 1 }]));
+  const html = renderCasePage({ chargeSheet, job, outputs, usage });
+  assert.ok(html.includes('Spend $0.0070 · 7,000 in / 2,100 out'), 'header sum missing or wrong');
 });
