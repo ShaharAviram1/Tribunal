@@ -112,7 +112,7 @@ export async function runDeliberation(deps: RunDeps): Promise<Job> {
         if (capHit) { await fail(role, `not dispatched: ${capHit}`, attempts); return; }
         const attempt = (job.attempts_by_role[role] ?? 0) + 1;
         job.attempts_by_role[role] = attempt;
-        const p = assemblePrompt({ role_id: role, chargeSheet, stances, corrective, promptsDir: deps.promptsDir });
+        const p = assemblePrompt({ role_id: role, chargeSheet, stances, corrective, promptsDir: deps.promptsDir, sketches: (chargeSheet as unknown as { sketches?: import('../prompt/assemble.ts').SketchPersona[] }).sketches });
         const res = await client.call({ role_id: role, prompt: p.text, hash: p.hash, attempt, max_output_tokens: ceiling });
         syncBudget();
         if (res.outcome === 'cap_exceeded') {

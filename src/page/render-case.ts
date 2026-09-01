@@ -7,6 +7,7 @@
 
 import type { StoredChargeSheet, StoredStance, StoredOpinion, FailureRecord, Reason } from '../protocol/types.ts';
 import type { Job } from '../protocol/run.ts';
+import { personaForRole, type SketchPersona } from '../prompt/assemble.ts';
 
 export type CaseData = {
   chargeSheet: StoredChargeSheet;
@@ -25,12 +26,12 @@ const NAMES: Record<string, string> = { jon: 'Jon Snow', tyrion: 'Tyrion Lannist
 const SEATS: Record<string, 'defense' | 'prosecution'> = { jon: 'defense', tyrion: 'defense', daenerys: 'prosecution', greyworm: 'prosecution' };
 const METHOD_LINE = 'Method adapted from published opinions. Not the jurist, and not a prediction of how he would decide.';
 
-function citation(id: string, stances: Map<string, StoredStance>): string {
+function citation(id: string, stances: Map<string, StoredStance>, displayName?: (r: string) => string): string {
   const [role] = id.split('.');
   const stance = stances.get(role ?? '');
   const point = stance?.points.find((p) => p.id === id);
   if (!point) return `<p class="cite-unresolved">an argued point that could not be found</p>`;
-  return `<details class="cite"><summary><span class="cite-who">${esc(NAMES[role!] ?? role!)}:</span> <span class="cite-claim">${esc(point.claim)}</span></summary><blockquote>${esc(point.support)}</blockquote></details>`;
+  return `<details class="cite"><summary><span class="cite-who">${esc(displayName ? displayName(role!) : (NAMES[role!] ?? role!))}:</span> <span class="cite-claim">${esc(point.claim)}</span></summary><blockquote>${esc(point.support)}</blockquote></details>`;
 }
 
 function shimmer(label: string, jobState: string): string {
@@ -69,9 +70,9 @@ ${attemptsDetails(rec)}
 </article>`;
 }
 
-function advocateHead(role: string, model: string | undefined, against = false, reassignedFrom?: string): string {
+function advocateHead(role: string, model: string | undefined, against = false, reassignedFrom?: string, name?: string): string {
   const seat = SEATS[role] ?? 'defense';
-  return `<header class="a-head"><h3>${esc(NAMES[role] ?? role)}</h3><p class="seat seat-${esc(seat)}${against ? ' struck' : ''}">${esc(seat)} seat</p><p class="a-model">${esc(model ?? '')}${reassignedFrom ? esc(` — reassigned from ${reassignedFrom} after its failure`) : ''}</p></header>`;
+  return `<header class="a-head"><h3>${esc(name ?? NAMES[role] ?? role)}</h3><p class="seat seat-${esc(seat)}${against ? ' struck' : ''}">${esc(seat)} seat</p><p class="a-model">${esc(model ?? '')}${reassignedFrom ? esc(` — reassigned from ${reassignedFrom} after its failure`) : ''}</p></header>`;
 }
 
 function judgeHead(label: string, model: string | undefined, reassignedFrom?: string): string {
@@ -82,10 +83,10 @@ function judgeHead(label: string, model: string | undefined, reassignedFrom?: st
 </header>`;
 }
 
-function stanceCard(s: StoredStance, models?: Record<string, string>): string {
+function stanceCard(s: StoredStance, models?: Record<string, string>, name?: string): string {
   const against = s.seat === 'defense' ? s.position === 'not_justified' : s.position === 'justified';
   return `<article class="advocate seat-${esc(s.seat)}">
-${advocateHead(s.role_id, models?.[s.role_id], against, (s as unknown as { model_reassigned_from?: string }).model_reassigned_from)}
+${advocateHead(s.role_id, models?.[s.role_id], against, (s as unknown as { model_reassigned_from?: string }).model_reassigned_from, name)}
 <div class="pos-block"><p class="micro">Position</p><p class="position">${esc(s.position.replace('_', ' '))}</p></div>
 ${against ? `<div class="against-seat"><p class="against-line">This seat argued against itself.</p><p class="against-sub">Seated for the ${esc(s.seat)}, it reached the opposite conclusion.</p></div>` : ''}
 <div class="points"><p class="micro">${s.points.length} points as argued</p>
@@ -94,31 +95,31 @@ ${s.points.map((p) => `<details class="point"><summary>${esc(p.claim)}</summary>
 </article>`;
 }
 
-function reasonBlock(r: Reason, i: number, total: number, stances: Map<string, StoredStance>): string {
+function reasonBlock(r: Reason, i: number, total: number, stances: Map<string, StoredStance>, displayName?: (x: string) => string): string {
   return `<div class="reason" data-reason="${i}">
 <p class="micro">Reason ${i + 1} of ${total}</p>
 <p class="reason-text">${esc(r.text)}</p>
-${r.relies_on.length ? `<p class="micro relies">Relies on</p>\n${r.relies_on.map((id) => citation(id, stances)).join('\n')}` : ''}
+${r.relies_on.length ? `<p class="micro relies">Relies on</p>\n${r.relies_on.map((id) => citation(id, stances, displayName)).join('\n')}` : ''}
 </div>`;
 }
 
-function opinionColumn(o: StoredOpinion, stances: Map<string, StoredStance>, models?: Record<string, string>): string {
+function opinionColumn(o: StoredOpinion, stances: Map<string, StoredStance>, models?: Record<string, string>, displayName?: (x: string) => string): string {
   const cites = o.reasons.reduce((n, r) => n + r.relies_on.length, 0) + o.against.relies_on.length;
   return `<article class="judge">
 ${judgeHead(o.label, models?.[o.role_id], (o as unknown as { model_reassigned_from?: string }).model_reassigned_from)}
 <div class="verdict-wrap"><div class="verdict-block"><p class="micro">Verdict</p><p class="verdict">${esc(o.verdict.replace('_', ' '))}</p></div>
 <div class="stepper"><p class="micro">Reasons</p><span class="step-controls"><button class="step-btn" data-step="-1" aria-label="previous reason">‹</button><button class="step-btn" data-step="1" aria-label="next reason">›</button><button class="read-all" data-readall>Read all</button></span></div>
 <div class="reasons">
-${o.reasons.map((r, i) => reasonBlock(r, i, o.reasons.length, stances)).join('\n')}
+${o.reasons.map((r, i) => reasonBlock(r, i, o.reasons.length, stances, displayName)).join('\n')}
 </div></div>
 <footer class="j-foot"><p class="micro">Strongest consideration against this verdict</p>
 <p class="against-text">${esc(o.against.text)}</p>
-${o.against.relies_on.map((id) => citation(id, stances)).join('\n')}
+${o.against.relies_on.map((id) => citation(id, stances, displayName)).join('\n')}
 <p class="counts">${o.reasons.length} reasons · ${cites} citations</p></footer>
 </article>`;
 }
 
-function roleSection(out: CaseData['outputs'][string], role: string, title: string, stances: Map<string, StoredStance>, kind: 'stance' | 'opinion', job: Job | null, models?: Record<string, string>): string {
+function roleSection(out: CaseData['outputs'][string], role: string, title: string, stances: Map<string, StoredStance>, kind: 'stance' | 'opinion', job: Job | null, models?: Record<string, string>, displayName?: (x: string) => string): string {
   const jobState = job ? job.status : 'not started';
   const wrap = (state: string, inner: string) => `<div class="role-slot" data-role="${esc(role)}" data-kind="${kind}" data-state="${state}">${inner}</div>`;
   if (isFailureRecord(out)) return wrap('failed', kind === 'stance' ? advocateFailureCard(out, role, models?.[role]) : judgeFailureColumn(out, title, models?.[role]));
@@ -129,12 +130,12 @@ function roleSection(out: CaseData['outputs'][string], role: string, title: stri
   if (out === undefined) {
     const stopped = job !== null && ['incomplete', 'failed'].includes(job.status);
     if (kind === 'stance') {
-      return wrap('waiting', `<article class="advocate waiting-card seat-${esc(SEATS[role] ?? 'defense')}">${advocateHead(role, models?.[role])}${shimmer('Yet to take the floor', jobState)}</article>`);
+      return wrap('waiting', `<article class="advocate waiting-card seat-${esc(SEATS[role] ?? 'defense')}">${advocateHead(role, models?.[role], false, undefined, displayName ? displayName(role) : undefined)}${shimmer('Yet to take the floor', jobState)}</article>`);
     }
     const label = stopped ? 'Never convened' : (job && job.stage === 'judges' ? 'Deliberating' : 'Awaiting argument');
     return wrap('waiting', `<article class="judge waiting-card">${judgeHead(title, models?.[role])}${shimmer(label, jobState)}</article>`);
   }
-  return wrap('returned', kind === 'stance' ? stanceCard(out as StoredStance, models) : opinionColumn(out as StoredOpinion, stances, models));
+  return wrap('returned', kind === 'stance' ? stanceCard(out as StoredStance, models, displayName ? displayName(role) : undefined) : opinionColumn(out as StoredOpinion, stances, models, displayName));
 }
 
 function panelName(models: Record<string, string> | undefined): string {
@@ -145,6 +146,9 @@ function panelName(models: Record<string, string> | undefined): string {
 
 export function renderCasePage(data: CaseData): string {
   const cs = data.chargeSheet;
+  const sketches = (cs as unknown as { sketches?: SketchPersona[] }).sketches;
+  const prov = (cs as unknown as { provenance?: { kind: string; intake_model?: string; drafted_at?: string } }).provenance;
+  const displayName = (role: string) => personaForRole(role, sketches)?.name ?? NAMES[role] ?? role;
   const job = data.job;
   const stances = new Map<string, StoredStance>();
   for (const r of ADVOCATE_ORDER) { const o = data.outputs[r]; if (o && !isFailureRecord(o)) stances.set(r, o as StoredStance); }
@@ -179,10 +183,12 @@ export function renderCasePage(data: CaseData): string {
 </header>
 ${stoppedNotice}
 <section id="opinions"><div class="section-head"><h2>The Bench</h2><p class="section-note">Three judicial methods, each ruling alone on the same record. Presented side by side; not combined.</p></div>
-<div class="plinth"><div class="bench-grid">${JUDGE_ORDER.map((r) => roleSection(data.outputs[r], r, (data.outputs[r] as StoredOpinion | undefined)?.label ?? r.replace('judge-', 'Judge '), stances, 'opinion', job, job?.models)).join('\n')}</div></div></section>
+<div class="plinth"><div class="bench-grid">${JUDGE_ORDER.map((r) => roleSection(data.outputs[r], r, (data.outputs[r] as StoredOpinion | undefined)?.label ?? r.replace('judge-', 'Judge '), stances, 'opinion', job, job?.models, displayName)).join('\n')}</div></div></section>
 <hr class="rail">
 <section id="advocates"><div class="section-head"><h2>The Floor</h2><p class="section-note">The seat fixes a procedural role, not a conclusion. Each advocate states the position it actually reached.</p></div>
-<div class="floor-grid">${ADVOCATE_ORDER.map((r) => roleSection(data.outputs[r], r, NAMES[r] ?? r, stances, 'stance', job, job?.models)).join('\n')}</div></section>
+<div class="floor-grid">${ADVOCATE_ORDER.map((r) => roleSection(data.outputs[r], r, displayName(r), stances, 'stance', job, job?.models, displayName)).join('\n')}</div></section>
+${sketches ? `<section id="drafted"><div class="section-head"><h2>The Four Representatives</h2><p class="section-note">Drafted by a model from the submitted scenario, as part of the record. The seat fixes a procedural role, not a conclusion.</p></div>
+<div class="floor-grid">${sketches.map((sk) => `<article class="advocate seat-${esc(sk.seat)}"><header class="a-head"><h3>${esc(sk.name)}</h3><p class="seat seat-${esc(sk.seat)}">${esc(sk.seat)} seat</p><p class="a-model"></p></header><div class="points"><p class="sketch-text">${esc(sk.sketch)}</p></div></article>`).join('\n')}</div></section>` : ''}
 <section class="sheet">
 <div class="sheet-left">
 <p class="micro">Act alleged</p><p class="act">${esc(cs.act_alleged)}</p>
@@ -293,6 +299,7 @@ box-shadow:inset 0 1px 0 rgba(240,222,180,.075),inset 0 0 0 1px rgba(0,0,0,.35),
 .bars .b2{width:86%}.bars .b3{width:61%}
 @keyframes shimmer{from{background-position:200% 0}to{background-position:0 0}}
 .reserve{margin-top:auto;border:1px dashed var(--rule);border-radius:var(--r);min-height:64px}
+.sketch-text{font-size:13.5px;line-height:1.55;color:var(--card-ink2)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
 .waiting-card{min-height:300px}
 .failed{border-style:dashed}

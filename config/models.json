@@ -47,6 +47,10 @@
     ],
     "judge-3": [
       "cohere/command-r-08-2024"
+    ],
+    "intake": [
+      "minimax/minimax-m2.7:free"
     ]
-  }
+  },
+  "intake": "anthropic/claude-sonnet-4.5"
 }

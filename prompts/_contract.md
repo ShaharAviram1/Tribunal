@@ -85,3 +85,7 @@ Point ids are the `id` values in the stances block, exactly as written. Every re
 ## What no prompt contains
 
 No prompt file mentions this contract, the assembly, the other role files, the retry mechanism, or that the writer is a model. Advocates are not told that judges exist or that other advocates exist. Judges are told only that they rule alone, in the preamble.
+
+## The intake prompt
+
+`prompts/_intake.md` is not part of any panel prompt. It is never assembled into any of the seven role prompts, and no block of it reaches an advocate or a judge. It runs once at case submission, on the submitted scenario text appended after it. Its output is validated by rule code like every other model output, and the assembled intake prompt is identified in the log by the same hash-of-assembled-text rule as every other call.
