@@ -67,6 +67,9 @@ you open it. The committed runs are the durable evidence.
 - `problem.md` — the situation, the stakeholders, what done means, what is out of scope and why.
 - `spec.md` — the contract the build is held to: goal and reason, criteria, boundaries, pitfalls.
 - `CLAUDE.md` — how to work in this repository, and the rule that outranks everything.
+- `intent.txt` — the idea as it was first put, before any of it was built.
+- `ARCHITECTURE.md` — how the infrastructure is built: the pieces, the request paths, the
+  database, the deploy, each claim naming the file that proves it.
 - `docs/charge-sheet.spec.md` — what a filer may submit and the rules enforced against it.
 - `docs/advocate-stance.schema.md` and `docs/judicial-opinion.schema.md` — the two output schemas.
 - `prompts/` — the seven panel prompts and the intake prompt: hand-written, versioned, loaded at
