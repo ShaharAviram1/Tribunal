@@ -11,9 +11,9 @@ Last revised 1 September 2026.
 
 | | |
 |---|---|
-| Merged to `main` | Turns 0, 1, 2, 3 |
+| Merged to `main` | Turns 0, 1, 2, 3, 4 — the spiral is complete |
 | Open | none |
-| Remaining | Turn 4, several models |
+| Remaining | none |
 | Deployed | Netlify, live convening, no access code |
 
 ## Turns
@@ -54,7 +54,7 @@ intake clerk that drafted T-006 from a neutral account and passed every rule fir
 Closed 1 September 2026: turn table amended, lessons-learned entry 6 added, *what is now locked*
 written, merge pack rewritten against the branch as merged, root README written, merged `--no-ff`.
 
-### 4 — Several models · next
+### 4 — Several models · merged
 
 Bound: same prompts, same temperature, different models.
 
@@ -62,11 +62,10 @@ Done when: a second live deliberation across more than one model, **complete**, 
 log; both logs in the repository; the per-run spend cap replaced by a measured figure as a recorded
 revision of `spec.md`.
 
-Standing at the open of the turn: multi-model runs exist but every one so far ended incomplete at a
-judge seat — most recently `qwen3.8-flash` erroring at the provider on every transport attempt and
-never answering at all. The measured spend revision to $0.25 is already in `spec.md` from three paid
-runs. What is missing is one clean complete run, which means replacing the seat that has never
-answered before running.
+Closed 1 September 2026: fourteen live probes seated seven models from seven companies, the seat
+that never answered was replaced by one that always did, and the first convening of the probed
+panel ran to complete — seven first-call answers, $0.0444, three verdicts. Both logs sit in the
+repository; the $0.25 backstop stands re-affirmed as a dated line.
 
 ### 5 — cut
 
@@ -75,9 +74,6 @@ inside turn three and are recorded there rather than given a turn of their own.
 
 ## Closing items
 
-- **Root `README.md`** — does not exist. What the project is, the shape of a run, how to run the
-  offline suite on the pinned Node with no key, how to render a committed deliberation from the
-  repository alone with no key and no network, where the live site is, and where `problem.md`,
-  `spec.md`, `CLAUDE.md`, the turn records and the merge packs live.
-- **Merge-ready state** — every turn record closed, every merge pack true to its branch, nothing
-  left unmerged.
+- **Root `README.md`** — written at the turn-three close.
+- **Merge-ready state** — reached 1 September 2026: every turn record closed, every merge pack
+  true to its branch, nothing left unmerged.

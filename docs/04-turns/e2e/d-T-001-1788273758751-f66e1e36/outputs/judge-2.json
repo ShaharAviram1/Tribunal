@@ -1,0 +1,34 @@
+{
+  "label": "Menachem Elon",
+  "against": {
+    "text": "The strongest consideration against justification is that Jon acted unilaterally, without formal authority or due process, and exploited a personal bond to commit the killing. This raises concerns about the legitimacy of his actions and the potential for anarchy if such acts are condoned.",
+    "relies_on": [
+      "daenerys.p1",
+      "daenerys.p4",
+      "greyworm.p3"
+    ]
+  },
+  "reasons": [
+    {
+      "text": "Jon acted to prevent imminent, large-scale harm after Daenerys demonstrated her willingness to commit mass atrocities and refused to show mercy. The absence of safer alternatives and her absolute power justified his action as a necessary defense of others and the realm.",
+      "relies_on": [
+        "jon.p1",
+        "jon.p2",
+        "jon.p3",
+        "tyrion.p1",
+        "tyrion.p2"
+      ]
+    },
+    {
+      "text": "The killing was proportionate because no lesser act could have prevented the threatened harm. Daenerys's control over the only dragon and her loyal army made non-lethal options impractical. Jon's lack of formal authority was irrelevant in a context where all formal institutions had been destroyed.",
+      "relies_on": [
+        "tyrion.p4",
+        "tyrion.p5",
+        "greyworm.p5"
+      ]
+    }
+  ],
+  "role_id": "judge-2",
+  "verdict": "justified",
+  "deliberation_id": "d-T-001-1788273758751-f66e1e36"
+}

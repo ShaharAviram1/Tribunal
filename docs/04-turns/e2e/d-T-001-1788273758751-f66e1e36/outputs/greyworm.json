@@ -1,0 +1,33 @@
+{
+  "seat": "prosecution",
+  "points": [
+    {
+      "id": "greyworm.p1",
+      "claim": "The city had surrendered, so killing the queen was not defense of others.",
+      "support": "Record says bells rang and organized resistance ceased. Daenerys then used Drogon against streets and civilians. That is not a response to organized resistance. If the threat was over, killing her cannot be necessary to stop an immediate attack. The scale of harm does not make a later killing defensive. Defense requires present danger. The agreed record fixes the sequence: surrender first, burning after. That sequence removes the core claim that Jon acted to save people from an ongoing assault."
+    },
+    {
+      "id": "greyworm.p2",
+      "claim": "The queen was unarmed and not attacking Jon when he killed her.",
+      "support": "Record says she was unarmed and not attacking. Jon used their intimacy to get close. That is not a response to force. It is a strike against a person who was not threatening him. If she had been drawing a weapon, summoning Drogon, or moving to kill, the record would say so. It does not. The absence of an immediate physical threat is central. A defender may not choose the moment of killing after the threat has passed. The fact that she was dangerous in a political or future sense does not make the stabbing self-defense or defense of others."
+    },
+    {
+      "id": "greyworm.p3",
+      "claim": "Jon was her sworn man, and he used her trust to reach her.",
+      "support": "He pledged loyalty to her. He fought beside her. He was not a stranger. The record says he used their intimacy to get close enough to strike. That makes the killing a betrayal of the relationship that gave him access. Loyalty does not excuse killing, but it shows he had a duty to seek lawful or public means first. He did not. He took advantage of the private meeting. The private setting matters. A public challenge, council, or arrest would have exposed the threat and allowed others to act. He chose the one place where she was least guarded."
+    },
+    {
+      "id": "greyworm.p4",
+      "claim": "He tried nothing first: no council, no arrest, no public surrender of power.",
+      "support": "Record says he had not convened a council, attempted detention, or sought a public surrender of power. Tyrion warned him of future danger. That warning is not a present attack. It is a prediction. The record is silent on any attempt by Jon to stop her by nonlethal means. It is also silent on any immediate order from her to kill him or his sisters. Where the record is silent, the tribunal cannot assume a safer alternative was impossible. The prosecution case is that the record does not show necessity. It shows a man who knew of a future threat and killed before any threat became present."
+    },
+    {
+      "id": "greyworm.p5",
+      "claim": "The killing was a private act, not a lawful defense of the realm.",
+      "support": "Jon lacked formal authority. He did not act as a court, council, or commander with lawful power. He acted alone in a private meeting. Defense of the realm, if it can be a justification, must be tied to an immediate danger and a necessary act. The record gives no such tie. It gives a future campaign, a speech, a warning, and a refusal to share judgment. Those are political facts. They do not make the queen an armed attacker. The strongest reading of the record is that Jon killed a dangerous ruler, not that he defended others from an attack in progress."
+    }
+  ],
+  "role_id": "greyworm",
+  "position": "not_justified",
+  "deliberation_id": "d-T-001-1788273758751-f66e1e36"
+}

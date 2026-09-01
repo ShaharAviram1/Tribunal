@@ -1,0 +1,33 @@
+{
+  "seat": "defense",
+  "points": [
+    {
+      "id": "jon.p1",
+      "claim": "Daenerys had already destroyed a surrendered city, killing many civilians.",
+      "support": "The record shows King's Landing had surrendered with bells ringing and no organized resistance. Despite this, Daenerys used her dragon to burn streets and civilians on a vast scale. This act was not a battle but a massacre of innocents who posed no threat. The scale of destruction and loss of life was immense and unjustified by any military necessity."
+    },
+    {
+      "id": "jon.p2",
+      "claim": "Daenerys declared she would continue her campaign of destruction beyond King's Landing.",
+      "support": "After the fall of the city, Daenerys addressed her forces, promising further campaigns of 'liberation.' Jon witnessed this speech and understood that more cities and people would suffer the same fate. This was not a one-time act but a declared policy of ongoing violence against those she deemed enemies."
+    },
+    {
+      "id": "jon.p3",
+      "claim": "Daenerys refused mercy and insisted on absolute judgment, threatening those close to Jon.",
+      "support": "Tyrion warned Jon that Daenerys would treat anyone she saw as an obstacle, including Jon's sisters, as enemies. Jon asked Daenerys to forgive Tyrion and to share moral judgment, but she refused. Her refusal to allow others to influence her decisions showed she would not be swayed or restrained by counsel or mercy."
+    },
+    {
+      "id": "jon.p4",
+      "claim": "No safer alternatives were available to prevent further harm to the realm and Jon’s family.",
+      "support": "Jon did not convene a council, seek a public surrender, or attempt detention before acting. The record does not show any safer means to stop Daenerys, who was unarmed but determined and surrounded by loyal soldiers. Given the urgency and scale of threatened harm, Jon acted in the only way he could to protect others."
+    },
+    {
+      "id": "jon.p5",
+      "claim": "Jon’s act was a necessary defense of others and the realm against imminent and large-scale harm.",
+      "support": "Based on what Jon knew—the massacre already committed, the promise of more, the refusal of mercy, and the absence of safer options—his killing of Daenerys was necessary to prevent further destruction and death. The act was not personal ambition but a grim duty to protect those who could not defend themselves."
+    }
+  ],
+  "role_id": "jon",
+  "position": "justified",
+  "deliberation_id": "d-T-001-1788273758751-f66e1e36"
+}

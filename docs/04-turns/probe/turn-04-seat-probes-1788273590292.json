@@ -1,0 +1,30 @@
+[
+  {
+    "model": "z-ai/glm-5.3-flash",
+    "outcome": "ok",
+    "served": null,
+    "ms": 90018,
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost_usd": null,
+    "finish": null,
+    "http": 200,
+    "fenced": false,
+    "valid_opinion": false,
+    "failure": "malformed: response was empty; return one JSON object and nothing else"
+  },
+  {
+    "model": "deepseek/deepseek-chat-v3-0324",
+    "outcome": "ok",
+    "served": "deepseek/deepseek-chat-v3-0324",
+    "ms": 13479,
+    "tokens_in": 3855,
+    "tokens_out": 272,
+    "cost_usd": 0.00117,
+    "finish": "stop",
+    "http": 200,
+    "fenced": true,
+    "valid_opinion": true,
+    "verdict": "justified"
+  }
+]

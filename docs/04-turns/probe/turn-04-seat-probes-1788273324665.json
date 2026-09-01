@@ -1,0 +1,16 @@
+[
+  {
+    "model": "minimax/minimax-m2.7:free",
+    "outcome": "ok",
+    "served": null,
+    "ms": 89960,
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost_usd": null,
+    "finish": null,
+    "http": 200,
+    "fenced": false,
+    "valid_opinion": false,
+    "failure": "malformed: response was empty; return one JSON object and nothing else"
+  }
+]

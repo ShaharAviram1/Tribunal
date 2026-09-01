@@ -1,0 +1,40 @@
+{
+  "label": "Meir Shamgar",
+  "against": {
+    "text": "The private nature of the killing, carried out in a moment of intimacy and trust, raises questions about the necessity and proportionality of Jon's actions. The absence of an immediate physical threat and the lack of a public challenge or attempt at resolution suggest a betrayal of trust rather than a legitimate act of defense.",
+    "relies_on": [
+      "daenerys.p1",
+      "daenerys.p2",
+      "greyworm.p2",
+      "greyworm.p3"
+    ]
+  },
+  "reasons": [
+    {
+      "text": "Daenerys's actions, as outlined in the record, demonstrate a clear and present danger to the realm and its people. Her destruction of King's Landing, despite its surrender, and her promise of continued campaigns of 'liberation' indicate an intent to rule through fear and violence. This threat was not speculative but an imminent and ongoing reality.",
+      "relies_on": [
+        "jon.p1",
+        "jon.p2",
+        "tyrion.p1"
+      ]
+    },
+    {
+      "text": "The absence of institutional mechanisms capable of restraining Daenerys is a critical factor. With all formal authority concentrated in her hands, and with the destruction of King's Landing, there was no lawful means to remove her from power. Jon, as her subordinate, had no authority to convene a council or seek a public surrender, and any attempt at detention would have been futile.",
+      "relies_on": [
+        "tyrion.p2",
+        "tyrion.p5"
+      ]
+    },
+    {
+      "text": "The specific and imminent threat to Jon's sisters, as warned by Tyrion, further justifies Jon's actions. Daenerys's refusal to show mercy or share moral judgment, coupled with her absolute power, left no safer alternatives. The harm was not theoretical; it had a real and immediate impact on identifiable persons.",
+      "relies_on": [
+        "jon.p3",
+        "tyrion.p3",
+        "tyrion.p4"
+      ]
+    }
+  ],
+  "role_id": "judge-3",
+  "verdict": "justified",
+  "deliberation_id": "d-T-001-1788273758751-f66e1e36"
+}

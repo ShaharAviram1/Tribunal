@@ -13,10 +13,10 @@
     "jon": "openai/gpt-4.1-mini",
     "tyrion": "anthropic/claude-sonnet-4.5",
     "daenerys": "google/gemini-2.5-flash",
-    "greyworm": "minimax/minimax-m2.7:free",
+    "greyworm": "qwen/qwen3.8-27b",
     "judge-1": "deepseek/deepseek-chat-v3.1",
     "judge-2": "mistralai/mistral-small-3.2-24b-instruct",
-    "judge-3": "qwen/qwen3.8-flash"
+    "judge-3": "cohere/command-r-08-2024"
   },
   "free_fallbacks": [
     "minimax/minimax-m2.7:free",
@@ -28,28 +28,28 @@
   ],
   "role_fallbacks": {
     "jon": [
-      "meta-llama/llama-4-maverick"
+      "deepseek/deepseek-chat-v3-0324"
     ],
     "tyrion": [
-      "x-ai/grok-build-0.1"
+      "mistralai/mistral-small-2603"
     ],
     "daenerys": [
-      "z-ai/glm-5.3-flash"
+      "google/gemini-2.5-flash-lite"
     ],
     "greyworm": [
-      "minimax/minimax-m3:free"
+      "google/gemini-2.5-flash-lite"
     ],
     "judge-1": [
-      "qwen/qwen3.8-27b"
+      "google/gemini-2.5-flash-lite"
     ],
     "judge-2": [
       "deepseek/deepseek-chat-v3-0324"
     ],
     "judge-3": [
-      "cohere/command-r-08-2024"
+      "mistralai/mistral-small-2603"
     ],
     "intake": [
-      "minimax/minimax-m2.7:free"
+      "deepseek/deepseek-chat-v3-0324"
     ]
   },
   "intake": "anthropic/claude-sonnet-4.5"
