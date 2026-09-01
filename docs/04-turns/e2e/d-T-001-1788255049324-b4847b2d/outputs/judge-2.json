@@ -1,0 +1,31 @@
+{
+  "label": "Menachem Elon",
+  "against": {
+    "text": "The strongest counter‑argument is that Daenerys was unarmed and posed no immediate physical threat at the moment of the killing, and safer alternatives existed: Jon could have convened a council, sought her detention, or arranged exile before resorting to lethal force. By bypassing these options, he acted without necessity, violating the principle that private individuals must exhaust lawful remedies before taking a life.",
+    "relies_on": [
+      "daenerys.p2",
+      "daenerys.p5",
+      "greyworm.p5"
+    ]
+  },
+  "reasons": [
+    {
+      "text": "Daenerys had just burned a surrendered city and announced that the campaign of liberation would continue, creating a clear and imminent danger of further mass casualties. Jon witnessed the destruction and heard her speech, confirming a credible, ongoing threat that only immediate action could avert.",
+      "relies_on": [
+        "jon.p1",
+        "tyrion.p1"
+      ]
+    },
+    {
+      "text": "All institutions capable of restraining Daenerys had been dismantled or were under her control; no council, court, or loyal force remained to detain her. Jon was alone with no allies, possessing only his body and a blade. With every non‑violent avenue exhausted and Grey Worm's forces loyal to her, lethal intervention was the sole realistic means to stop her.",
+      "relies_on": [
+        "jon.p2",
+        "tyrion.p2",
+        "tyrion.p4"
+      ]
+    }
+  ],
+  "role_id": "judge-2",
+  "verdict": "justified",
+  "deliberation_id": "d-T-001-1788255049324-b4847b2d"
+}

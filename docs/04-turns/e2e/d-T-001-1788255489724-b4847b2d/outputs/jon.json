@@ -1,0 +1,33 @@
+{
+  "seat": "defense",
+  "points": [
+    {
+      "id": "jon.p1",
+      "claim": "Daenerys had already destroyed a surrendered city and killed many civilians, showing she would continue to cause great harm.",
+      "support": "The record shows King's Landing had surrendered, its bells rang, and organized resistance ceased before Daenerys used her dragon to burn streets and civilians on a vast scale. This was not a battle but a massacre of innocents after victory. She then declared her campaign of 'liberation' would continue beyond the city, promising more destruction and death. This demonstrated a clear and present danger to countless lives beyond the city walls."
+    },
+    {
+      "id": "jon.p2",
+      "claim": "Daenerys refused mercy and insisted on absolute judgment, rejecting any shared or peaceful resolution.",
+      "support": "Jon asked Daenerys to forgive Tyrion and to show mercy, but she refused to let others choose what was good and presented her own judgment as final. This refusal closed off any possibility of negotiation, council, or peaceful transfer of power. The record confirms she was unarmed and not attacking Jon, but also that she would not yield or share authority."
+    },
+    {
+      "id": "jon.p3",
+      "claim": "Jon had no safer alternatives available to prevent further harm given the circumstances and his lack of formal authority.",
+      "support": "Jon did not convene a council, attempt detention, or seek a public surrender of power before killing Daenerys. The record does not show any other means to stop her imminent threat. With her soldiers ready to enforce her will and her refusal to show mercy, Jon faced a choice between allowing further mass killings or acting decisively in that moment."
+    },
+    {
+      "id": "jon.p4",
+      "claim": "Jon acted to defend others and the realm from a clear and ongoing threat of large-scale violence and tyranny.",
+      "support": "The record shows Tyrion warned Jon that Daenerys would treat anyone she saw as an obstacle, including Jon’s own family, as enemies. Jon had pledged loyalty to her but saw that loyalty betrayed by her actions and intentions. His killing of Daenerys was an act to protect those who could not defend themselves and to prevent further destruction of the realm."
+    },
+    {
+      "id": "jon.p5",
+      "claim": "The defense of others and the realm justified Jon’s intentional killing despite his lack of formal authority.",
+      "support": "The record does not grant Jon formal authority to act, but it also does not provide any lawful alternative to stop Daenerys’s deadly campaign. Given the scale of threatened harm, the absence of safer options, and the refusal of mercy, Jon’s act was necessary to defend the innocent and preserve the realm’s future."
+    }
+  ],
+  "role_id": "jon",
+  "position": "justified",
+  "deliberation_id": "d-T-001-1788255489724-b4847b2d"
+}

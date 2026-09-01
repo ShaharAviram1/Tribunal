@@ -1,0 +1,28 @@
+{
+  "seat": "prosecution",
+  "points": [
+    {
+      "id": "daenerys.p1",
+      "claim": "Jon Snow's act was a betrayal of his sworn loyalty, a fundamental breach of trust that cannot be justified by any perceived threat.",
+      "support": "Jon Snow pledged his loyalty to me. This was not a casual alliance but a solemn oath. The agreed record states he used our intimacy to get close enough to strike, an act of profound deception. He did not confront me, he did not demand my surrender, he did not convene a council. He chose the path of the assassin, violating the very foundation of trust and allegiance. Such an act, born of deceit and executed in secret, cannot be deemed justified."
+    },
+    {
+      "id": "daenerys.p2",
+      "claim": "The killing was an act of assassination, not a defense, as I was unarmed and posed no immediate threat to Jon Snow or anyone else at that moment.",
+      "support": "The agreed factual record explicitly states that I was unarmed and not attacking Jon when he killed me. There was no immediate danger, no active aggression from my person that necessitated such a drastic and final response. To claim self-defense or defense of others when the alleged threat is disarmed and engaged in an embrace is a perversion of justice. This was a premeditated act against an unsuspecting individual, not a defensive measure."
+    },
+    {
+      "id": "daenerys.p3",
+      "claim": "Jon Snow failed to exhaust any peaceful or alternative means of addressing his concerns, choosing immediate lethal force without warning or demand.",
+      "support": "The record clearly states that Jon Snow 'had not convened a council, attempted detention, or sought a public surrender of power.' He spoke to me, yes, asking for mercy and to share moral judgment, but when I refused, he immediately resorted to murder. He made no attempt to rally support, to present his case to others, or to seek any resolution short of my death. This demonstrates a complete disregard for due process or any attempt at a peaceful resolution, rendering his violent act unjustified."
+    },
+    {
+      "id": "daenerys.p4",
+      "claim": "Jon Snow acted without formal authority, usurping the right to judge and execute based on his own private assessment of future harm.",
+      "support": "Jon Snow held no formal authority over me. He was my sworn subject. His actions were not sanctioned by any council or legal body. He took it upon himself to be judge, jury, and executioner based on his interpretation of my intentions and Tyrion Lannister's warnings. The record shows he did not seek a public surrender of power, meaning he did not attempt to establish a legitimate basis for his intervention. This unilateral decision to end a life, without authority or due process, is an act of tyranny, not justice."
+    }
+  ],
+  "role_id": "daenerys",
+  "position": "not_justified",
+  "deliberation_id": "d-T-001-1788255489724-b4847b2d"
+}

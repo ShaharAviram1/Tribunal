@@ -1,0 +1,33 @@
+{
+  "seat": "defense",
+  "points": [
+    {
+      "id": "tyrion.p1",
+      "claim": "Daenerys had just demonstrated a willingness to burn a surrendered city and announced that the destruction would continue, creating an immediate threat of mass casualties.",
+      "support": "The agreed record shows that after the bells rang and organized resistance ceased, Daenerys unleashed Drogon on the streets, killing civilians on a vast scale. She then told her assembled forces that the campaign of liberation would continue beyond King’s Landing. Jon Snow witnessed the carnage and heard her speech. The combination of recent mass murder and a declared intent to repeat it creates a clear, imminent threat of further large‑scale loss of life."
+    },
+    {
+      "id": "tyrion.p2",
+      "claim": "All legitimate institutions capable of restraining Daenerys had been dismantled or were under her control, leaving no lawful procedure to depose her.",
+      "support": "The record notes that Tyrion, the Hand, renounced his office, was imprisoned and warned Jon that Daenerys would treat anyone she saw as an obstacle as an enemy. No council, no Small Council, no independent court remained to hear a case against her. The Iron Throne was vacant in any practical sense, and the only armed force loyal to her was commanded by Grey Worm, who participated in the slaughter. With the formal structures of justice gone, there was no institution that could legally remove her."
+    },
+    {
+      "id": "tyrion.p3",
+      "claim": "Killing a single individual to prevent the foreseeable slaughter of thousands is proportionate, especially when the target is the architect of that slaughter.",
+      "support": "Daenerys’s own actions—burning a city after surrender—illustrate her willingness to inflict mass casualties for political ends. The record shows she intended to extend that campaign, promising further wars of liberation. The moral calculus is stark: one life, taken in the moment of imminent further bloodshed, against the likely death of thousands. When the harm threatened is of a magnitude that dwarfs the act itself, the response can be considered proportionate."
+    },
+    {
+      "id": "tyrion.p4",
+      "claim": "Every attempted non‑violent solution had failed; Daenerys rejected pleas for mercy and imprisoned her own Hand, leaving assassination as the sole viable method to stop her.",
+      "support": "Jon asked Daenerys to forgive Tyrion and to show mercy; she refused, insisting her judgment alone would prevail. No council was convened, no public surrender of power was sought, and Grey Worm’s forces remained loyal to her. With all peaceful avenues exhausted and her own commander threatening to eliminate perceived threats, the only remaining means to prevent further carnage was the immediate removal of the source of that threat."
+    },
+    {
+      "id": "tyrion.p5",
+      "claim": "Jon had witnessed the devastation and understood the scale of the threat, giving him both the moral knowledge and the practical necessity to act, even without formal authority.",
+      "support": "Jon Snow was present at the destruction of King’s Landing, witnessed the carnage, heard Daenerys’s promise of further war, and had already attempted to intervene by pleading for mercy. With all official channels removed, the duty to prevent further slaughter fell to those who understood the scale of the threat."
+    }
+  ],
+  "role_id": "tyrion",
+  "position": "justified",
+  "deliberation_id": "d-T-001-1788255049324-b4847b2d"
+}

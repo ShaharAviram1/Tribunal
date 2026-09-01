@@ -1,0 +1,31 @@
+{
+  "label": "Menachem Elon",
+  "against": {
+    "text": "The killing violated Jon's sworn loyalty and lacked formal authority, raising concerns about the legitimacy of unilateral action even against a tyrant. The absence of an immediate threat and the exploitation of trust undermine claims of necessity and proportionality.",
+    "relies_on": [
+      "daenerys.p1",
+      "greyworm.p2",
+      "greyworm.p5"
+    ]
+  },
+  "reasons": [
+    {
+      "text": "Jon acted to prevent a demonstrated pattern of mass atrocity, as Daenerys had already burned a surrendered city and promised further campaigns. With no lawful authority or institutional restraint, lethal force was the only means to stop her imminent threat to countless lives.",
+      "relies_on": [
+        "jon.p1",
+        "tyrion.p1",
+        "tyrion.p2"
+      ]
+    },
+    {
+      "text": "Jon exhausted the only viable alternative—appealing to Daenerys's mercy—before acting. Her refusal to share judgment or yield power left no peaceful or lawful path to prevent future harm, justifying his intervention as a last resort to protect the realm.",
+      "relies_on": [
+        "jon.p2",
+        "tyrion.p5"
+      ]
+    }
+  ],
+  "role_id": "judge-2",
+  "verdict": "justified",
+  "deliberation_id": "d-T-001-1788255489724-b4847b2d"
+}

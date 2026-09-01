@@ -1,0 +1,36 @@
+{
+  "label": "Aharon Barak",
+  "against": {
+    "text": "The strongest counterargument is that Daenerys was unarmed and posed no immediate threat at the moment of the killing, and that safer non‑lethal options such as detention, trial, or exile existed. By exploiting intimacy to ambush her, Jon bypassed all lawful procedures, making the lethal act unnecessary.",
+    "relies_on": [
+      "daenerys.p2",
+      "greyworm.p2",
+      "greyworm.p4"
+    ]
+  },
+  "reasons": [
+    {
+      "text": "Jon killed Daenerys to avert imminent mass murder. She had just burned a surrendered city, killing thousands, and announced that the campaign of liberation would continue. A reasonable person who witnessed the carnage and heard her speech would believe further large‑scale bloodshed was certain and immediate. This satisfies a lawful purpose of protecting innocent life.",
+      "relies_on": [
+        "jon.p1",
+        "tyrion.p1"
+      ]
+    },
+    {
+      "text": "The record shows no council, no independent court, and no armed force willing to act against Daenerys; she imprisoned her own Hand and refused mercy, leaving no institutional channel that could depose her without delay. In the throne room Jon faced a ruler whose personal army remained loyal and who rejected any counsel, so lethal action was the only realistic means to stop her.",
+      "relies_on": [
+        "jon.p2",
+        "tyrion.p2"
+      ]
+    },
+    {
+      "text": "Jon’s act was proportionate: one life taken to prevent the foreseeable slaughter of thousands. Daenerys’s own conduct—burning civilians after surrender and pledging further wars—demonstrated she would cause massive harm, and the harm avoided by her death far outweighed the loss of a single individual.",
+      "relies_on": [
+        "tyrion.p3"
+      ]
+    }
+  ],
+  "role_id": "judge-1",
+  "verdict": "justified",
+  "deliberation_id": "d-T-001-1788255049324-b4847b2d"
+}

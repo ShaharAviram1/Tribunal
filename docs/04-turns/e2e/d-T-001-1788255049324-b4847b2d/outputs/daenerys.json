@@ -1,0 +1,33 @@
+{
+  "seat": "prosecution",
+  "points": [
+    {
+      "id": "daenerys.p1",
+      "claim": "Jon Snow violated his sworn loyalty to me when he struck me down, betraying the oath he swore as my ally and lover.",
+      "support": "The record shows Jon pledged fealty to Daenerys after the war, and his subsequent act of killing her broke that pledge without any prior notice or declared justification. A sworn ally who kills his sovereign cannot claim lawful authority; his breach of oath is itself a decisive factor against justification."
+    },
+    {
+      "id": "daenerys.p2",
+      "claim": "I was unarmed and posed no immediate threat at the moment he killed me, so the killing lacked any self‑defence rationale.",
+      "support": "The agreed facts state that Daenerys was unarmed and was not attacking Jon when he stabbed her. With no imminent lethal danger to Jon, the use of deadly force cannot be framed as necessary protection of himself or others."
+    },
+    {
+      "id": "daenerys.p3",
+      "claim": "Jon exploited our intimacy and trust, using an embrace as a cover to strike, which is an act of ambush, not a lawful act.",
+      "support": "The record notes that Jon used their intimacy to get close enough to strike, revealing that the killing was deliberate and covert rather than a response to an open threat. An ambush under the guise of affection disqualifies the act from any claim of justified force."
+    },
+    {
+      "id": "daenerys.p4",
+      "claim": "Jon bypassed any council, detention, or public demand for surrender, choosing murder over any legal or political remedy.",
+      "support": "The agreed facts specify that Jon did not convene a council, attempt to detain Daenerys, or demand her surrender of power. By skipping all institutional options, he opted for immediate lethal action when alternatives existed, making the killing unnecessary."
+    },
+    {
+      "id": "daenerys.p5",
+      "claim": "There were safer alternatives available—detention, trial, exile, or removal by the council—that Jon never attempted, rendering his lethal action unnecessary.",
+      "support": "The Small Council, the Unsullied, and the dragons were under Jon’s reach after the victory. The record shows no effort to employ these mechanisms to neutralize Daenerys non‑lethally, demonstrating that a non‑violent solution was feasible and that the killing was not required."
+    }
+  ],
+  "role_id": "daenerys",
+  "position": "not_justified",
+  "deliberation_id": "d-T-001-1788255049324-b4847b2d"
+}

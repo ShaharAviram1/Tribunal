@@ -1,0 +1,42 @@
+{
+  "deliberation_id": "d-T-001-1788255489724-b4847b2d",
+  "case_id": "T-001",
+  "status": "incomplete",
+  "stage": "judges",
+  "terminal_reason": "judge column(s) judge-3 produced no opinion; the others stand",
+  "calls": 10,
+  "spend_usd": 0.027477635,
+  "attempts_by_role": {
+    "jon": 1,
+    "tyrion": 1,
+    "judge-1": 1,
+    "judge-2": 1,
+    "judge-3": 1,
+    "daenerys": 1,
+    "greyworm": 1
+  },
+  "claimed_at": "2026-09-01T09:38:10.739+00:00",
+  "heartbeat_at": null,
+  "completed_roles": [
+    "jon",
+    "daenerys",
+    "tyrion",
+    "greyworm",
+    "judge-1",
+    "judge-2"
+  ],
+  "failed_roles": [
+    "judge-3"
+  ],
+  "models": {
+    "jon": "openai/gpt-4.1-mini",
+    "tyrion": "anthropic/claude-sonnet-4.5",
+    "judge-1": "deepseek/deepseek-chat-v3.1",
+    "judge-2": "mistralai/mistral-small-3.2-24b-instruct",
+    "judge-3": "qwen/qwen3.8-flash",
+    "daenerys": "google/gemini-2.5-flash",
+    "greyworm": "minimax/minimax-m2.7:free"
+  },
+  "created_at": "2026-09-01T09:38:09.806007+00:00",
+  "updated_at": "2026-09-01T09:40:46.887+00:00"
+}

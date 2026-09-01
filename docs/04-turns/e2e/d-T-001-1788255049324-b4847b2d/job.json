@@ -1,0 +1,41 @@
+{
+  "deliberation_id": "d-T-001-1788255049324-b4847b2d",
+  "case_id": "T-001",
+  "status": "complete",
+  "stage": "judges",
+  "terminal_reason": null,
+  "calls": 9,
+  "spend_usd": 0,
+  "attempts_by_role": {
+    "jon": 1,
+    "tyrion": 1,
+    "judge-1": 2,
+    "judge-2": 1,
+    "judge-3": 2,
+    "daenerys": 1,
+    "greyworm": 1
+  },
+  "claimed_at": "2026-09-01T09:30:51.667+00:00",
+  "heartbeat_at": null,
+  "completed_roles": [
+    "greyworm",
+    "daenerys",
+    "jon",
+    "tyrion",
+    "judge-2",
+    "judge-3",
+    "judge-1"
+  ],
+  "failed_roles": [],
+  "models": {
+    "jon": "minimax/minimax-m2.7:free",
+    "tyrion": "minimax/minimax-m2.7:free",
+    "judge-1": "minimax/minimax-m2.7:free",
+    "judge-2": "minimax/minimax-m2.7:free",
+    "judge-3": "minimax/minimax-m2.7:free",
+    "daenerys": "minimax/minimax-m2.7:free",
+    "greyworm": "minimax/minimax-m2.7:free"
+  },
+  "created_at": "2026-09-01T09:30:49.625811+00:00",
+  "updated_at": "2026-09-01T09:36:09.028+00:00"
+}

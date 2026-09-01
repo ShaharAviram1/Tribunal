@@ -1,0 +1,14 @@
+{
+  "failed": true,
+  "reason": "transport_error",
+  "role_id": "judge-3",
+  "attempts": [
+    {
+      "hash": "a930305123adddf7509fb72e3cf8d0fb544775fcded14cf6b2e96c2630f77d6c",
+      "text": null,
+      "detail": "transport retries exhausted",
+      "outcome": "transport_error"
+    }
+  ],
+  "deliberation_id": "d-T-001-1788255489724-b4847b2d"
+}
