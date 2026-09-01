@@ -19,7 +19,7 @@
   function bufferGavel() {
     if (buffered) return;
     buffered = document.createElement('video');
-    buffered.src = '/gavel.mp4#t=1,5';
+    buffered.src = '/gavel.mp4#t=2.4,4.6';
     buffered.muted = true; buffered.playsInline = true; buffered.preload = 'auto';
     buffered.load();
   }
@@ -27,20 +27,30 @@
     const veil = document.createElement('div');
     veil.className = 'gavel-veil held';
     const v = buffered ?? document.createElement('video');
-    if (!buffered) { v.src = '/gavel.mp4#t=1,5'; v.muted = true; v.playsInline = true; }
+    if (!buffered) { v.src = '/gavel.mp4#t=2.4,4.6'; v.muted = true; v.playsInline = true; }
     v.autoplay = true; v.muted = true; v.playsInline = true;
     veil.appendChild(v);
     veil.insertAdjacentHTML('beforeend', '<div class="gavel-vignette"></div><p class="gavel-word">The bench has ruled</p>');
     document.body.appendChild(veil);
-    let struck = false;
-    const strike = () => { if (struck) return; struck = true; veil.classList.remove('held'); veil.classList.add('rolling'); if (atStrike) atStrike(); };
-    const done = () => { veil.classList.add('fading'); setTimeout(() => veil.remove(), 900); };
-    v.addEventListener('playing', strike, { once: true });
+    // Choreography anchored to the measured impact frame (t=3.2s absolute: hammer meets block,
+    // smoke). The clip becomes visible as it plays; the word and the verdict reveal land ON the
+    // bang, not two seconds ahead of it; the fade rides out on the smoke. Floors keep a slow or
+    // failed load from ever holding the verdicts hostage.
+    const IMPACT = 3.15, FADE_AT = 4.45;
+    let shown2 = false, struck = false, faded = false;
+    const show = () => { if (shown2) return; shown2 = true; veil.classList.remove('held'); };
+    const strike = () => { if (struck) return; struck = true; show(); veil.classList.add('rolling'); if (atStrike) atStrike(); };
+    const done = () => { if (faded) return; faded = true; strike(); veil.classList.add('fading'); setTimeout(() => veil.remove(), 900); };
+    v.addEventListener('playing', show, { once: true });
+    v.addEventListener('timeupdate', () => {
+      if (v.currentTime >= IMPACT) strike();
+      if (v.currentTime >= FADE_AT) done();
+    });
     v.addEventListener('pause', done, { once: true });  // a media fragment pauses at its end time
     v.addEventListener('ended', done, { once: true });
-    v.addEventListener('error', () => { strike(); done(); }, { once: true });
-    setTimeout(() => { strike(); }, 2500);              // never hold the verdicts hostage to a slow load
-    setTimeout(() => { if (document.body.contains(veil)) done(); }, 9000);
+    v.addEventListener('error', () => done(), { once: true });
+    setTimeout(() => { strike(); }, 3000);              // floor: reveal even if the clip never plays
+    setTimeout(() => { if (document.body.contains(veil)) done(); }, 8000);
     v.play?.();
   }
   if (terminalArrival) { mountGavel(); return; }
