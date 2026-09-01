@@ -38,15 +38,17 @@ test('truncation: one retry of the same prompt at a doubled ceiling, no correcti
   assert.equal(job.status, 'complete');
 });
 
-test('truncation on every allowed attempt fails the role as truncated with all raw texts stored', async () => {
-  const s = happy(); s.tyrion = [truncated(cut), truncated(cut + 'x'), truncated(cut + 'y')];
+test('an advocate that truncates twice fails as truncated and never reaches a third attempt', async () => {
+  const s = happy(); s.tyrion = [truncated(cut), truncated(cut + 'x')];
   const c = client(s); const store = makeStore();
   const job = await runDeliberation({ client: c, store, chargeSheet: chargeSheet as never, deliberation_id: 'd-t', caps });
   const rec = store.getOutput('tyrion') as { failed: boolean; reason: string; attempts: { text: string; detail: string }[] };
   assert.equal(rec.failed, true);
-  assert.match(rec.reason, /truncated/);
-  assert.deepEqual(rec.attempts.map((a) => a.text), [cut, cut + 'x', cut + 'y']);
-  assert.match(rec.attempts[0]!.detail, /1000/); assert.match(rec.attempts[1]!.detail, /2000/); assert.match(rec.attempts[2]!.detail, /4000/);
+  assert.equal(rec.reason, 'truncated');
+  assert.equal(c.ceilings.tyrion!.length, 2, 'one raise per role, no third attempt');
+  assert.deepEqual(c.ceilings.tyrion, [1000, 2000]);
+  assert.deepEqual(rec.attempts.map((a) => a.text), [cut, cut + 'x'], 'both raw texts stored');
+  assert.match(rec.attempts[0]!.detail, /1000/); assert.match(rec.attempts[1]!.detail, /2000/);
   assert.equal(job.status, 'incomplete');
 });
 
