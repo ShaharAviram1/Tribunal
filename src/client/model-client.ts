@@ -27,8 +27,7 @@ export type LogRow = {
   model_requested: string;
   model_served: string | null;
   model_mismatch: boolean;
-  temperature: number;
-  temperature_honoured: boolean | null;
+  temperature_sent: number;
   tokens_in: number | null;
   tokens_out: number | null;
   cost_usd: number | null;
@@ -59,7 +58,7 @@ export type Budget = {
 export type Transport = (req: {
   model: string; prompt: string; temperature: number; timeout_ms: number; max_tokens: number;
 }) => Promise<
-  | { kind: 'ok'; text: string; model_served: string | null; tokens_in: number | null; tokens_out: number | null; cost_usd: number | null; http_status: number; temperature_honoured: boolean | null; finish_reason: string | null }
+  | { kind: 'ok'; text: string; model_served: string | null; tokens_in: number | null; tokens_out: number | null; cost_usd: number | null; http_status: number; finish_reason: string | null }
   | { kind: 'refusal'; model_served: string | null; http_status: number; detail: string }
   | { kind: 'forbidden'; http_status: number; detail: string }
   | { kind: 'transport_error'; http_status: number | null; detail: string }
@@ -159,7 +158,7 @@ export class ModelClient {
       const base = { ...this.#row(req, model, latency_ms, started), max_output_tokens: ceiling };
       if (res.kind === 'ok') {
         const row: LogRow = { ...base, outcome: 'ok', model_served: res.model_served, model_mismatch: res.model_served !== null && res.model_served !== model,
-          tokens_in: res.tokens_in, tokens_out: res.tokens_out, cost_usd: res.cost_usd, http_status: res.http_status, temperature_honoured: res.temperature_honoured,
+          tokens_in: res.tokens_in, tokens_out: res.tokens_out, cost_usd: res.cost_usd, http_status: res.http_status,
           finish_reason: res.finish_reason, detail: stripOuterFence(res.text).fence_stripped ? 'fence_stripped: a single outer code fence was stripped before parsing' : null };
         await this.#record(row);
         return { outcome: 'ok', text: res.text, truncated: res.finish_reason === 'length', row };
@@ -202,7 +201,7 @@ export class ModelClient {
     return {
       deliberation_id: this.#id, role_id: req.role_id, attempt: req.attempt, prompt_hash: req.hash,
       model_requested: model, model_served: null, model_mismatch: false,
-      temperature: this.#caps.temperature, temperature_honoured: null,
+      temperature_sent: this.#caps.temperature,
       tokens_in: null, tokens_out: null, cost_usd: null, latency_ms,
       outcome: 'ok', http_status: null, detail: null, started_at: new Date(started).toISOString(),
       max_output_tokens: req.max_output_tokens ?? this.#caps.max_output_tokens, finish_reason: null,

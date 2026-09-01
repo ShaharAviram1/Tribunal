@@ -15,12 +15,12 @@ function memBudget(): Budget & { rows: LogRow[] } {
     add: async (r) => { rows.push(r); },
   };
 }
-const ok = (text = '{}', served = 'test/model-a', finish = 'stop'): Transport => async () => ({ kind: 'ok', text, model_served: served, tokens_in: 10, tokens_out: 5, cost_usd: 0.01, http_status: 200, temperature_honoured: null, finish_reason: finish });
+const ok = (text = '{}', served = 'test/model-a', finish = 'stop'): Transport => async () => ({ kind: 'ok', text, model_served: served, tokens_in: 10, tokens_out: 5, cost_usd: 0.01, http_status: 200, finish_reason: finish });
 const script = (kinds: Array<'ok' | 'transport_error' | 'refusal' | 'timeout'>): Transport => {
   let i = 0;
   return async () => {
     const k = kinds[Math.min(i++, kinds.length - 1)]!;
-    if (k === 'ok') return { kind: 'ok', text: '{}', model_served: 'test/model-a', tokens_in: 1, tokens_out: 1, cost_usd: 0.001, http_status: 200, temperature_honoured: null, finish_reason: 'stop' };
+    if (k === 'ok') return { kind: 'ok', text: '{}', model_served: 'test/model-a', tokens_in: 1, tokens_out: 1, cost_usd: 0.001, http_status: 200, finish_reason: 'stop' };
     if (k === 'refusal') return { kind: 'refusal', model_served: 'test/model-a', http_status: 200, detail: 'content_filter' };
     if (k === 'timeout') return { kind: 'timeout' };
     return { kind: 'transport_error', http_status: 503, detail: 'upstream' };
@@ -37,7 +37,7 @@ test('an ok call writes one row with requested and served model, hash, temperatu
   assert.equal(client.log.length, 1);
   const row = client.log[0]!;
   assert.equal(row.model_requested, 'test/model-a'); assert.equal(row.model_served, 'test/model-a'); assert.equal(row.model_mismatch, false);
-  assert.equal(row.prompt_hash, 'h'.repeat(64)); assert.equal(row.temperature, 0);
+  assert.equal(row.prompt_hash, 'h'.repeat(64)); assert.equal(row.temperature_sent, 0);
   assert.equal(row.tokens_in, 10); assert.equal(row.tokens_out, 5); assert.equal(row.cost_usd, 0.01); assert.equal(typeof row.latency_ms, 'number');
 });
 
@@ -124,7 +124,7 @@ test('a 429 on a free model advances to the next in the chain, each attempt logg
   const transport: Transport = async ({ model }) => {
     n++;
     if (model === 'free/a:free') return { kind: 'transport_error', http_status: 429, detail: 'rate-limited' };
-    return { kind: 'ok', text: '{}', model_served: model, tokens_in: 1, tokens_out: 1, cost_usd: 0, http_status: 200, temperature_honoured: null, finish_reason: 'stop' };
+    return { kind: 'ok', text: '{}', model_served: model, tokens_in: 1, tokens_out: 1, cost_usd: 0, http_status: 200, finish_reason: 'stop' };
   };
   const client = new ModelClient({ caps, models: { jon: 'free/a:free' }, freeFallbacks: chain, deliberation_id: 'd-test', budget, transport, sleep: async () => {}, random: () => 0, now: () => 0 });
   const r = await client.call(req(1));
@@ -164,13 +164,12 @@ test('the real transport maps any 403 to forbidden with the body verbatim, class
   assert.equal((res as { detail: string }).detail, bodyText, 'provider body stored verbatim');
 });
 
-test('an ok response through the real transport records temperature_honoured true, never null', async () => {
-  const payload = JSON.stringify({ model: 'm', choices: [{ finish_reason: 'stop', message: { content: '{}' } }], usage: { prompt_tokens: 1, completion_tokens: 1, cost: 0 } });
-  const fake = (async () => new Response(payload, { status: 200 })) as typeof fetch;
-  const t = openRouterTransport('k', fake);
-  const res = await t({ model: 'm', prompt: 'p', temperature: 0, timeout_ms: 5000, max_tokens: 10 });
-  assert.equal(res.kind, 'ok');
-  assert.equal((res as { temperature_honoured: boolean | null }).temperature_honoured, true);
+test('every row logs temperature_sent and carries no temperature_honoured field', async () => {
+  const { client } = mk(ok());
+  await client.call(req());
+  const row = client.log[0]! as LogRow & { temperature_honoured?: unknown };
+  assert.equal(row.temperature_sent, 0);
+  assert.equal('temperature_honoured' in row, false, 'the field asserting the unknowable is gone');
 });
 
 test('a fenced ok response notes fence_stripped on its log row; an unfenced one keeps detail null', async () => {
