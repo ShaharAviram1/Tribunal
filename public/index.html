@@ -15,46 +15,64 @@
   color-scheme:dark;
 }
 *{box-sizing:border-box}
-body{margin:0 auto;max-width:46rem;padding:1rem 1.25rem 2.5rem;font:16px/1.6 var(--text);background:var(--ground);color:var(--ink);overflow-wrap:break-word}
-.masthead{border-bottom:3px double var(--brass);padding-bottom:.9rem;margin-bottom:1.1rem}
-.tribunal-name{font-family:var(--display);font-size:1.15rem;font-weight:600;letter-spacing:.35em;text-transform:uppercase;color:var(--brass);margin:.4rem 0 .3rem}
-.charter{color:var(--ink2);margin:.2rem 0 0;font-size:.98rem}
-.guard{font-size:.88em;border:1px solid var(--hairline);background:var(--panel);border-radius:.35rem;padding:.5rem .85rem;color:var(--ink2);margin:0 0 1.4rem}
-h2{font-family:var(--display);font-variant:small-caps;letter-spacing:.12em;font-weight:600;font-size:1.35rem;border-bottom:1px solid var(--hairline);padding-bottom:.25rem;margin:1.6rem 0 .7rem}
-.card{display:block;background:var(--panel);border:1px solid var(--hairline);border-radius:.45rem;padding:.8rem 1rem;margin:.6rem 0;width:100%;cursor:pointer}
+body{margin:0 auto;max-width:46rem;padding:2.75rem 1.25rem 3.5rem;font:16px/1.7 var(--text);background:var(--ground);color:var(--ink);overflow-wrap:break-word}
+
+.masthead{text-align:center;padding-bottom:1.2rem;margin:0 0 1.5rem;border-bottom:3px double var(--brass)}
+.tribunal-name{font-family:var(--display);font-weight:600;font-size:clamp(2.6rem,7vw,4.5rem);letter-spacing:.1em;text-transform:uppercase;color:var(--brass);margin:0;line-height:1.05}
+.charter{max-width:32rem;margin:0 auto 2.4rem;text-align:center;color:var(--ink2);font-size:.95rem;line-height:1.7;overflow-wrap:break-word}
+
+.guard{font-size:.88em;border:1px solid var(--hairline);background:var(--panel);border-radius:.4rem;padding:.75rem 1.1rem;color:var(--ink2);margin:0 auto 2.6rem;max-width:32rem;text-align:center;overflow-wrap:break-word}
+
+h2{display:table;margin:2.6rem auto 1.3rem;font-family:var(--display);font-variant:small-caps;letter-spacing:.18em;font-weight:600;font-size:1.05rem;color:var(--ink2);border-bottom:1px solid var(--hairline);padding-bottom:.4rem;text-align:center}
+
+#cases{margin:0 auto;max-width:34rem;text-align:center}
+
+.card{display:block;background:var(--panel);border:1px solid var(--hairline);border-radius:.55rem;padding:1.7rem 1.5rem;margin:.7rem auto;max-width:34rem;cursor:pointer;text-align:center}
 .card:hover{border-color:var(--muted)}
 .card input[type=radio]{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;clip-path:inset(50%);overflow:hidden;white-space:nowrap}
 .card:has(input:checked){border:1px solid var(--brass);box-shadow:0 0 0 1px var(--brass)}
-.card-title{font-family:var(--display);font-weight:600;font-size:1.15rem;margin:0}
-.card-sub{color:var(--ink2);font-size:.92em;margin:.15rem 0 0}
-.case-name{font-family:var(--display)}
-.docket{font-size:.8em;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin:0 0 .1rem}
-.runs{list-style:none;margin:.5rem 0 0;padding:.45rem 0 0;border-top:1px solid var(--hairline);font-size:.9em}
-.runs li{margin:.25rem 0;color:var(--ink2);overflow-wrap:anywhere}
-.no-runs{margin:.5rem 0 0;padding-top:.45rem;border-top:1px solid var(--hairline);font-size:.9em;font-style:italic;color:var(--muted)}
-details.debug{border:1px dashed var(--hairline);border-radius:.45rem;padding:.35rem .9rem;margin:.9rem 0;color:var(--ink2)}
-details.debug summary{cursor:pointer;font-size:.9em;font-style:italic;color:var(--muted)}
-.panel-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:.6rem}
-.panel-grid .card{margin:0}
-.bench{margin:1.6rem 0 0;border-top:3px double var(--brass);padding-top:1rem}
-button{font:inherit;font-family:var(--display);font-weight:600;letter-spacing:.06em;color:var(--ground);background:var(--brass);border:1px solid var(--brass);border-radius:.35rem;padding:.55rem 1.4rem;cursor:pointer}
-button:hover{filter:brightness(1.08)}
-button:disabled{opacity:.55;cursor:default}
-.duration{font-style:italic;color:var(--ink2);font-size:.92em;margin:.5rem 0 0}
-#status{color:var(--ink2);font-style:italic;min-height:1.4em;margin:.7rem 0 0;overflow-wrap:anywhere}
+.card-title{font-family:var(--display);font-weight:600;font-size:1.6rem;margin:0;line-height:1.25;overflow-wrap:break-word}
+.card-sub{color:var(--ink2);font-size:.95em;margin:.6rem 0 0;overflow-wrap:break-word}
+.case-name{display:block}
+.docket{font-size:.78em;color:var(--muted);letter-spacing:.16em;text-transform:uppercase;margin:0 0 .6rem}
+
+.runs{list-style:none;margin:1.2rem 0 0;padding:1.05rem 0 0;border-top:1px solid var(--hairline);font-size:.88em}
+.runs::before{content:"Past hearings";display:block;font-family:var(--display);font-variant:small-caps;letter-spacing:.16em;color:var(--muted);font-size:.85em;margin:0 0 .65rem}
+.runs li{margin:.4rem 0;color:var(--ink2);overflow-wrap:anywhere}
+.no-runs{margin:1.2rem 0 0;padding-top:1.05rem;border-top:1px solid var(--hairline);font-size:.9em;font-style:italic;color:var(--muted)}
+
+details.debug{border:1px dashed var(--hairline);border-radius:.5rem;padding:.5rem 1.1rem;margin:1.4rem auto;color:var(--ink2);max-width:34rem;text-align:left}
+details.debug summary{cursor:pointer;font-size:.85em;font-style:italic;color:var(--muted);text-align:center}
+details.debug .card{max-width:none;padding:.75rem .95rem;margin:.6rem 0;text-align:left}
+details.debug .card-title{font-size:1.05rem}
+details.debug .docket{font-size:.7em}
+details.debug .runs,details.debug .no-runs{font-size:.82em}
+
+.panel-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:1rem;max-width:40rem;margin:0 auto}
+.panel-grid .card{margin:0;max-width:none;padding:2.1rem 1.3rem;display:flex;flex-direction:column;justify-content:center;min-height:9rem}
+.panel-grid .card-title{font-variant:small-caps;letter-spacing:.08em;font-size:1.3rem}
+.panel-grid .card-sub{margin-top:.75rem}
+
+.bench{margin:2.8rem auto 0;max-width:32rem;text-align:center;border-top:3px double var(--brass);padding-top:1.7rem}
+button{display:block;width:100%;font:inherit;font-family:var(--display);font-weight:600;font-variant:small-caps;letter-spacing:.1em;color:var(--brass);background:transparent;border:2px solid var(--brass);border-radius:.4rem;padding:1.05rem 1.6rem;cursor:pointer;margin:0 auto;transition:background .15s,color .15s}
+button:hover:not(:disabled){background:var(--brass);color:var(--ground)}
+button:disabled{opacity:.5;cursor:default}
+.duration{font-style:italic;color:var(--ink2);font-size:.92em;margin:1.1rem 0 0;overflow-wrap:break-word}
+#status{color:var(--ink2);font-style:italic;min-height:1.4em;margin:.85rem 0 0;overflow-wrap:anywhere}
+
 a{color:var(--brass)}
-footer{margin-top:2.2rem;border-top:3px double var(--brass);padding-top:.6rem;color:var(--muted);font-size:.9em}
+footer{margin-top:2.8rem;border-top:3px double var(--brass);padding-top:.8rem;color:var(--muted);font-size:.9em;text-align:center}
 </style>
 </head>
 <body>
 <header class="masthead">
-  <p class="tribunal-name">The Tribunal</p>
-  <p class="charter">Four advocates and three judges deliberate one charge sheet in seven separate model calls. The three opinions are presented side by side and are never combined.</p>
+  <h1 class="tribunal-name">The Tribunal</h1>
 </header>
+<p class="charter">Four advocates and three judges deliberate one charge sheet in seven separate model calls. The three opinions are presented side by side and are never combined.</p>
 
 <p class="guard">A fictional proceeding. Each judge adapts a judicial method from a real jurist's published opinions; no judge represents the jurist or predicts how they would decide.</p>
 
-<h2>The Case</h2>
+<h2>The Matter Before the Bench</h2>
 <div id="cases"><p class="card-sub">Retrieving the docket…</p></div>
 
 <h2>The Panel</h2>
