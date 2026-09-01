@@ -99,6 +99,7 @@ export async function runDeliberation(deps: RunDeps): Promise<Job> {
     const isJudge = (JUDGES as readonly string[]).includes(role);
     const validIds = stances ? stances.flatMap((s) => s.points.map((p) => p.id)) : [];
     const attempts: FailureRecord['attempts'] = [];
+    let truncationRetries = 0; // one per role, across passes (ruling 2026-09-02)
     const primaryModel = job.models[role];
     let reassignedFrom: string | null = null;
     let lastFailReason = 'failed';
@@ -130,8 +131,15 @@ export async function runDeliberation(deps: RunDeps): Promise<Job> {
         if (res.outcome === 'transport_error') { attempts.push({ hash: p.hash, text: null, outcome: 'transport_error', detail: 'transport retries exhausted' }); lastFailReason = 'transport_error'; passFailed = true; break; }
         if (res.truncated) {
           attempts.push({ hash: p.hash, text: res.text, outcome: 'ok', detail: `truncated at ${ceiling} output tokens` });
-          if (round === rounds - 1) { lastFailReason = `truncated on all attempts`; passFailed = true; break; }
+          // One ceiling raise per role, then the role fails as truncated, whatever the seat
+          // (ruling 2026-09-02): the advocates' third validation attempt was granted for the
+          // transient empty-200 flake and must not silently extend a different condition, and
+          // a second raise is 65,536 tokens against a 0.25 USD cap. Truncation retries are
+          // budgeted separately from the validation rounds and never reach a fallback.
+          if (truncationRetries >= 1) { await fail(role, 'truncated', attempts); return; }
+          truncationRetries += 1;
           ceiling = ceiling * caps.truncation_retry_ceiling_multiplier;
+          round -= 1; // a truncation retry does not spend a validation round
           continue;
         }
         const v = isJudge ? validateOpinion(res.text, validIds) : validateStance(res.text);

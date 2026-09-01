@@ -1,0 +1,19 @@
+The Tribunal — project intent
+
+This is the running project for the course. The idea is a tribunal that
+argues and rules on one case from the course dossier, using several model
+calls instead of one.
+
+One charge sheet, T-001, goes to seven roles: four advocates and three
+judges, each with its own prompt and its own model call. The advocates
+argue first and return their positions as structured points. The three
+judges then read those four stances, and each returns its own verdict and
+reasons.
+
+What it needs to do:
+- Seven separate calls, not one conversation, so the outputs are
+  independent of each other.
+- Show the three verdicts side by side and never combine them: no count,
+  no majority, no summary of what the panel found.
+- Run one: all seven roles on the same model.
+- Run two: the seven roles across several models.

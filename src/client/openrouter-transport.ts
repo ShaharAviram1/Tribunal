@@ -34,12 +34,13 @@ export function openRouterTransport(apiKey: string, fetchImpl: typeof fetch = fe
       if (REFUSAL_FINISH.has(finish) || (text.trim() === '' && choice?.message?.refusal)) {
         return { kind: 'refusal', model_served: served, http_status: res.status, detail: choice?.message?.refusal ?? `finish_reason=${finish}` };
       }
-      // The provider accepted the request carrying the temperature parameter; a provider that
-      // rejects the parameter fails the whole call, and that failure is its own non-ok row.
+      // A provider that rejects the temperature parameter fails the whole call, recorded as the
+      // call failure it already is; silent ignoring is undetectable from outside, and no field
+      // claims otherwise (spec.md criterion 8, revision 2026-09-02).
       return {
         kind: 'ok', text, model_served: served, http_status: res.status, finish_reason: finish,
         tokens_in: body?.usage?.prompt_tokens ?? null, tokens_out: body?.usage?.completion_tokens ?? null,
-        cost_usd: body?.usage?.cost ?? null, temperature_honoured: true,
+        cost_usd: body?.usage?.cost ?? null,
       };
     } catch (e: any) {
       if (e?.name === 'AbortError') return { kind: 'timeout' };
