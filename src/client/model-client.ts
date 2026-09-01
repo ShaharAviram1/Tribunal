@@ -32,7 +32,7 @@ export type LogRow = {
   tokens_out: number | null;
   cost_usd: number | null;
   latency_ms: number;
-  outcome: 'ok' | 'refusal' | 'transport_error' | 'cap_exceeded' | 'timeout';
+  outcome: 'ok' | 'refusal' | 'forbidden' | 'transport_error' | 'cap_exceeded' | 'timeout';
   max_output_tokens: number;
   finish_reason: string | null;
   http_status: number | null;
@@ -44,6 +44,7 @@ export type CallRequest = { role_id: string; prompt: string; hash: string; attem
 export type CallResult =
   | { outcome: 'ok'; text: string; truncated: boolean; row: LogRow }
   | { outcome: 'refusal'; row: LogRow }
+  | { outcome: 'forbidden'; row: LogRow }
   | { outcome: 'transport_error'; row: LogRow }
   | { outcome: 'cap_exceeded'; row: LogRow };
 
@@ -59,6 +60,7 @@ export type Transport = (req: {
 }) => Promise<
   | { kind: 'ok'; text: string; model_served: string | null; tokens_in: number | null; tokens_out: number | null; cost_usd: number | null; http_status: number; temperature_honoured: boolean | null; finish_reason: string | null }
   | { kind: 'refusal'; model_served: string | null; http_status: number; detail: string }
+  | { kind: 'forbidden'; http_status: number; detail: string }
   | { kind: 'transport_error'; http_status: number | null; detail: string }
   | { kind: 'timeout' }
 >;
@@ -165,6 +167,12 @@ export class ModelClient {
         const row: LogRow = { ...base, outcome: 'refusal', model_served: res.model_served, model_mismatch: res.model_served !== null && res.model_served !== model, http_status: res.http_status, detail: res.detail };
         await this.#record(row);
         return { outcome: 'refusal', row };
+      }
+      if (res.kind === 'forbidden') {
+        // Its own condition: one row, the provider body verbatim, zero retries of any kind.
+        const row: LogRow = { ...base, outcome: 'forbidden', http_status: res.http_status, detail: res.detail };
+        await this.#record(row);
+        return { outcome: 'forbidden', row };
       }
       const row: LogRow = res.kind === 'timeout'
         ? { ...base, outcome: 'timeout', detail: `no response within ${this.#caps.call_timeout_ms}ms` }

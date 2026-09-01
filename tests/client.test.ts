@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { ModelClient, type Caps, type LogRow, type Transport, type Budget } from '../src/client/model-client.ts';
+import { openRouterTransport } from '../src/client/openrouter-transport.ts';
 
 const caps: Caps = JSON.parse(readFileSync('config/caps.json', 'utf8'));
 const models = { jon: 'test/model-a' };
@@ -139,4 +140,26 @@ test('a paid model outside the chain never rotates', async () => {
   const r = await client.call(req(1));
   assert.equal(r.outcome, 'transport_error');
   assert.ok(client.log.every((x) => x.model_requested === 'paid/model'));
+});
+
+test('an HTTP 403 is its own condition: one row, outcome forbidden, body verbatim, zero retries', async () => {
+  let called = 0;
+  const t: Transport = async () => { called++; return { kind: 'forbidden', http_status: 403, detail: '{"error":{"message":"anything the provider said"}}' }; };
+  const { client } = mk(t);
+  const r = await client.call(req());
+  assert.equal(r.outcome, 'forbidden');
+  assert.equal(called, 1, 'zero retries');
+  assert.equal(client.log.length, 1);
+  assert.equal(client.log[0]!.outcome, 'forbidden');
+  assert.equal(client.log[0]!.http_status, 403);
+  assert.equal(client.log[0]!.detail, '{"error":{"message":"anything the provider said"}}');
+});
+
+test('the real transport maps any 403 to forbidden with the body verbatim, classifying no text', async () => {
+  const bodyText = '{"error":{"message":"wording no heuristic has ever seen"}}';
+  const fake = (async () => new Response(bodyText, { status: 403 })) as typeof fetch;
+  const t = openRouterTransport('k', fake);
+  const res = await t({ model: 'm', prompt: 'p', temperature: 0, timeout_ms: 5000, max_tokens: 10 });
+  assert.equal(res.kind, 'forbidden');
+  assert.equal((res as { detail: string }).detail, bodyText, 'provider body stored verbatim');
 });

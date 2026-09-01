@@ -13,6 +13,7 @@ import type { StoredChargeSheet, StoredStance, StoredOpinion, FailureRecord } fr
 export type CallOutcome =
   | { outcome: 'ok'; text: string; truncated?: boolean; row?: { model_requested?: string } }
   | { outcome: 'refusal' }
+  | { outcome: 'forbidden' }
   | { outcome: 'transport_error' }
   | { outcome: 'cap_exceeded' };
 export type ModelClient = {
@@ -125,6 +126,7 @@ export async function runDeliberation(deps: RunDeps): Promise<Job> {
         // Terminal for the role: zero retries and never a fallback (spec.md criterion 6,
         // revision 2026-09-02: the fallback ruling covered failure, not refusal).
         if (res.outcome === 'refusal') { attempts.push({ hash: p.hash, text: null, outcome: 'refusal', detail: 'provider signalled a refusal' }); await fail(role, 'refusal', attempts); return; }
+        if (res.outcome === 'forbidden') { attempts.push({ hash: p.hash, text: null, outcome: 'forbidden', detail: 'provider answered HTTP 403; body stored verbatim on its log row' }); await fail(role, 'forbidden: provider answered HTTP 403', attempts); return; }
         if (res.outcome === 'transport_error') { attempts.push({ hash: p.hash, text: null, outcome: 'transport_error', detail: 'transport retries exhausted' }); lastFailReason = 'transport_error'; passFailed = true; break; }
         if (res.truncated) {
           attempts.push({ hash: p.hash, text: res.text, outcome: 'ok', detail: `truncated at ${ceiling} output tokens` });
