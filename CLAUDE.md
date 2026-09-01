@@ -33,7 +33,7 @@ Do not copy from these into code comments, prompts, or this file. Copies drift a
 
 **Prompts are code.** The seven prompts are versioned files loaded at runtime, reviewed in commits, never strings in code. The shared charge sheet block goes first in every one of them, byte-identical, so it caches.
 
-**Plain code carries, stores, and orders.** A model call appears only where reasoning is required: the four stances and the three opinions. The protocol, id assignment, validation, retry, and rendering are deterministic code with no model call of their own.
+**Plain code carries, stores, and orders.** A model call appears only where reasoning is required: the four stances, the three opinions, and the intake clerk's draft of a submitted scenario. The protocol, id assignment, validation, retry, and rendering are deterministic code with no model call of their own.
 
 **Objects pass between stages, never flattened prose.** A judge receives four stance objects, not a paragraph about them.
 
