@@ -19,7 +19,7 @@
   function bufferGavel() {
     if (buffered) return;
     buffered = document.createElement('video');
-    buffered.src = '/gavel.mp4#t=2.2,4.63';
+    buffered.src = '/gavel.mp4#t=1.8,4.63';
     buffered.muted = true; buffered.playsInline = true; buffered.preload = 'auto';
     buffered.load();
   }
@@ -27,7 +27,7 @@
     const veil = document.createElement('div');
     veil.className = 'gavel-veil held';
     const v = buffered ?? document.createElement('video');
-    if (!buffered) { v.src = '/gavel.mp4#t=2.2,4.63'; v.muted = true; v.playsInline = true; }
+    if (!buffered) { v.src = '/gavel.mp4#t=1.8,4.63'; v.muted = true; v.playsInline = true; }
     v.autoplay = true; v.muted = true; v.playsInline = true;
     veil.appendChild(v);
     veil.insertAdjacentHTML('beforeend', '<div class="gavel-vignette"></div><p class="gavel-word">The bench has ruled</p>');
@@ -36,7 +36,7 @@
     // smoke). The clip becomes visible as it plays; the word and the verdict reveal land ON the
     // bang, not two seconds ahead of it; the fade rides out on the smoke. Floors keep a slow or
     // failed load from ever holding the verdicts hostage.
-    const IMPACT = 3.18, FADE_AT = 4.63; // measured by hand on the tuning page, 2026-09-01: start 2.20, impact 3.18, end 4.63
+    const IMPACT = 3.18, FADE_AT = 4.63; // measured by hand on the tuning page, 2026-09-01: start 1.80 (amended from 2.20 for more wind-up), impact 3.18, end 4.63
     let shown2 = false, struck = false, faded = false;
     const show = () => { if (shown2) return; shown2 = true; veil.classList.remove('held'); };
     const strike = () => { if (struck) return; struck = true; show(); veil.classList.add('rolling'); if (atStrike) atStrike(); };
