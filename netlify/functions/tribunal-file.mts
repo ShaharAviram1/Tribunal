@@ -21,7 +21,7 @@ export default async (req: Request): Promise<Response> => {
   const url = requireEnv('SUPABASE_URL'); const key = requireEnv('SUPABASE_SERVICE_ROLE_KEY');
 
   // Both rate limits run before any write or model call.
-  const gate = await rateLimit(url, key, req);
+  const gate = await rateLimit(url, key, req, panel);
   if (!gate.ok) return gate.response;
 
   // Convene mode: { case_id } deliberates an existing charge sheet afresh.
@@ -47,12 +47,18 @@ export default async (req: Request): Promise<Response> => {
 
 // Both limits answer 429 before any write or model call. The IP hash rides on the end of the
 // deliberation id, so the per-IP cooldown needs no schema change: a LIKE query on the suffix.
-async function rateLimit(url: string, key: string, req: Request): Promise<{ ok: true; iphash: string } | { ok: false; response: Response }> {
+async function rateLimit(url: string, key: string, req: Request, panel: 'single' | 'multi'): Promise<{ ok: true; iphash: string } | { ok: false; response: Response }> {
   const base = url.replace(/\/$/, '');
   const headers = { apikey: key, Authorization: `Bearer ${key}` };
-  const dayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
-  const day = (await (await fetch(`${base}/rest/v1/jobs?select=deliberation_id&created_at=gt.${dayAgo}`, { headers })).json()) as unknown[];
-  if (day.length >= 10) return { ok: false, response: json({ error: 'global limit reached: at most 10 deliberations per 24 hours; try again later' }, 429) };
+  // The daily cap binds only the paid panel: free-panel deliberations cost nothing and the
+  // free-model chain absorbs per-model limits, so their count is policy-irrelevant (decision,
+  // 2026-09-01). The per-IP cooldown below still throttles everyone.
+  if (panel === 'multi') {
+    const dayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    const day = (await (await fetch(`${base}/rest/v1/jobs?select=models&created_at=gt.${dayAgo}`, { headers })).json()) as { models: Record<string, string> }[];
+    const paid = day.filter((j) => new Set(Object.values(j.models ?? {})).size > 1).length;
+    if (paid >= 10) return { ok: false, response: json({ error: 'the paid panel is limited to 10 deliberations per 24 hours; try again later, or convene the free panel' }, 429) };
+  }
   const ip = req.headers.get('x-nf-client-connection-ip') ?? req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
   const iphash = createHash('sha256').update(ip).digest('hex').slice(0, 8);
   const fiveMinAgo = new Date(Date.now() - 5 * 60 * 1000).toISOString();

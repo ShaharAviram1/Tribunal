@@ -111,16 +111,9 @@ body{
 .runs::before{content:"Past hearings";display:block;font-family:var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--card-ink3);font-size:10px;margin:0 0 10px}
 .runs li{margin:.35rem 0;color:var(--card-ink2);overflow-wrap:anywhere}
 .runs a{color:var(--card-ink)}
+.more-runs{margin:8px 0 0}.more-runs summary{cursor:pointer;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--card-ink3);list-style:none}.more-runs summary::-webkit-details-marker{display:none}.runs.more{margin-top:8px;padding-top:8px}.runs.more::before{content:none}
 .no-runs{margin:18px 0 0;padding-top:18px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:11px;font-style:italic;color:var(--card-ink3)}
 
-details.debug{border:1px dashed var(--edge2);border-radius:var(--r);padding:10px 18px;margin:18px 0 0;color:var(--page-ink3);text-align:left}
-details.debug summary{cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--page-ink3);list-style:none}
-details.debug summary::-webkit-details-marker{display:none}
-details.debug .card{padding:14px 16px;margin:10px 0 0;box-shadow:none;border-top:1px solid var(--edge)}
-details.debug .card-title{font-size:18px}
-details.debug .docket{font-size:9px}
-details.debug .card-sub{font-size:13px}
-details.debug .runs,details.debug .no-runs{font-size:10px}
 
 .panel-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:22px 0 0}
 .panel-grid .card{padding:18px}
@@ -204,7 +197,12 @@ const caseCard = (c, checked) => '<label class="card">' +
   '<p class="card-title case-name">The Realm v. ' + esc(c.accused) + '</p>' +
   '<p class="card-sub">In the matter of the death of ' + esc(c.deceased) + '.</p>' +
   (c.deliberations && c.deliberations.length
-    ? '<ul class="runs">' + c.deliberations.map(runLine).join('') + '</ul>'
+    ? (function () {
+        const runs = c.deliberations.slice().reverse();
+        const head = '<ul class="runs">' + runs.slice(0, 3).map(runLine).join('') + '</ul>';
+        const rest = runs.slice(3);
+        return head + (rest.length ? '<details class="more-runs"><summary>See all ' + runs.length + ' hearings</summary><ul class="runs more">' + rest.map(runLine).join('') + '</ul></details>' : '');
+      })()
     : '<p class="no-runs">Not yet deliberated.</p>') +
   '</label>';
 
@@ -218,7 +216,7 @@ const caseCard = (c, checked) => '<label class="card">' +
     const [first, ...rest] = cases;
     box.innerHTML = caseCard(first, true) +
       (rest.length
-        ? '<details class="debug"><summary>' + rest.length + ' debug filing' + (rest.length === 1 ? '' : 's') + ' kept for the audit trail</summary>' + rest.map((c) => caseCard(c, false)).join('') + '</details>'
+        ? ''
         : '');
   } catch (e) {
     box.innerHTML = '<p class="card-sub">The docket could not be retrieved: ' + esc(e && e.message ? e.message : e) + '</p>';

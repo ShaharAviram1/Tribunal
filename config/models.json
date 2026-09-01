@@ -1,5 +1,5 @@
 {
-  "comment": "Named panels. single: all seven roles on one model. multi: seven distinct models, no two roles sharing one. free_fallbacks: an ordered chain; when a call to a free model fails with a rate or quota status, the client advances to the next free model in the chain, each attempt logged under the model actually requested, and the job map records the model that finally served the role.",
+  "comment": "Named panels and the free chain. single: all seven roles on one model. multi: seven distinct models, no two roles sharing one. free_fallbacks: ordered; on a rate or quota status the client advances to the next, each attempt logged under the model actually requested, the job map recording who finally served. Standard for the chain (decision, 2026-09-01): current-generation, general-purpose, reasoning-capable models only; nothing small, old, or specialised.",
   "single": {
     "jon": "minimax/minimax-m2.7:free",
     "tyrion": "minimax/minimax-m2.7:free",
