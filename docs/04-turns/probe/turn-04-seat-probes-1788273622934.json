@@ -1,0 +1,30 @@
+[
+  {
+    "model": "google/gemini-2.5-flash-lite",
+    "outcome": "ok",
+    "served": "google/gemini-2.5-flash-lite",
+    "ms": 2525,
+    "tokens_in": 3990,
+    "tokens_out": 456,
+    "cost_usd": 0.0005814,
+    "finish": "stop",
+    "http": 200,
+    "fenced": true,
+    "valid_opinion": true,
+    "verdict": "justified"
+  },
+  {
+    "model": "mistralai/mistral-small-2603",
+    "outcome": "ok",
+    "served": "mistralai/mistral-small-2603",
+    "ms": 2963,
+    "tokens_in": 3914,
+    "tokens_out": 248,
+    "cost_usd": 0.0007359,
+    "finish": "stop",
+    "http": 200,
+    "fenced": true,
+    "valid_opinion": true,
+    "verdict": "justified"
+  }
+]

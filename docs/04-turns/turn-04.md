@@ -62,4 +62,28 @@ run-02's single-panel log already in the repository, so both logs required by th
 sit side by side; and the spend-cap line in spec.md re-affirmed or revised from the completed
 run's measured figure, as a dated revision either way.
 
-Nothing convenes until this plan is approved.
+## Amended on approval: greyworm earned nothing, and lost the seat
+
+The approval ordered the disputed seat to earn its place on a probe, not on history: three
+re-probes, seat kept at 2 of 3. minimax passed 1 of 3 — one valid opinion at 44 seconds between
+two empty responses that ran the full 90-second timeout — so by the amendment's own branch, and
+by the simultaneous ruling that slow seats go even if the replacement is paid, the seat passes to
+qwen/qwen3.8-27b, already probed valid. The first probe's failure, the three re-probes, and the
+pass rate are all in `docs/04-turns/probe/`; the record does not read as though the failure never
+happened. The multi panel now carries no free seat.
+
+Every fallback slot was then re-pointed at a probed model, because a fallback aimed at an
+unprobed or dead model is worse than none: llama-4-maverick (502 on probe) and glm-5.3-flash
+(empty at 90s on probe) are struck; deepseek-chat-v3-0324, gemini-2.5-flash-lite and
+mistral-small-2603 all probed valid (the flash-lite probe validating through the fence strip is
+the revision closing its own loop) and now hold every fallback slot on the panel.
+
+## The ruling, recorded
+
+Per-seat fallback stands, armed, at every seat including paid. The done-when never promised seven
+distinct models; no-two-share is a property this seating happens to have, not a demonstration this
+turn owes. Disarming locked behaviour so a run reads cleanly would make the record flatter than the
+system. If a reassignment fires, the run counts as complete and the merge pack states in one line
+which seat reassigned, to what, after how many retries, and that two roles shared a model in that
+run as a result.
+
