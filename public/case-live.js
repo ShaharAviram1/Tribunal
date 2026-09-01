@@ -47,6 +47,17 @@
   const shown = new Set();
   let lastChange = Date.now(), lastSignature = '', lastReveal = 0;
   const queue = [];
+
+  // Background tabs freeze timers, which froze the whole view and, on the refresh it forced,
+  // skipped the gavel (which fires only on a live transition or a ?live=1 arrival). The sleep is
+  // therefore abortable: returning to the foreground kicks an immediate poll, so a stall catches
+  // up in one cycle and a terminal transition that happened while hidden still strikes the gavel.
+  let wake = null;
+  const sleep = (ms) => new Promise((resolve) => { wake = resolve; setTimeout(resolve, ms); });
+  const kick = () => { if (document.visibilityState === 'visible' && wake) wake(); };
+  document.addEventListener('visibilitychange', kick);
+  window.addEventListener('pageshow', kick);
+  window.addEventListener('focus', kick);
   const slot = (r) => document.querySelector('.role-slot[data-role="' + r + '"]');
   const stateOfLocal = (r) => slot(r)?.dataset.state ?? 'waiting';
 
@@ -72,7 +83,7 @@
   }
 
   for (;;) {
-    await new Promise((r) => setTimeout(r, POLL));
+    await sleep(POLL);
     const doc = await fetchDoc(); if (!doc) continue;
     let job = null;
     try { job = (await (await fetch('/.netlify/functions/tribunal-case?deliberation_id=' + encodeURIComponent(id))).json()).job; } catch {}
@@ -116,7 +127,7 @@
       document.querySelector('.progress-rail')?.remove();
       return;
     }
-    if (Date.now() - lastChange > STALL_MS && job) {
+    if (Date.now() - lastChange > STALL_MS && document.visibilityState === 'visible' && job) {
       const p = document.createElement('p'); p.className = 'notice';
       p.textContent = 'This run has not advanced for a while. Job state: ' + job.status + ', stage ' + job.stage + (job.terminal_reason ? ', ' + job.terminal_reason : '') + '. The page has stopped polling; reload to look again.';
       document.querySelector('.case-head')?.after(p);

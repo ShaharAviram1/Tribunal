@@ -20,10 +20,15 @@ test('multi is seven distinct models, no two roles sharing one', () => {
   assert.equal(new Set(Object.values(panels.multi)).size, 7);
 });
 
-test('the free fallback chain is ordered, free-only, and starts from the single panel model', () => {
-  const chain: string[] = panels.free_fallbacks;
-  assert.ok(chain.length >= 3);
-  for (const m of chain) assert.match(m, /:free$/, m);
-  assert.equal(chain[0], panels.single.jon, 'the chain starts where the single panel starts');
-  assert.equal(new Set(chain).size, chain.length, 'no duplicates');
+test('paid only: no free model holds any seat or fallback, and the free chain is empty', () => {
+  // Decision, 2026-09-01: free models proved slow and flaky in probes and production, and the
+  // whole roster went paid. The chain stays as a mechanism with nothing to rotate through.
+  assert.deepEqual(panels.free_fallbacks, []);
+  const everywhere = [
+    ...Object.values(panels.single) as string[],
+    ...Object.values(panels.multi) as string[],
+    panels.intake as string,
+    ...(Object.values(panels.role_fallbacks) as string[][]).flat(),
+  ];
+  for (const m of everywhere) assert.ok(!m.endsWith(':free'), `free model still present: ${m}`);
 });

@@ -1,13 +1,13 @@
 {
-  "comment": "Named panels and the free chain. single: all seven roles on one model. multi: seven distinct models, no two roles sharing one. free_fallbacks: ordered; on a rate or quota status the client advances to the next, each attempt logged under the model actually requested, the job map recording who finally served. Standard for the chain (decision, 2026-09-01): current-generation, general-purpose, reasoning-capable models only; nothing small, old, or specialised. role_fallbacks: ordered per-role reassignment used ONLY when a seat fails after all its retries; never because of what a stance said. A reassignment is logged, written to the job map, and shown on the page, since it can break the multi panel's no-two-roles-share-a-model property and that must be visible.",
+  "comment": "Named panels and the free chain. single: all seven roles on one model. multi: seven distinct models, no two roles sharing one. free_fallbacks: ordered; on a rate or quota status the client advances to the next, each attempt logged under the model actually requested, the job map recording who finally served. Standard for the chain (decision, 2026-09-01): current-generation, general-purpose, reasoning-capable models only; nothing small, old, or specialised. role_fallbacks: ordered per-role reassignment used ONLY when a seat fails after all its retries; never because of what a stance said. A reassignment is logged, written to the job map, and shown on the page, since it can break the multi panel's no-two-roles-share-a-model property and that must be visible. single moved off minimax on 2026-09-01: consistently slow (44-108s answers, two 90s empty flakes in probes) and drifting against its seats; gpt-4.1-mini probed cleanest of fourteen candidates and is production-proven, at about two cents a full run. Paid only, by decision 2026-09-01: no free model holds any seat or fallback anywhere, and the free chain is empty; the rotation code stays but has nothing to rotate through.",
   "single": {
-    "jon": "minimax/minimax-m2.7:free",
-    "tyrion": "minimax/minimax-m2.7:free",
-    "daenerys": "minimax/minimax-m2.7:free",
-    "greyworm": "minimax/minimax-m2.7:free",
-    "judge-1": "minimax/minimax-m2.7:free",
-    "judge-2": "minimax/minimax-m2.7:free",
-    "judge-3": "minimax/minimax-m2.7:free"
+    "jon": "openai/gpt-4.1-mini",
+    "tyrion": "openai/gpt-4.1-mini",
+    "daenerys": "openai/gpt-4.1-mini",
+    "greyworm": "openai/gpt-4.1-mini",
+    "judge-1": "openai/gpt-4.1-mini",
+    "judge-2": "openai/gpt-4.1-mini",
+    "judge-3": "openai/gpt-4.1-mini"
   },
   "multi": {
     "jon": "openai/gpt-4.1-mini",
@@ -18,14 +18,7 @@
     "judge-2": "mistralai/mistral-small-3.2-24b-instruct",
     "judge-3": "cohere/command-r-08-2024"
   },
-  "free_fallbacks": [
-    "minimax/minimax-m2.7:free",
-    "minimax/minimax-m3:free",
-    "nvidia/nemotron-3-ultra-550b-a55b:free",
-    "nvidia/nemotron-3-super-120b-a12b:free",
-    "z-ai/glm-5.2:free",
-    "thinkingmachines/inkling:free"
-  ],
+  "free_fallbacks": [],
   "role_fallbacks": {
     "jon": [
       "deepseek/deepseek-chat-v3-0324"
