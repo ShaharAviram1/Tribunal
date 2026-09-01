@@ -1,5 +1,5 @@
 {
-  "comment": "Named panels and the free chain. single: all seven roles on one model. multi: seven distinct models, no two roles sharing one. free_fallbacks: ordered; on a rate or quota status the client advances to the next, each attempt logged under the model actually requested, the job map recording who finally served. Standard for the chain (decision, 2026-09-01): current-generation, general-purpose, reasoning-capable models only; nothing small, old, or specialised.",
+  "comment": "Named panels and the free chain. single: all seven roles on one model. multi: seven distinct models, no two roles sharing one. free_fallbacks: ordered; on a rate or quota status the client advances to the next, each attempt logged under the model actually requested, the job map recording who finally served. Standard for the chain (decision, 2026-09-01): current-generation, general-purpose, reasoning-capable models only; nothing small, old, or specialised. role_fallbacks: ordered per-role reassignment used ONLY when a seat fails after all its retries; never because of what a stance said. A reassignment is logged, written to the job map, and shown on the page, since it can break the multi panel's no-two-roles-share-a-model property and that must be visible.",
   "single": {
     "jon": "minimax/minimax-m2.7:free",
     "tyrion": "minimax/minimax-m2.7:free",
@@ -25,5 +25,28 @@
     "nvidia/nemotron-3-super-120b-a12b:free",
     "z-ai/glm-5.2:free",
     "thinkingmachines/inkling:free"
-  ]
+  ],
+  "role_fallbacks": {
+    "jon": [
+      "meta-llama/llama-4-maverick"
+    ],
+    "tyrion": [
+      "x-ai/grok-build-0.1"
+    ],
+    "daenerys": [
+      "z-ai/glm-5.3-flash"
+    ],
+    "greyworm": [
+      "minimax/minimax-m3:free"
+    ],
+    "judge-1": [
+      "qwen/qwen3.8-27b"
+    ],
+    "judge-2": [
+      "deepseek/deepseek-chat-v3-0324"
+    ],
+    "judge-3": [
+      "cohere/command-r-08-2024"
+    ]
+  }
 }

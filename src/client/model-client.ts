@@ -67,6 +67,7 @@ export type ModelClientOptions = {
   caps: Caps;
   models: Record<string, string>;
   freeFallbacks?: string[];
+  roleFallbacks?: Record<string, string[]>;
   deliberation_id: string;
   budget: Budget;
   transport: Transport;
@@ -84,6 +85,8 @@ export class ModelClient {
   readonly #caps: Readonly<Caps>;
   readonly #models: Record<string, string>;
   readonly #fallbacks: readonly string[];
+  readonly #roleFallbacks: Record<string, string[]>;
+  readonly #reassigned: Record<string, string[]> = {};
   readonly #id: string;
   readonly #budget: Budget;
   readonly #transport: Transport;
@@ -95,6 +98,7 @@ export class ModelClient {
     this.#caps = Object.freeze({ ...o.caps });
     this.#models = { ...o.models };
     this.#fallbacks = o.freeFallbacks ?? [];
+    this.#roleFallbacks = o.roleFallbacks ?? {};
     this.#id = o.deliberation_id;
     this.#budget = o.budget;
     this.#transport = o.transport;
@@ -109,6 +113,18 @@ export class ModelClient {
     const m = this.#models[role_id];
     if (!m) throw new Error(`no model configured for role ${role_id}`);
     return m;
+  }
+
+  // Reassign a seat to its next configured fallback model. Called by the protocol ONLY after a
+  // role has failed all its retries; never because of what a stance said. Returns the new model
+  // or null when the chain is exhausted.
+  reassignToFallback(role_id: string): string | null {
+    const used = (this.#reassigned[role_id] ??= []);
+    const next = (this.#roleFallbacks[role_id] ?? []).find((m) => !used.includes(m) && m !== this.#models[role_id]);
+    if (!next) return null;
+    used.push(next);
+    this.#models[role_id] = next;
+    return next;
   }
 
   // A rate or quota status on a free model advances the role to the next free model in the

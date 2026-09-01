@@ -33,6 +33,7 @@ An id resolves when it is exactly `<role_id>.p<n>` for one of the four advocate 
 | `role_id` | string | one of `judge-1`, `judge-2`, `judge-3` |
 | `label` | string | the judge's display name from configuration (revised 2026-09-01: the full jurist name, shown with a standing method line, 'method adapted from published opinions; not the jurist, and not a prediction of how he would decide') |
 | `deliberation_id` | string | the deliberation this opinion belongs to |
+| `model_reassigned_from` | string, optional | present only when the seat failed on its primary model and was reassigned to a configured fallback (revision 2026-09-01); in a seven-model run this can break the no-two-roles-share-a-model property, which is why it is shown, never hidden |
 
 The profile is carried in `label` and never in an id. The dossier adapts judicial methods and does not impersonate; an id is where that distinction is quietly lost, so no real jurist's name appears in `role_id`, in any point id, or in any key.
 

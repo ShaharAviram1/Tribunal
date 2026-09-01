@@ -78,7 +78,7 @@
     try { job = (await (await fetch('/.netlify/functions/tribunal-case?deliberation_id=' + encodeURIComponent(id))).json()).job; } catch {}
     if (job && meta) { meta.dataset.calls = 'Calls ' + (job.calls ?? 0) + ' of 20'; }
     const floorDone = SEAT_ORDER.filter((r) => ['returned', 'failed'].includes(stateOf(doc, r))).length;
-    const benchDone = JUDGES.filter((j) => ['returned', 'failed'].includes(stateOf(doc, j))).length;
+    const benchDone = JUDGES.filter((j) => ['returned', 'failed', 'sealed'].includes(stateOf(doc, j))).length;
     const pf = document.getElementById('pr-floor'); if (pf) pf.style.width = (floorDone / 4) * 100 + '%';
     const pb = document.getElementById('pr-bench'); if (pb) pb.style.width = (benchDone / 3) * 100 + '%';
 
@@ -99,8 +99,8 @@
     speakNext();
     if (job && job.stage === 'judges' && job.status === 'running') {
       for (const j of JUDGES) {
-        if (stateOf(doc, j) === 'waiting') {
-          const lab = slot(j)?.querySelector('.waiting .micro'); if (lab) lab.textContent = 'Deliberating';
+        if (['waiting', 'sealed'].includes(stateOf(doc, j))) {
+          const lab = slot(j)?.querySelector('.waiting .micro'); if (lab) lab.textContent = stateOf(doc, j) === 'sealed' ? 'Opinion returned, under seal until the bench rules' : 'Deliberating';
         }
       }
     }

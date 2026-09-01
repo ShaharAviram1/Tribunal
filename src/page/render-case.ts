@@ -69,23 +69,23 @@ ${attemptsDetails(rec)}
 </article>`;
 }
 
-function advocateHead(role: string, model: string | undefined, against = false): string {
+function advocateHead(role: string, model: string | undefined, against = false, reassignedFrom?: string): string {
   const seat = SEATS[role] ?? 'defense';
-  return `<header class="a-head"><h3>${esc(NAMES[role] ?? role)}</h3><p class="seat seat-${esc(seat)}${against ? ' struck' : ''}">${esc(seat)} seat</p><p class="a-model">${esc(model ?? '')}</p></header>`;
+  return `<header class="a-head"><h3>${esc(NAMES[role] ?? role)}</h3><p class="seat seat-${esc(seat)}${against ? ' struck' : ''}">${esc(seat)} seat</p><p class="a-model">${esc(model ?? '')}${reassignedFrom ? esc(` — reassigned from ${reassignedFrom} after its failure`) : ''}</p></header>`;
 }
 
-function judgeHead(label: string, model: string | undefined): string {
+function judgeHead(label: string, model: string | undefined, reassignedFrom?: string): string {
   return `<header class="j-head">
 <div class="nameplate"><h3>${esc(label)}</h3></div>
 <p class="method">${METHOD_LINE}</p>
-<p class="j-model">${esc(model ?? '')}</p>
+<p class="j-model">${esc(model ?? '')}${reassignedFrom ? esc(` — reassigned from ${reassignedFrom} after its failure`) : ''}</p>
 </header>`;
 }
 
 function stanceCard(s: StoredStance, models?: Record<string, string>): string {
   const against = s.seat === 'defense' ? s.position === 'not_justified' : s.position === 'justified';
   return `<article class="advocate seat-${esc(s.seat)}">
-${advocateHead(s.role_id, models?.[s.role_id], against)}
+${advocateHead(s.role_id, models?.[s.role_id], against, (s as unknown as { model_reassigned_from?: string }).model_reassigned_from)}
 <div class="pos-block"><p class="micro">Position</p><p class="position">${esc(s.position.replace('_', ' '))}</p></div>
 ${against ? `<div class="against-seat"><p class="against-line">This seat argued against itself.</p><p class="against-sub">Seated for the ${esc(s.seat)}, it reached the opposite conclusion.</p></div>` : ''}
 <div class="points"><p class="micro">${s.points.length} points as argued</p>
@@ -105,7 +105,7 @@ ${r.relies_on.length ? `<p class="micro relies">Relies on</p>\n${r.relies_on.map
 function opinionColumn(o: StoredOpinion, stances: Map<string, StoredStance>, models?: Record<string, string>): string {
   const cites = o.reasons.reduce((n, r) => n + r.relies_on.length, 0) + o.against.relies_on.length;
   return `<article class="judge">
-${judgeHead(o.label, models?.[o.role_id])}
+${judgeHead(o.label, models?.[o.role_id], (o as unknown as { model_reassigned_from?: string }).model_reassigned_from)}
 <div class="verdict-wrap"><div class="verdict-block"><p class="micro">Verdict</p><p class="verdict">${esc(o.verdict.replace('_', ' '))}</p></div>
 <div class="stepper"><p class="micro">Reasons</p><span class="step-controls"><button class="step-btn" data-step="-1" aria-label="previous reason">‹</button><button class="step-btn" data-step="1" aria-label="next reason">›</button><button class="read-all" data-readall>Read all</button></span></div>
 <div class="reasons">
@@ -122,6 +122,10 @@ function roleSection(out: CaseData['outputs'][string], role: string, title: stri
   const jobState = job ? job.status : 'not started';
   const wrap = (state: string, inner: string) => `<div class="role-slot" data-role="${esc(role)}" data-kind="${kind}" data-state="${state}">${inner}</div>`;
   if (isFailureRecord(out)) return wrap('failed', kind === 'stance' ? advocateFailureCard(out, role, models?.[role]) : judgeFailureColumn(out, title, models?.[role]));
+  const sealed = kind === 'opinion' && out !== undefined && !isFailureRecord(out) && job !== null && job.status === 'running';
+  if (sealed) {
+    return wrap('sealed', `<article class="judge waiting-card">${judgeHead(title, models?.[role])}${shimmer('Opinion returned, under seal until the bench rules', 'running')}</article>`);
+  }
   if (out === undefined) {
     const stopped = job !== null && ['incomplete', 'failed'].includes(job.status);
     if (kind === 'stance') {

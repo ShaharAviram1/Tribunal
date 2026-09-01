@@ -30,6 +30,7 @@ The model emits no ids. Models are unreliable at maintaining unique identifiers;
 | `role_id` | string | one of `jon`, `tyrion`, `daenerys`, `greyworm` |
 | `seat` | string | `defense` or `prosecution`, from configuration; `jon` and `tyrion` are defense, `daenerys` and `greyworm` are prosecution |
 | `deliberation_id` | string | the deliberation this stance belongs to |
+| `model_reassigned_from` | string, optional | present only when the seat failed on its primary model and was reassigned to a configured fallback (revision 2026-09-01); records the model that failed, so the reassignment is visible on the record |
 | `points[].id` | string | `<role_id>.p<index>`, index starting at 1 in array order, so `tyrion.p1` through `tyrion.p5` |
 
 `seat` is stored alongside the emitted `position` so that "concluded against the seat" is a comparison of two stored values, not something the interface derives.

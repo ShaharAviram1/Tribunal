@@ -1,7 +1,7 @@
 {
   "max_calls_per_deliberation": 20,
   "max_spend_usd_per_deliberation": 0.25,
-  "max_attempts_per_role": 4,
+  "max_attempts_per_role": 6,
   "transport_retries_per_call": 2,
   "call_timeout_ms": 90000,
   "temperature": 0,

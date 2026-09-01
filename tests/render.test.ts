@@ -85,3 +85,22 @@ test('the page names the panel and the model behind each card', () => {
   assert.equal((html.match(/class="a-model"/g) ?? []).length, 4, 'each advocate carries its model');
   assert.ok(html.includes('minimax/minimax-m2.7:free'));
 });
+
+test('no judge content reaches the document before the bench rules: running seals returned opinions', () => {
+  const running = renderCasePage({ chargeSheet, job: { ...job, status: 'running', stage: 'judges' }, outputs });
+  assert.equal((running.match(/data-state="sealed"/g) ?? []).length, 3, 'returned opinions are not sealed while running');
+  for (const o of ['judge-1', 'judge-2', 'judge-3']) {
+    const op = outputs[o] as { verdict: string; reasons: { text: string }[] };
+    assert.ok(!running.includes(op.reasons[0]!.text), `${o} reason text leaked before the gavel state`);
+  }
+  assert.ok(!/<p class="verdict">/.test(running), 'a verdict rendered before the gavel state');
+  const done = renderCasePage({ chargeSheet, job, outputs });
+  assert.equal((done.match(/<p class="verdict">/g) ?? []).length, 3, 'terminal page lacks the verdicts');
+});
+
+test('a reassigned seat says so on its card', () => {
+  const re = JSON.parse(JSON.stringify(outputs['judge-3']));
+  re.model_reassigned_from = 'q/dead';
+  const html = renderCasePage({ chargeSheet, job, outputs: { ...outputs, 'judge-3': re } });
+  assert.ok(html.includes('reassigned from q/dead after its failure'));
+});

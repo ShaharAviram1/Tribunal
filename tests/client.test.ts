@@ -85,11 +85,11 @@ test('the spend cap refuses the call that would follow reaching it', async () =>
   assert.match(client.log[2]!.detail!, /spend cap/);
 });
 
-test('the per-role attempt ceiling refuses a fifth attempt', async () => {
+test('the per-role attempt ceiling refuses a seventh attempt', async () => {
   const { client } = mk(ok());
-  const r = await client.call(req(5));
+  const r = await client.call(req(7));
   assert.equal(r.outcome, 'cap_exceeded');
-  assert.match(r.row.detail!, /per-role ceiling 4/);
+  assert.match(r.row.detail!, /per-role ceiling 6/);
 });
 
 test('budget is read from the job, not process memory: a fresh client sees prior spend', async () => {
