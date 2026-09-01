@@ -5,6 +5,7 @@
 // No provider-side JSON mode; fallback routing disabled; served model logged beside requested.
 
 import { createHash } from 'node:crypto';
+import { stripOuterFence } from '../protocol/parse-object.ts';
 
 export type Caps = {
   max_calls_per_deliberation: number;
@@ -159,7 +160,7 @@ export class ModelClient {
       if (res.kind === 'ok') {
         const row: LogRow = { ...base, outcome: 'ok', model_served: res.model_served, model_mismatch: res.model_served !== null && res.model_served !== model,
           tokens_in: res.tokens_in, tokens_out: res.tokens_out, cost_usd: res.cost_usd, http_status: res.http_status, temperature_honoured: res.temperature_honoured,
-          finish_reason: res.finish_reason, detail: null };
+          finish_reason: res.finish_reason, detail: stripOuterFence(res.text).fence_stripped ? 'fence_stripped: a single outer code fence was stripped before parsing' : null };
         await this.#record(row);
         return { outcome: 'ok', text: res.text, truncated: res.finish_reason === 'length', row };
       }

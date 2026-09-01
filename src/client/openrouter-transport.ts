@@ -34,10 +34,12 @@ export function openRouterTransport(apiKey: string, fetchImpl: typeof fetch = fe
       if (REFUSAL_FINISH.has(finish) || (text.trim() === '' && choice?.message?.refusal)) {
         return { kind: 'refusal', model_served: served, http_status: res.status, detail: choice?.message?.refusal ?? `finish_reason=${finish}` };
       }
+      // The provider accepted the request carrying the temperature parameter; a provider that
+      // rejects the parameter fails the whole call, and that failure is its own non-ok row.
       return {
         kind: 'ok', text, model_served: served, http_status: res.status, finish_reason: finish,
         tokens_in: body?.usage?.prompt_tokens ?? null, tokens_out: body?.usage?.completion_tokens ?? null,
-        cost_usd: body?.usage?.cost ?? null, temperature_honoured: null,
+        cost_usd: body?.usage?.cost ?? null, temperature_honoured: true,
       };
     } catch (e: any) {
       if (e?.name === 'AbortError') return { kind: 'timeout' };

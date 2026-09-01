@@ -163,3 +163,22 @@ test('the real transport maps any 403 to forbidden with the body verbatim, class
   assert.equal(res.kind, 'forbidden');
   assert.equal((res as { detail: string }).detail, bodyText, 'provider body stored verbatim');
 });
+
+test('an ok response through the real transport records temperature_honoured true, never null', async () => {
+  const payload = JSON.stringify({ model: 'm', choices: [{ finish_reason: 'stop', message: { content: '{}' } }], usage: { prompt_tokens: 1, completion_tokens: 1, cost: 0 } });
+  const fake = (async () => new Response(payload, { status: 200 })) as typeof fetch;
+  const t = openRouterTransport('k', fake);
+  const res = await t({ model: 'm', prompt: 'p', temperature: 0, timeout_ms: 5000, max_tokens: 10 });
+  assert.equal(res.kind, 'ok');
+  assert.equal((res as { temperature_honoured: boolean | null }).temperature_honoured, true);
+});
+
+test('a fenced ok response notes fence_stripped on its log row; an unfenced one keeps detail null', async () => {
+  const fenced = '```json\n{"a":1}\n```';
+  const one = mk(ok(fenced));
+  await one.client.call(req());
+  assert.match(one.client.log[0]!.detail ?? '', /fence_stripped/, 'the log detail notes the strip');
+  const two = mk(ok('{"a":1}'));
+  await two.client.call(req());
+  assert.equal(two.client.log[0]!.detail, null);
+});
