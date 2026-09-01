@@ -58,3 +58,9 @@ The same blind protocol, re-run after the fixes. Six claims, two contradictions:
 The mechanics section cites criteria by number; ARCHITECTURE.md points at spec.md part three
 for the rejected shapes; every new CLAUDE.md and README line points at a document instead of
 copying from it.
+
+## 6. Correction, 2026-09-02: where the intent.txt sweep happened
+
+`6747fe8` untracked intent.txt after an add -A swept the held file into history; its message
+attributes the sweep to the maintenance-6 commit. The sweep happened at `ae875ae`, the first
+maintenance-5 commit. The pushed commit stands as written; this section is the correction.
