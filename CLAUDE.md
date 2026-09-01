@@ -4,15 +4,22 @@
 
 ## What this is
 
-Four advocates and three judges deliberate one charge sheet, T-001, in seven separate model calls. The judges' opinions are shown side by side, unreconciled. Run one puts all seven roles on one model; run two spreads them across several. That is the whole project.
+Four advocates and three judges deliberate a charge sheet in seven separate model calls: T-001 from the dossier, or a case the intake clerk drafts from a submitted scenario, as T-006 proved. The judges' opinions are shown side by side, unreconciled. Run one put all seven roles on one model; run two spread them across several; both are committed with their logs. That is the whole project.
 
 ## The documents, and what each is for
 
+- `intent.txt`: the idea as it was first put, before any of it was built. The seed, not a summary.
 - `problem.md`: the situation that needs to change, who it is for, what done looks like, what is excluded and why. Read first.
 - `spec.md`: the contract the build is held to. Goal and reason, numbered criteria, boundaries, how correctness is checked, known pitfalls. Where it is silent, its part one says how to resolve the silence.
 - `docs/charge-sheet.spec.md`: what a filer may submit, what the system stamps, and the six rules with the failure each prevents.
+- `README.md`: the front door: what this is, how to run it, where everything lives.
+- `ROADMAP.md`: where the spiral stands, turn by turn, and what remains.
+- `ARCHITECTURE.md`: how the infrastructure is built, every claim naming the file that proves it.
 - `docs/advocate-stance.schema.md`: what an advocate call returns, what the system adds at ingest, and which retry each rejection triggers.
 - `docs/judicial-opinion.schema.md`: the same for a judge, plus what an opinion must never contain.
+- `docs/04-turns/`: one record per spiral turn: the plan, what it taught, what is locked.
+- `docs/06-merge-packs/`: what each branch carried when it was proposed for merge.
+- `docs/07-design/handoff.md`: the courtroom design the case page implements.
 - `INTERVIEW-QUESTIONS.md`, `INTERVIEW-ASSUMPTIONS.md`: how the decisions were reached, and which are still owed.
 - `docs/lessons-learned.md`: every correction the user gives is written there as a rule, not a complaint. If the rule is permanent, it is carried into this file. It is graded evidence and only counts if it fills up during the build.
 
