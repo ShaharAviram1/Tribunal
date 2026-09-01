@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Gavel tuning</title>
+<style>
+body{margin:0;background:#14100c;color:#efe7d8;font:14px ui-monospace,monospace;display:grid;place-items:center;min-height:100vh}
+video{width:min(90vw,900px);display:block}
+.bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:14px;justify-content:center}
+button{font:inherit;background:#1c1510;color:#efe7d8;border:1px solid #c9a227;border-radius:4px;padding:8px 14px;cursor:pointer}
+#t{font-size:26px;font-weight:700;color:#c9a227;min-width:120px;text-align:center}
+#marks{padding:10px;font-size:16px;color:#efe7d8}
+#marks b{color:#c9a227}
+.hint{opacity:.7;max-width:640px;text-align:center;padding:0 16px 24px}
+</style></head>
+<body>
+<div>
+<video id="v" src="/gavel.mp4" controls muted playsinline></video>
+<div class="bar">
+  <button data-step="-0.5">−0.5s</button>
+  <button data-step="-0.1">−0.1s</button>
+  <button data-step="-0.03">−frame</button>
+  <span id="t">0.00s</span>
+  <button data-step="0.03">+frame</button>
+  <button data-step="0.1">+0.1s</button>
+  <button data-step="0.5">+0.5s</button>
+</div>
+<div class="bar">
+  <button id="mstart">Mark START</button>
+  <button id="mimpact">Mark IMPACT</button>
+  <button id="mend">Mark END</button>
+</div>
+<div id="marks">start: <b id="s">–</b> · impact: <b id="i">–</b> · end: <b id="e">–</b></div>
+<p class="hint">Scrub or frame-step to the moments, mark all three, then send me the line shown above.
+START = where the veil should open; IMPACT = the exact bang; END = where the fade should begin.</p>
+</div>
+<script>
+const v = document.getElementById('v'), t = document.getElementById('t');
+const show = () => { t.textContent = v.currentTime.toFixed(2) + 's'; };
+v.addEventListener('timeupdate', show); v.addEventListener('seeked', show);
+document.querySelectorAll('[data-step]').forEach((b) => b.addEventListener('click', () => { v.pause(); v.currentTime = Math.max(0, v.currentTime + Number(b.dataset.step)); }));
+const mark = (id) => { document.getElementById(id).textContent = v.currentTime.toFixed(2) + 's'; };
+document.getElementById('mstart').onclick = () => mark('s');
+document.getElementById('mimpact').onclick = () => mark('i');
+document.getElementById('mend').onclick = () => mark('e');
+</script>
+</body>
+</html>
