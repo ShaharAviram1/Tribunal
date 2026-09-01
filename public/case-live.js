@@ -11,25 +11,37 @@
   const JUDGES = ['judge-1', 'judge-2', 'judge-3'];
   const MIN_HOLD = 9000, POLL = 5000, STALL_MS = 240000;
 
-  const GAVEL = '<div class="gavel-veil"><video src="/gavel.mp4#t=1,5" autoplay muted playsinline></video><div class="gavel-vignette"></div><p class="gavel-word">The bench has ruled</p></div>';
-  const GAVEL_CSS = '<style>'
-    + '.gavel-veil{position:fixed;inset:0;z-index:60;display:grid;place-items:center;background:#000;animation:gv-veil 4.4s ease forwards}'
-    + '.gavel-veil video{width:100%;height:100%;object-fit:cover;opacity:.92;grid-area:1/1}'
-    + '.gavel-vignette{grid-area:1/1;width:100%;height:100%;background:radial-gradient(58% 52% at 50% 48%,transparent 0%,rgba(5,4,3,.55) 72%,#000 100%)}'
-    + '.gavel-word{position:absolute;bottom:56px;left:0;right:0;text-align:center;font:600 19px "Bodoni Moda",Georgia,serif;letter-spacing:.28em;text-transform:uppercase;color:#e8e2d2;animation:gv-word 4.4s ease forwards}'
-    + '@keyframes gv-veil{0%{opacity:0}8%{opacity:1}82%{opacity:1}100%{opacity:0;visibility:hidden}}'
-    + '@keyframes gv-word{0%,30%{opacity:0;letter-spacing:.5em}46%{opacity:1;letter-spacing:.28em}92%{opacity:1}100%{opacity:0}}'
-    + '.progress-rail{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:18px 0 0;padding:12px 18px;background:var(--card);border:1px solid var(--edge);border-radius:var(--r)}'
-    + '.progress-rail .half{display:flex;align-items:center;gap:10px}'
-    + '.progress-rail .lab{font:400 10px "JetBrains Mono",monospace;letter-spacing:.2em;text-transform:uppercase;color:var(--card-ink3);width:82px}'
-    + '.progress-rail .track{flex:1;height:3px;background:var(--rule)}'
-    + '.progress-rail .fill{display:block;height:100%;width:0;background:var(--accent);transition:width .7s ease}'
-    + '.speaking-card{outline:1px solid var(--accent);outline-offset:2px}'
-    + '</style>';
-  document.head.insertAdjacentHTML('beforeend', GAVEL_CSS);
-  function mountGavel() {
-    document.body.insertAdjacentHTML('beforeend', GAVEL);
-    setTimeout(() => document.querySelector('.gavel-veil')?.remove(), 4500);
+  // The gavel is timed by the video itself, not by a clock racing a 3 MB download: the veil
+  // holds solid black until the clip is actually playing, the word rises with the strike, and
+  // the fade begins when the media fragment ends. A hidden element buffers the clip during the
+  // bench stage so the strike starts the instant it is called for.
+  let buffered = null;
+  function bufferGavel() {
+    if (buffered) return;
+    buffered = document.createElement('video');
+    buffered.src = '/gavel.mp4#t=1,5';
+    buffered.muted = true; buffered.playsInline = true; buffered.preload = 'auto';
+    buffered.load();
+  }
+  function mountGavel(atStrike) {
+    const veil = document.createElement('div');
+    veil.className = 'gavel-veil held';
+    const v = buffered ?? document.createElement('video');
+    if (!buffered) { v.src = '/gavel.mp4#t=1,5'; v.muted = true; v.playsInline = true; }
+    v.autoplay = true; v.muted = true; v.playsInline = true;
+    veil.appendChild(v);
+    veil.insertAdjacentHTML('beforeend', '<div class="gavel-vignette"></div><p class="gavel-word">The bench has ruled</p>');
+    document.body.appendChild(veil);
+    let struck = false;
+    const strike = () => { if (struck) return; struck = true; veil.classList.remove('held'); veil.classList.add('rolling'); if (atStrike) atStrike(); };
+    const done = () => { veil.classList.add('fading'); setTimeout(() => veil.remove(), 900); };
+    v.addEventListener('playing', strike, { once: true });
+    v.addEventListener('pause', done, { once: true });  // a media fragment pauses at its end time
+    v.addEventListener('ended', done, { once: true });
+    v.addEventListener('error', () => { strike(); done(); }, { once: true });
+    setTimeout(() => { strike(); }, 2500);              // never hold the verdicts hostage to a slow load
+    setTimeout(() => { if (document.body.contains(veil)) done(); }, 9000);
+    v.play?.();
   }
   if (terminalArrival) { mountGavel(); return; }
 
@@ -109,6 +121,7 @@
     }
     speakNext();
     if (job && job.stage === 'judges' && job.status === 'running') {
+      bufferGavel();
       for (const j of JUDGES) {
         if (['waiting', 'sealed'].includes(stateOf(doc, j))) {
           const lab = slot(j)?.querySelector('.waiting .micro'); if (lab) lab.textContent = stateOf(doc, j) === 'sealed' ? 'Opinion returned, under seal until the bench rules' : 'Deliberating';
