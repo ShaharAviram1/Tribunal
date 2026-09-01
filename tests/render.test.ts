@@ -120,3 +120,10 @@ test('the header sums the whole run: spend and tokens across every seat', () => 
   const html = renderCasePage({ chargeSheet, job, outputs, usage });
   assert.ok(html.includes('Spend $0.0070 · 7,000 in / 2,100 out'), 'header sum missing or wrong');
 });
+
+test('the gavel stylesheet ships with every page, so live-script surgery cannot lose it again', () => {
+  const html = page();
+  for (const sel of ['.gavel-veil{', '.gavel-veil.held video', '.gavel-veil.rolling .gavel-word', '@keyframes gv-word']) {
+    assert.ok(html.includes(sel), `gavel CSS missing: ${sel}`);
+  }
+});
