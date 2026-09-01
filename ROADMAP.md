@@ -90,7 +90,7 @@ criterion renumbered so that every citation elsewhere still resolves.
 
 Two blind verification runs, each given only the documents and the repository, found ten
 discrepancies between what the documents claimed and what the code did. Four were real defects the
-275-test suite did not catch, repaired on `maintenance-5`, `-6` and `-7`: a refusal reassigning to
+suite, then 268 tests, did not catch, repaired on `maintenance-5`: a refusal reassigning to
 a fallback, a text regex classifying HTTP 403, two log fields the spec claimed and nothing wrote,
 and a paid-run cap with a hole in it. The second run also found that per-role fallback had never
 been wired into the deliberation's client at all — the drills passed against clients they built
