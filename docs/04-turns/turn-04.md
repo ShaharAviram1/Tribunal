@@ -87,3 +87,13 @@ system. If a reassignment fires, the run counts as complete and the merge pack s
 which seat reassigned, to what, after how many retries, and that two roles shared a model in that
 run as a result.
 
+
+## The run
+
+`d-T-001-1788273758751-f66e1e36`, convened on the branch deploy the moment the probed panel was
+sealed. Complete in 125 seconds: seven calls, seven outputs, zero retries, no corrective, no
+truncation, no fallback fired — every seat answered its first call, which is what the probes were
+for. Measured spend $0.0444, inside the estimate and re-affirming the $0.25 backstop as a dated
+line in spec.md. Full export at `docs/04-turns/e2e/d-T-001-1788273758751-f66e1e36/`; the polling
+transcript beside it; run-02's single-panel log already in the repository, so both logs the
+done-condition requires sit side by side. The done-condition of the turn is met.

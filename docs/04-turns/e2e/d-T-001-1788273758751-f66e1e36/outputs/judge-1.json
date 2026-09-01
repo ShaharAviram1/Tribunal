@@ -1,0 +1,40 @@
+{
+  "label": "Aharon Barak",
+  "against": {
+    "text": "Jon exploited intimacy and trust to kill an unarmed, non-threatening individual in a private setting, making his act one of betrayal rather than open defense, and he failed to attempt any public or non-lethal measures first.",
+    "relies_on": [
+      "daenerys.p1",
+      "greyworm.p2",
+      "greyworm.p3"
+    ]
+  },
+  "reasons": [
+    {
+      "text": "Daenerys demonstrated a clear and present danger by destroying a surrendered city and declaring her intent to continue such campaigns, making future mass atrocities certain, not speculative.",
+      "relies_on": [
+        "jon.p1",
+        "jon.p2",
+        "tyrion.p1"
+      ]
+    },
+    {
+      "text": "No safer alternative existed; all institutional checks were destroyed, detention was impossible, and any public challenge would have resulted in Jon's immediate arrest, leaving lethal force as the only effective means to prevent further harm.",
+      "relies_on": [
+        "tyrion.p2",
+        "tyrion.p4",
+        "jon.p4"
+      ]
+    },
+    {
+      "text": "The act was proportionate; the scale of harm Daenerys had inflicted and promised outweighed the taking of one life, and Jon's lack of formal authority is irrelevant when no functioning authority remained to address the threat.",
+      "relies_on": [
+        "tyrion.p5",
+        "jon.p5",
+        "tyrion.p3"
+      ]
+    }
+  ],
+  "role_id": "judge-1",
+  "verdict": "justified",
+  "deliberation_id": "d-T-001-1788273758751-f66e1e36"
+}

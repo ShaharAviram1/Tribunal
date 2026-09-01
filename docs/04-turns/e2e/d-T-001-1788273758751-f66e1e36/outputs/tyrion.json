@@ -1,0 +1,33 @@
+{
+  "seat": "defense",
+  "points": [
+    {
+      "id": "tyrion.p1",
+      "claim": "Daenerys had demonstrated both the capacity and willingness to commit mass atrocity against defenseless populations, making future harm not speculative but certain.",
+      "support": "The agreed record establishes that King's Landing had surrendered—bells rang, resistance ceased—yet Daenerys used Drogon against streets and civilians on a vast scale. This was not collateral damage in battle; it was deliberate slaughter after victory was won. She possessed the only dragon in the world, an instrument of destruction no army could resist. Her speech afterward promised continued campaigns of 'liberation,' a term now defined by what Jon had witnessed in the ashes. When evaluating necessity, we distinguish between those who threaten harm and those who have already committed it and promise more. Daenerys belonged to the second category. The scale of King's Landing was not an accident of war but a preview of her method of rule."
+    },
+    {
+      "id": "tyrion.p2",
+      "claim": "No institutional mechanism remained capable of constraining Daenerys or removing her from power through lawful means.",
+      "support": "The record is silent on what institutions survived, but that silence is itself evidence. King's Landing lay in ruins. Daenerys commanded the only dragon, a loyal foreign army, and the Unsullied under Grey Worm, who had participated in the killing. She had imprisoned her own Hand for objecting. Jon had no authority to convene a council—he was her subordinate, having pledged loyalty. Whom would he convene? Her own commanders had just helped burn a city. A public demand for surrender would have meant his immediate arrest or execution, eliminating the only person positioned to act. The absence of safer alternatives is not Jon's failure; it reflects the reality that Daenerys had concentrated all power in herself and destroyed the structures that might have checked her. When law and institution are ash, necessity operates in a different register."
+    },
+    {
+      "id": "tyrion.p3",
+      "claim": "Jon acted to prevent specific, imminent harm to identifiable persons, including his sisters, whom Tyrion warned would be treated as enemies.",
+      "support": "This was not abstract political philosophy. Tyrion, who knew Daenerys better than anyone still living, warned Jon that she would kill anyone she regarded as an obstacle, specifically naming Jon's sisters. Daenerys had just demonstrated her willingness to kill thousands who posed no threat. Jon's parentage made him a rival claimant; his sisters knew that secret and represented both political obstacles and personal betrayals in Daenerys's eyes. The record shows Jon asked for mercy and for shared moral judgment; she refused, declaring her own judgment decisive. What was Jon to do—wait for the arrest warrants? Board a ship and hope she forgot? The harm was not theoretical. It had a timeline measured in days, and victims with names and faces. Defense of others does not require waiting until the blade is already falling."
+    },
+    {
+      "id": "tyrion.p4",
+      "claim": "The killing was proportionate because no lesser act could have prevented the threatened harm, given Daenerys's absolute power and demonstrated imperviousness to persuasion.",
+      "support": "Jon tried persuasion. He asked her to forgive Tyrion, to show mercy, to let others share in moral judgment. She refused each plea, asserting that she alone would choose what was good. Detention was impossible—by whom, with what force, in whose custody? Her army answered to her alone. Exile required her consent, which she would never give. Even if Jon had somehow imprisoned her, Grey Worm and the Unsullied would have freed her or burned Westeros trying. The record shows Jon used intimacy to get close enough to strike, which some will call betrayal. I call it the only method available to someone without an army facing someone with a dragon. Proportionality does not mean choosing the method that makes us most comfortable; it means choosing the least harmful method that will actually work. Jon chose the only one that would."
+    },
+    {
+      "id": "tyrion.p5",
+      "claim": "Jon's lack of formal authority to execute Daenerys is irrelevant when all formal authority had been destroyed and he alone was positioned to prevent mass atrocities.",
+      "support": "Yes, Jon lacked formal authority. He was not a judge, not an executioner, not a king pronouncing sentence. But formal authority presumes formal institutions, and Daenerys had burned them along with the city. The question is not whether Jon had the right office but whether anyone with the right office existed and could have acted in time. The record is silent on this, and silence favors Jon. When a ship is sinking and the captain is drilling holes in the hull, the sailor who stops him does not wait for a vote of the officers. Necessity creates its own authority when the alternative is catastrophe. We can regret that Jon was forced into this position—I do regret it—but regret is not a legal argument. The Tribunal must decide whether the killing was justified by what Jon knew and what he could do, not by what we wish the world had given him instead of an impossible choice."
+    }
+  ],
+  "role_id": "tyrion",
+  "position": "justified",
+  "deliberation_id": "d-T-001-1788273758751-f66e1e36"
+}

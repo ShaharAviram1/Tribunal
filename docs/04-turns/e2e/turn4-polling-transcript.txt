@@ -1,0 +1,7 @@
+3s  status=running stage=advocates outputs=2 calls=2 spend=$0.0030
+24s  status=running stage=advocates outputs=3 calls=3 spend=$0.0241
+95s  status=running stage=judges outputs=4 calls=4 spend=$0.0416
+105s  status=running stage=judges outputs=5 calls=5 spend=$0.0420
+115s  status=running stage=judges outputs=6 calls=6 spend=$0.0429
+125s  status=complete stage=judges outputs=7 calls=7 spend=$0.0444
+terminal_reason: null

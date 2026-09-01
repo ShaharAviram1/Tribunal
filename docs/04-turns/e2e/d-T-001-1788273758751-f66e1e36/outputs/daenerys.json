@@ -1,0 +1,28 @@
+{
+  "seat": "prosecution",
+  "points": [
+    {
+      "id": "daenerys.p1",
+      "claim": "Jon Snow's act was a betrayal of sacred trust, executed through deceit and intimacy, not a legitimate act of defense.",
+      "support": "The agreed factual record explicitly states, 'Daenerys was unarmed and was not attacking Jon when he killed her. Jon used their intimacy to get close enough to strike.' This was not a confrontation, but an assassination under the guise of affection. He exploited a personal bond, a bond of loyalty he had sworn, to commit murder. There was no open challenge, no demand for surrender, only a calculated act of treachery."
+    },
+    {
+      "id": "daenerys.p2",
+      "claim": "Jon Snow failed to pursue any alternative, less extreme measures before resorting to murder, demonstrating a lack of due process or genuine attempt at resolution.",
+      "support": "The record confirms, 'He had not convened a council, attempted detention, or sought a public surrender of power.' Jon Snow, despite his concerns, made no effort to engage with me through established channels, or even to create new ones. He did not attempt to rally support, to present his case to others, or to offer me any opportunity to address his fears. His immediate and sole recourse was lethal force, behind closed doors."
+    },
+    {
+      "id": "daenerys.p3",
+      "claim": "The alleged 'defense of others' is undermined by Jon Snow's failure to present any public or formal challenge to my rule, leaving no record of his attempts to avert the perceived harm.",
+      "support": "While Tyrion Lannister warned Jon of potential future threats to his sisters, Jon himself made no public declaration of these fears, nor did he attempt to gather allies or present a united front against my perceived tyranny. His actions were entirely clandestine. If the threat was so grave and widespread, why was his response so isolated and secretive? The record shows no attempt to build a consensus or to act with any authority beyond his own personal judgment."
+    },
+    {
+      "id": "daenerys.p4",
+      "claim": "Jon Snow's lack of formal authority to depose or execute a reigning monarch renders his act an unlawful killing, regardless of his personal convictions.",
+      "support": "Jon Snow held no formal authority to judge or execute me. He was a sworn subject, not a tribunal. The question itself acknowledges his 'lack of formal authority.' To claim justification for an act of regicide without any legitimate mandate or process is to endorse anarchy. His personal belief, however strong, cannot supersede the established order, especially when he made no attempt to challenge that order through any recognized means."
+    }
+  ],
+  "role_id": "daenerys",
+  "position": "not_justified",
+  "deliberation_id": "d-T-001-1788273758751-f66e1e36"
+}
