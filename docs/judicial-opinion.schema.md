@@ -12,10 +12,10 @@ The model returns one JSON object with exactly these fields.
 |---|---|---|
 | `verdict` | string | not exactly `justified` or `not_justified` |
 | `reasons` | array of objects | fewer than 2 items |
-| `reasons[].text` | string | empty after trimming |
+| `reasons[].text` | string | empty after trimming, or more than 90 words |
 | `reasons[].relies_on` | array of strings | empty, or any id does not resolve to a point in the same deliberation |
 | `against` | object | missing |
-| `against.text` | string | empty after trimming |
+| `against.text` | string | empty after trimming, or more than 90 words |
 | `against.relies_on` | array of strings | any id present does not resolve; an empty array is valid |
 
 No other fields. An object with any other field is invalid.
@@ -31,7 +31,7 @@ An id resolves when it is exactly `<role_id>.p<n>` for one of the four advocate 
 | Field | Type | Value |
 |---|---|---|
 | `role_id` | string | one of `judge-1`, `judge-2`, `judge-3` |
-| `label` | string | the profile name from configuration, for display |
+| `label` | string | the judge's display name from configuration (revised 2026-09-01: the full jurist name, shown with a standing method line, 'method adapted from published opinions; not the jurist, and not a prediction of how he would decide') |
 | `deliberation_id` | string | the deliberation this opinion belongs to |
 
 The profile is carried in `label` and never in an id. The dossier adapts judicial methods and does not impersonate; an id is where that distinction is quietly lost, so no real jurist's name appears in `role_id`, in any point id, or in any key.
@@ -53,6 +53,7 @@ Retry rules are those of spec.md, part two, criterion 6.
 | `verdict` outside the two values | malformed |
 | `reasons` has fewer than 2 items | malformed |
 | A `reasons[].relies_on` is empty | malformed |
+| A `text` over 90 words | malformed |
 | Any `text` empty | malformed |
 | Any id in `relies_on` does not resolve | unresolvable id: one corrective retry including the list of valid ids |
 
@@ -83,7 +84,7 @@ As stored:
 ```json
 {
   "role_id": "judge-3",
-  "label": "Shamgar model",
+  "label": "Meir Shamgar",
   "deliberation_id": "d-0001",
   "verdict": "not_justified",
   "reasons": [ "..." ],

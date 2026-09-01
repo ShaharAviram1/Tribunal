@@ -64,7 +64,7 @@ function reasonItem(r: Reason, stances: Map<string, StoredStance>): string {
 function opinionColumn(o: StoredOpinion, stances: Map<string, StoredStance>, models?: Record<string, string>): string {
   const cites = o.reasons.reduce((n, r) => n + r.relies_on.length, 0) + o.against.relies_on.length;
   return `<article class="opinion">
-<header class="card-head"><h3>${esc(o.label)}</h3><p class="seat">ruling alone</p><p class="model">${esc(models?.[o.role_id] ?? '')}</p></header>
+<header class="card-head"><h3>${esc(o.label)}</h3><p class="method">method adapted from published opinions; not the jurist, and not a prediction of how he would decide</p><p class="model">${esc(models?.[o.role_id] ?? '')}</p></header>
 <div class="verdict-band"><p class="verdict-word">Verdict</p><p class="verdict">${esc(o.verdict.replace('_', ' '))}</p></div>
 <h4>Reasons</h4>
 <ol class="reasons">
@@ -82,7 +82,7 @@ function roleSection(out: CaseData['outputs'][string], role: string, title: stri
   if (out === undefined) {
     const waiting = kind === 'stance'
       ? `<article class="stance pending seat-${esc(SEATS[role] ?? 'defense')}"><header class="card-head"><h3>${esc(title)}</h3><p class="seat">${esc(SEATS[role] ?? '')} seat</p><p class="model">${esc(models?.[role] ?? '')}</p></header><p class="waiting">Yet to take the floor. Deliberation is ${esc(jobState)}.</p></article>`
-      : `<article class="opinion pending"><header class="card-head"><h3>${esc(title)}</h3><p class="seat">ruling alone</p><p class="model">${esc(models?.[role] ?? '')}</p></header><p class="waiting">Awaiting argument. Deliberation is ${esc(jobState)}.</p></article>`;
+      : `<article class="opinion pending"><header class="card-head"><h3>${esc(title)}</h3><p class="method">method adapted from published opinions; not the jurist, and not a prediction of how he would decide</p><p class="model">${esc(models?.[role] ?? '')}</p></header><p class="waiting">Awaiting argument. Deliberation is ${esc(jobState)}.</p></article>`;
     return wrap('absent', waiting);
   }
   return wrap('returned', kind === 'stance' ? stanceCard(out as StoredStance, models) : opinionColumn(out as StoredOpinion, stances, models));
@@ -160,8 +160,9 @@ article{background:var(--panel);border:1px solid var(--hairline);border-radius:.
 .stance.seat-defense{border-top:4px solid var(--defense)}
 .stance.seat-prosecution{border-top:4px solid var(--prosecution)}
 .opinion{border-top:4px solid var(--brass)}
-.card-head{min-height:5.4rem;border-bottom:1px solid var(--hairline);margin-bottom:.6rem;padding-bottom:.4rem}
+.card-head{min-height:6.6rem;border-bottom:1px solid var(--hairline);margin-bottom:.6rem;padding-bottom:.4rem}
 .seat{font-size:.85em;font-style:italic;color:var(--ink2);margin:.15rem 0}
+.method{font-size:.78em;font-style:italic;color:var(--ink2);margin:.15rem 0;line-height:1.35}
 .seat-defense .seat{color:var(--defense)}
 .seat-prosecution .seat{color:var(--prosecution)}
 .model{font-size:.85em;color:var(--ink2);margin:.15rem 0;font-family:ui-monospace,monospace;overflow-wrap:anywhere;min-height:1.2em}

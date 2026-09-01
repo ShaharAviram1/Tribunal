@@ -73,10 +73,10 @@ Return one JSON object and nothing else: no preamble, no closing remark, no code
 {
   "verdict": "justified" | "not_justified",
   "reasons": [
-    { "text": "<the reason>", "relies_on": ["<point id>", ...] },
+    { "text": "<the reason, at most 90 words>", "relies_on": ["<point id>", ...] },
     ...  at least two reasons, each citing at least one point id
   ],
-  "against": { "text": "<the strongest consideration against your verdict>", "relies_on": ["<point id>", ...] }
+  "against": { "text": "<the strongest consideration against your verdict, at most 90 words>", "relies_on": ["<point id>", ...] }
 }
 ```
 
