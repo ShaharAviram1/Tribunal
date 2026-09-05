@@ -57,11 +57,21 @@ deliberation stopped before the bench, and the page renders each failure as a fa
 
 ## The live site
 
-The site is https://incomparable-hotteok-4da2cf.netlify.app. A deliberation takes about two minutes
-from filing to the third opinion. Every panel runs on paid models; convening needs no access code, only room under the daily cap.
+The site is https://tribunal-skg3.onrender.com, a free Render service running `server/serve.ts`
+since 5 September 2026, when Netlify blocked deploys for exhausted credit; the earlier address,
+https://incomparable-hotteok-4da2cf.netlify.app, still serves the last deploy made before that day.
+A deliberation takes about two minutes from filing to the third opinion. Every panel runs on paid
+models; convening needs no access code, only room under the daily cap.
 
-Deployments sleep: the free Supabase project pauses when idle, so the site may be unavailable when
+Deployments sleep: the free Render instance stops after fifteen idle minutes and wakes in under a
+minute, and the free Supabase project pauses when idle, so the site may be slow or unavailable when
 you open it. The committed runs are the durable evidence.
+
+To run it yourself, on the pinned Node with the variables of `.env.example` set:
+
+```
+npm start
+```
 
 ## Where things live
 
