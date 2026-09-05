@@ -2,8 +2,11 @@
   "name": "tribunal",
   "private": true,
   "type": "module",
-  "engines": { "node": "24.11.1" },
+  "engines": {
+    "node": "24.11.1"
+  },
   "scripts": {
+    "start": "node server/serve.ts",
     "test": "node --import ./tests/_guard.ts --test 'tests/**/*.test.ts'"
   }
 }
