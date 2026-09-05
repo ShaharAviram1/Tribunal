@@ -111,7 +111,7 @@ Netlify account's credit ran out, blocking every deploy: a plain Node host for t
 `server/serve.ts`, mirrors the Netlify routing and runs on a free Render service, tested on loopback
 and proven byte-identical on a served case page. Record: `docs/06-merge-packs/maintenance-8-pack.md`.
 
-### Maintenance nine · in review
+### Maintenance nine and ten · in review
 
 The first run watched on the new host missed its gavel. Not the host: Render serves the clip's byte
 ranges in a third of a second. A hidden tab still runs the poll loop, slower, and defers media
@@ -119,7 +119,10 @@ loading, so the loop mounted the veil behind the viewer's back and the floors re
 looked. Reading the loop for that found a second gap: markup fetched before job state, so a
 twenty-second run turning terminal between the two would reveal sealed columns without a gavel and
 stop polling. Both closed in `public/case-live.js`; the clip now buffers from the first moment of a
-live page. Record: `docs/06-merge-packs/maintenance-9-pack.md`.
+live page. Record: `docs/06-merge-packs/maintenance-9-pack.md`. Then the deployed page held in a
+hidden tab and still missed its viewer, who had gone to the terminal with the tab in view: visible
+to the browser, unattended in fact. Maintenance ten holds until the page is visible and its window
+focused, and says so in one line while it waits. Record: `docs/06-merge-packs/maintenance-10-pack.md`.
 
 ## Closing items
 
@@ -136,4 +139,4 @@ live page. Record: `docs/06-merge-packs/maintenance-9-pack.md`.
 
 The Tribunal is finished for now. No further turn is planned. Work resumes only if a live run
 teaches something, which is the bound turn five was written under, and it did once more on
-5 September 2026: maintenance eight and nine, above, are the result.
+5 September 2026: maintenance eight, nine and ten, above, are the result.

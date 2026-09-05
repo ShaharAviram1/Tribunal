@@ -24,7 +24,8 @@ already spent.
   (maintenance-9): the same hidden tab still ran the loop, only slower, and could see the job turn
   terminal with no one watching; a hidden tab also defers media loading, so the gavel's veil ran
   its floors over a clip that never played and was gone before the viewer returned. The reveal
-  and the gavel now wait for a visible tab, and the markup is fetched once more after the job is
+  and the gavel now wait for an attended page, visible and in a focused window, since a visible tab
+  behind the terminal played the gavel to an empty room the same day (maintenance-10), and the markup is fetched once more after the job is
   known terminal, closing a second gap where the job turned terminal between the two requests of
   one poll and the page would have adopted sealed columns and stopped.
 - **Free models cost the most.** The free tier's slowness and refusals bought nothing a paid
