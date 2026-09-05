@@ -127,3 +127,10 @@ test('the gavel stylesheet ships with every page, so live-script surgery cannot 
     assert.ok(html.includes(sel), `gavel CSS missing: ${sel}`);
   }
 });
+
+test("the return link sits above the title, whose glyph box overflows upward and would otherwise take the click", () => {
+  // Measured live, 2026-09-05: the h1 at line-height .96 in a display face overflows its box by
+  // 8-12px above; the lower half of the crumb link hit-tested as the h1 and showed a text cursor.
+  const html = page();
+  assert.ok(html.includes(".crumb a.crumb-home{position:relative;z-index:1;"), "crumb link has no stacking position of its own");
+});

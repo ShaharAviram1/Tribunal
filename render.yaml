@@ -1,0 +1,24 @@
+# Render blueprint: one free web service running server/serve.ts, the plain Node host for the same
+# five handlers Netlify serves. No build step: the pinned Node strips TypeScript natively and
+# package.json declares no dependency. The four secrets are set in the Render dashboard, never here.
+services:
+  - type: web
+    name: tribunal
+    runtime: node
+    plan: free
+    buildCommand: "true"
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: 24.11.1
+      - key: TRIBUNAL_STORE
+        value: supabase
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: TRIBUNAL_FUNCTION_SECRET
+        sync: false

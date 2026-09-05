@@ -246,7 +246,7 @@ box-shadow:inset 0 0 200px 10px rgba(0,0,0,.5),inset 0 -160px 150px -130px rgba(
 .micro{font:400 10px var(--mono);letter-spacing:.25em;text-transform:uppercase;color:var(--card-ink3);margin:.3em 0}
 .case-head{position:relative;display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:20px;border-bottom:3px double var(--accent-soft);padding-bottom:20px}
 .watermark{position:absolute;right:-6px;top:-40px;font:700 210px/1 var(--display);color:rgba(255,255,255,.028);pointer-events:none;user-select:none}
-.crumb{letter-spacing:.3em;font-size:11px;display:flex;align-items:center;gap:14px}.crumb a.crumb-home{color:var(--accent);text-decoration:none;border:1px solid var(--edge2);border-radius:3px;padding:5px 11px;letter-spacing:.22em;transition:border-color .2s}.crumb a.crumb-home:hover{border-color:var(--accent)}.crumb-docket{color:var(--page-ink3)}
+.crumb{letter-spacing:.3em;font-size:11px;display:flex;align-items:center;gap:14px}.crumb a.crumb-home{position:relative;z-index:1;color:var(--accent);text-decoration:none;border:1px solid var(--edge2);border-radius:3px;padding:5px 11px;letter-spacing:.22em;transition:border-color .2s}.crumb a.crumb-home:hover{border-color:var(--accent)}.crumb-docket{color:var(--page-ink3)}
 h1{font:700 clamp(40px,4.8vw,70px)/0.96 var(--display);letter-spacing:-.02em;margin:.1em 0;text-shadow:0 2px 0 rgba(0,0,0,.5)}
 .head-sub{font-size:15px;color:var(--page-ink2);margin:.3em 0}
 .head-right{text-align:right;font:400 11px/1.7 var(--mono);color:var(--page-ink3);letter-spacing:.06em}
