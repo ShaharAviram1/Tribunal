@@ -57,13 +57,25 @@
   // A run now finishes in about twenty seconds, so a poll may never see the bench stage; the clip
   // buffers from the first moment the live page is open, since a viewer here will need it.
   bufferGavel();
-  // The reveal and the gavel wait for a visible tab. Timers keep running while a tab is hidden,
-  // only slower, so the loop can see the job turn terminal with no one watching; and a hidden tab
-  // defers media loading, so the veil would run its floors over a clip that never plays and be
-  // gone before the viewer returns (seen on 2026-09-05). The moment is held until there is an eye.
-  const visible = () => document.visibilityState === 'visible' ? Promise.resolve() : new Promise((resolve) => {
-    const on = () => { if (document.visibilityState === 'visible') { document.removeEventListener('visibilitychange', on); resolve(); } };
-    document.addEventListener('visibilitychange', on);
+  // The reveal and the gavel wait for an attended page: visible, and in a focused window. Timers
+  // keep running while a tab is hidden, only slower, so the loop can see the job turn terminal with
+  // no one watching; a hidden tab defers media loading, so the veil would run its floors over a clip
+  // that never plays and be gone before the viewer returns (seen 2026-09-05). And a tab that is
+  // visible but in a window that lost focus, to the terminal or another window, plays the gavel to
+  // an empty room (seen the same day, decision: hold). While held, one line under the header says
+  // so, because a page that appears to be waiting on the bench while the bench is done would be a
+  // lie by omission. Returning to the page, by switching or clicking into it, releases the hold.
+  const attended = () => document.visibilityState === 'visible' && document.hasFocus();
+  const untilAttended = () => attended() ? Promise.resolve() : new Promise((resolve) => {
+    const note = document.createElement('p'); note.className = 'notice held-note';
+    note.textContent = 'The bench is ready. Return to this page to hear it.';
+    document.querySelector('.case-head')?.after(note);
+    const on = () => {
+      if (!attended()) return;
+      document.removeEventListener('visibilitychange', on); window.removeEventListener('focus', on); window.removeEventListener('pageshow', on);
+      note.remove(); resolve();
+    };
+    document.addEventListener('visibilitychange', on); window.addEventListener('focus', on); window.addEventListener('pageshow', on);
   });
 
   const head = document.querySelector('.case-head');
@@ -150,7 +162,7 @@
       }
     }
     if (terminal) {
-      await visible();
+      await untilAttended();
       // The markup was fetched before the job state, so a run that turned terminal between the two
       // requests still shows sealed judges in `doc`; revealing from it would show no gavel, adopt
       // sealed columns, and stop polling. One fresh fetch after the wait closes both gaps.
