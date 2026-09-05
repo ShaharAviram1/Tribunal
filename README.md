@@ -27,8 +27,9 @@ The result is three verdicts, never combined: no count, no synthesis, nothing th
 opinions to fewer than three.
 
 Two panels can hear a case. One model takes all seven roles, or seven distinct models take one role
-each. An intake clerk can also draft a charge sheet from a submitted scenario in one further model
-call, logged on the same job as the deliberation it precedes.
+each. An intake clerk once drafted a charge sheet from a submitted scenario in one further model
+call (T-006 is its record); scenario submission was retired from the live site on 2026-09-05, and
+the endpoint says so rather than pretending to draft.
 
 ## Running the offline suite
 

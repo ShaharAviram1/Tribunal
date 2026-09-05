@@ -18,9 +18,9 @@ runs and how the parts reach each other.
     (`src/protocol/validate-charge-sheet.ts`), naming the failed rule; stamps what only the system
     may write (`src/protocol/stamp.ts`); writes the job row; invokes the background function. No
     model call happens here.
-  - `tribunal-intake.mts` — scenario submission. Reserves the docket row and the job, answers at
-    once, and hands the scenario to the background function, because a synchronous function's
-    ceiling cannot hold a model call.
+  - `tribunal-intake.mts` — scenario submission, retired 2026-09-05 (`spec.md` part two, step 0).
+    Answers 503 naming the retirement. The clerk it once fed (`src/protocol/intake.ts`) and the
+    background function's intake branch remain, reachable by nothing on the live site.
   - `tribunal-run-background.mts` — the background function, where every model call in the system
     happens: the intake clerk's draft (`src/protocol/intake.ts`) and the seven-role protocol
     (`src/protocol/run.ts`).
@@ -69,9 +69,9 @@ function calls a model except through the client module.
 
 - **Filing a charge sheet.** POST to `tribunal-file.mts`. Rules checked, failures named, sheet
   stamped and stored, job row written `pending`, background function invoked, docket URL returned.
-- **Submitting a scenario.** POST to `tribunal-intake.mts`. Word bounds checked, docket row and
-  job reserved, background invoked with the scenario, answer returned at once. The clerk drafts
-  where the deliberation already lives.
+- **Submitting a scenario.** POST to `tribunal-intake.mts` answers 503: retired 2026-09-05. Until
+  then it checked the word bounds, reserved the docket row and job, and handed the scenario to the
+  background function, where the clerk drafted.
 - **Convening.** POST to `tribunal-file.mts` with a case id: a fresh job row for an existing
   stamped sheet, then the same background invocation. The paid-panel daily cap is enforced here.
 - **Polling a run in progress.** `public/case-live.js`, injected by `tribunal-case-page.mts`,
