@@ -16,4 +16,9 @@ Branch `maintenance-9` into `main`. Evidence under each heading, not assertion.
 
 ## 3. Watched
 
-Recorded below after one convening on the new host in a visible tab.
+One convening on the local host with the real store, `d-T-001-1788578911921-b23a6a84`, complete in
+fourteen seconds. The instrumented automation tab, hidden throughout: the loop polled the finished job
+(the header read Calls 7 of 20) and then held, no veil mounted, judges still waiting, the rail still up,
+for as long as it was watched. Under the previous code the same tab had mounted the veil and lost it at
+the eight-second floor. The author reported the reveal working in a visible tab; that tab was theirs,
+not the instrumented one, and the deployed host is the test that remains.
