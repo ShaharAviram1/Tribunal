@@ -218,7 +218,7 @@ It is loud because it breaks the card's rhythm and uses the brightest ink on the
 | Convene | Disables the button, POSTs the filing, redirects to the case page |
 | Advocate reveal | One at a time in seat order, minimum 9s gap; `fade-up .7s` |
 | Bench | Status only until all judges are terminal |
-| Gavel | Fires once, on transition to a terminal job with at least one returned opinion |
+| Gavel | Fires once, on transition to a terminal job with at least one returned opinion. Amended 2026-09-05: the transition is acted on only while the tab is visible; seen while hidden, the reveal and the gavel wait for the viewer to return, because a hidden tab defers media loading and the veil would run its floors unseen |
 | Verdict reveal | All three at once, behind the gavel |
 | Reason stepper | Per column, `‹`/`›` wrap around; opens on reason 1 |
 | Read all | **Global, not per column** — toggles every column at once, so the three never differ in disclosure state |

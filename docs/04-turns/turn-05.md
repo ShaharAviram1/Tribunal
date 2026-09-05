@@ -20,7 +20,13 @@ already spent.
 - **A hidden tab is not a crashed run.** The live page froze whenever it left the foreground;
   the database showed the deliberation complete in nineteen seconds. Browsers clamp timers in
   background tabs. The poll now sleeps abortably and wakes on `visibilitychange`, and the
-  stalled notice only counts time the page was actually watching.
+  stalled notice only counts time the page was actually watching. Amended 2026-09-05
+  (maintenance-9): the same hidden tab still ran the loop, only slower, and could see the job turn
+  terminal with no one watching; a hidden tab also defers media loading, so the gavel's veil ran
+  its floors over a clip that never played and was gone before the viewer returned. The reveal
+  and the gavel now wait for a visible tab, and the markup is fetched once more after the job is
+  known terminal, closing a second gap where the job turned terminal between the two requests of
+  one poll and the page would have adopted sealed columns and stopped.
 - **Free models cost the most.** The free tier's slowness and refusals bought nothing a paid
   cent didn't buy better; every chain, primary and fallback, now runs paid models only.
 - **Cost belongs beside the name.** Each seat shows its model with the dollars and tokens it

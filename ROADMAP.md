@@ -99,7 +99,7 @@ beside all six places the earlier record claimed otherwise. Record:
 `docs/06-merge-packs/docs-pass-pack.md` and the three maintenance packs; the method is
 `docs/lessons-learned.md` entry 7.
 
-### Maintenance eight · in review
+### Maintenance eight · merged
 
 Not a spiral turn; the bound of turn five again, no new capability. Opened 5 September 2026 when the
 site taught three things at once. The return link on a case page hit-tested as the title, whose
@@ -110,6 +110,16 @@ do, the endpoint answering 503 with the reason, the clerk's code and T-006 kept 
 Netlify account's credit ran out, blocking every deploy: a plain Node host for the same five handlers,
 `server/serve.ts`, mirrors the Netlify routing and runs on a free Render service, tested on loopback
 and proven byte-identical on a served case page. Record: `docs/06-merge-packs/maintenance-8-pack.md`.
+
+### Maintenance nine · in review
+
+The first run watched on the new host missed its gavel. Not the host: Render serves the clip's byte
+ranges in a third of a second. A hidden tab still runs the poll loop, slower, and defers media
+loading, so the loop mounted the veil behind the viewer's back and the floors removed it before they
+looked. Reading the loop for that found a second gap: markup fetched before job state, so a
+twenty-second run turning terminal between the two would reveal sealed columns without a gavel and
+stop polling. Both closed in `public/case-live.js`; the clip now buffers from the first moment of a
+live page. Record: `docs/06-merge-packs/maintenance-9-pack.md`.
 
 ## Closing items
 
@@ -126,4 +136,4 @@ and proven byte-identical on a served case page. Record: `docs/06-merge-packs/ma
 
 The Tribunal is finished for now. No further turn is planned. Work resumes only if a live run
 teaches something, which is the bound turn five was written under, and it did once more on
-5 September 2026: maintenance eight, above, is the result and awaits its merge.
+5 September 2026: maintenance eight and nine, above, are the result.
