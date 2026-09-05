@@ -99,6 +99,18 @@ beside all six places the earlier record claimed otherwise. Record:
 `docs/06-merge-packs/docs-pass-pack.md` and the three maintenance packs; the method is
 `docs/lessons-learned.md` entry 7.
 
+### Maintenance eight · in review
+
+Not a spiral turn; the bound of turn five again, no new capability. Opened 5 September 2026 when the
+site taught three things at once. The return link on a case page hit-tested as the title, whose
+glyph box overflowed its heading by up to twelve pixels: one stacking declaration, one test. Scenario
+submission drafted a background under the 200-word floor from any thin scenario (T-007, and a
+diagnostic call that reproduced it); retired by decision as outside what the tribunal is described to
+do, the endpoint answering 503 with the reason, the clerk's code and T-006 kept as evidence. And the
+Netlify account's credit ran out, blocking every deploy: a plain Node host for the same five handlers,
+`server/serve.ts`, mirrors the Netlify routing and runs on a free Render service, tested on loopback
+and proven byte-identical on a served case page. Record: `docs/06-merge-packs/maintenance-8-pack.md`.
+
 ## Closing items
 
 - **Root `README.md`** — written at the turn-three close.
@@ -112,6 +124,6 @@ beside all six places the earlier record claimed otherwise. Record:
 
 ## Where this stands
 
-The Tribunal is finished for now. Nothing is in flight, nothing is unmerged, and no further turn is
-planned. Work resumes only if a live run teaches something, which is the bound turn five was
-written under.
+The Tribunal is finished for now. No further turn is planned. Work resumes only if a live run
+teaches something, which is the bound turn five was written under, and it did once more on
+5 September 2026: maintenance eight, above, is the result and awaits its merge.

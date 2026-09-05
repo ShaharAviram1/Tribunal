@@ -163,11 +163,30 @@ key itself, set at the provider, is the one control that survives all of this be
 
 ## Deploy
 
-`netlify.toml` publishes `public/` and serves `netlify/functions/`; the `/case/*` redirect maps
-case URLs onto the page function. The Node version is pinned twice, in `.nvmrc` and in
-`netlify.toml`, so local and deploy cannot disagree; the pinned version strips TypeScript natively,
-so there is no build step and no dependency — `package.json` declares none. Branch deploys serve
-branches for verification before merge; production serves `main`.
+Two hosts run the same handlers; neither changes them.
+
+**Render, since 2026-09-05.** `server/serve.ts` is a plain Node server that hosts the five handlers
+on the paths Netlify gave them, and `render.yaml` describes the free web service that runs it with
+`npm start`. The server mirrors `netlify.toml` claim by claim: `public/` as static files with byte
+ranges for the gavel clip, `/.netlify/functions/<name>` for the five names and no other, `/case/<id>`
+onto the page handler with the id as the redirect passed it, and the background function answered
+202 before it runs. `tests/server.test.ts` holds each of those claims on loopback with no store
+environment, so every handler answers before it could reach Supabase. One difference stands: on
+Netlify the platform re-invokes a background function that dies, and the claim-and-heartbeat
+mechanism of spec.md part three resumes the job; on Render nothing re-invokes, so a deliberation
+killed mid-run stays `running` until its heartbeat goes stale, and the case page reports the stall
+after four minutes of no advance. That is a failure shown as a failure, not a substitution. The free
+instance sleeps after fifteen idle minutes and wakes in under a minute; a live page polls every five
+seconds, so a run in progress keeps it awake.
+
+**Netlify, until 2026-09-05.** `netlify.toml` publishes `public/` and serves `netlify/functions/`;
+the `/case/*` redirect maps case URLs onto the page function. Deploys stopped when the account's
+credit ran out; the CLI's refusal is recorded in the maintenance-8 pack. The configuration stays
+so the site deploys there again the day credit returns, unchanged.
+
+The Node version is pinned three times, in `.nvmrc`, `netlify.toml`, and `render.yaml`, so local
+and either deploy cannot disagree; the pinned version strips TypeScript natively, so there is no
+build step and no dependency — `package.json` declares none.
 
 `SECRETS_SCAN_OMIT_KEYS` in `netlify.toml` omits `TRIBUNAL_STORE` and `TRIBUNAL_FILING_ENABLED`
 from Netlify's secret scanning. Both are non-secret flags whose values are ordinary words that
