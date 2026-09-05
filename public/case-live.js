@@ -54,6 +54,17 @@
     v.play?.();
   }
   if (terminalArrival) { mountGavel(); return; }
+  // A run now finishes in about twenty seconds, so a poll may never see the bench stage; the clip
+  // buffers from the first moment the live page is open, since a viewer here will need it.
+  bufferGavel();
+  // The reveal and the gavel wait for a visible tab. Timers keep running while a tab is hidden,
+  // only slower, so the loop can see the job turn terminal with no one watching; and a hidden tab
+  // defers media loading, so the veil would run its floors over a clip that never plays and be
+  // gone before the viewer returns (seen on 2026-09-05). The moment is held until there is an eye.
+  const visible = () => document.visibilityState === 'visible' ? Promise.resolve() : new Promise((resolve) => {
+    const on = () => { if (document.visibilityState === 'visible') { document.removeEventListener('visibilitychange', on); resolve(); } };
+    document.addEventListener('visibilitychange', on);
+  });
 
   const head = document.querySelector('.case-head');
   head.insertAdjacentHTML('afterend',
@@ -139,12 +150,18 @@
       }
     }
     if (terminal) {
-      while (queue.length) { const r = queue.shift(); adopt(doc, r); shown.add(r); }
-      const anyReturned = JUDGES.some((j) => stateOf(doc, j) === 'returned');
+      await visible();
+      // The markup was fetched before the job state, so a run that turned terminal between the two
+      // requests still shows sealed judges in `doc`; revealing from it would show no gavel, adopt
+      // sealed columns, and stop polling. One fresh fetch after the wait closes both gaps.
+      const fin = (await fetchDoc()) ?? doc;
+      while (queue.length) { const r = queue.shift(); adopt(fin, r); shown.add(r); }
+      for (const r of SEAT_ORDER) if (!shown.has(r) && ['returned', 'failed'].includes(stateOf(fin, r))) { adopt(fin, r); shown.add(r); }
+      const anyReturned = JUDGES.some((j) => stateOf(fin, j) === 'returned');
       const reveal = () => {
-        for (const j of JUDGES) adopt(doc, j);
-        const n = doc.querySelector('.notice'); if (n) document.querySelector('.case-head')?.after(document.importNode(n, true));
-        const hr = doc.querySelector('.head-right'); if (hr) document.querySelector('.head-right')?.replaceWith(document.importNode(hr, true));
+        for (const j of JUDGES) adopt(fin, j);
+        const n = fin.querySelector('.notice'); if (n) document.querySelector('.case-head')?.after(document.importNode(n, true));
+        const hr = fin.querySelector('.head-right'); if (hr) document.querySelector('.head-right')?.replaceWith(document.importNode(hr, true));
       };
       if (anyReturned) { mountGavel(); reveal(); } else { reveal(); }
       document.querySelector('.progress-rail')?.remove();
