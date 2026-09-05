@@ -111,7 +111,7 @@ Netlify account's credit ran out, blocking every deploy: a plain Node host for t
 `server/serve.ts`, mirrors the Netlify routing and runs on a free Render service, tested on loopback
 and proven byte-identical on a served case page. Record: `docs/06-merge-packs/maintenance-8-pack.md`.
 
-### Maintenance nine and ten · in review
+### Maintenance nine and ten · merged
 
 The first run watched on the new host missed its gavel. Not the host: Render serves the clip's byte
 ranges in a third of a second. A hidden tab still runs the poll loop, slower, and defers media

@@ -14,4 +14,6 @@ Branch `maintenance-10` into `main`. Evidence under each heading, not assertion.
 
 ## 3. Watched
 
-Recorded below once the author has watched a run on the deployed host.
+The author convened T-001 on the deployed host, left the page for another tab, and returned: the
+waiting line, then the gavel, then the three verdicts. Reported working, 2026-09-05, after the merge
+at d2b6130.
