@@ -117,3 +117,14 @@ test('the case page renders that same deliberation from the run root', async () 
   assert.match(html, /Jon Snow/);
   assert.equal(html.includes('SUPABASE'), false);
 });
+
+test('the case page renders a committed run by its run-NN id', async () => {
+  process.env.TRIBUNAL_STORE = 'file';
+  process.env.TRIBUNAL_PERSISTENT_HOST = '1';
+  const { default: page } = await import('../netlify/functions/tribunal-case-page.mts');
+  const res = await page(new Request('https://x/case?deliberation_id=run-02'));
+  assert.equal(res.status, 200);
+  assert.match(await res.text(), /Jon Snow/);
+  const bad = await page(new Request('https://x/case?deliberation_id=runs'));
+  assert.equal(bad.status, 400);
+});

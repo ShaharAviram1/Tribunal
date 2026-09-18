@@ -14,7 +14,10 @@ export default async (req: Request): Promise<Response> => {
   if (!env.ok) return env.response;
   const u = new URL(req.url);
   const deliberation_id = u.searchParams.get('deliberation_id') ?? u.pathname.split('/').filter(Boolean).pop() ?? '';
-  if (!deliberation_id.startsWith('d-')) return html('<p>No deliberation named. A case page address looks like /case/&lt;deliberation id&gt;.</p>', 400);
+  // A live deliberation (`d-…`) or one of the committed runs (`run-NN`), which
+  // makeStore reads from the repository's own runs/ directory. Anything else is
+  // not an address this page has, and never reaches the store.
+  if (!/^(d-[A-Za-z0-9._-]+|run-\d{2,})$/.test(deliberation_id)) return html('<p>No deliberation named. A case page address looks like /case/&lt;deliberation id&gt;.</p>', 400);
   const store = makeStore(deliberation_id);
   const job = (await store.getJob()) as (CaseData['job'] & { case_id: string }) | undefined;
   if (!job) return html('<p>Unknown deliberation.</p>', 404);
