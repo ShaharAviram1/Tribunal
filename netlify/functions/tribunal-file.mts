@@ -2,7 +2,8 @@
 // No model call happens here or anywhere outside the background function.
 import { validateChargeSheet } from '../../src/protocol/validate-charge-sheet.ts';
 import { stampChargeSheet } from '../../src/protocol/stamp.ts';
-import { SupabaseStore } from '../../src/store/supabase-store.ts';
+import { makeStore } from '../../src/store/index.ts';
+import { makeCatalogue, type Catalogue } from '../../src/store/catalogue.ts';
 import { checkEnv, FILE_ENV } from '../../src/functions-env.ts';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -18,54 +19,53 @@ export default async (req: Request): Promise<Response> => {
   const panel = panelRaw as 'single' | 'multi';
   let input: unknown;
   try { input = await req.json(); } catch { return json({ error: 'body is not JSON' }, 400); }
-  const url = requireEnv('SUPABASE_URL'); const key = requireEnv('SUPABASE_SERVICE_ROLE_KEY');
+  const catalogue = makeCatalogue();
 
   // Both rate limits run before any write or model call.
-  const gate = await rateLimit(url, key, req, panel);
+  const gate = await rateLimit(catalogue, req);
   if (!gate.ok) return gate.response;
 
   // Convene mode: { case_id } deliberates an existing charge sheet afresh.
   const asConvene = input as { case_id?: string };
   if (asConvene && typeof asConvene === 'object' && 'case_id' in asConvene) {
     if (Object.keys(asConvene).length !== 1 || !/^T-[0-9]{3}$/.test(asConvene.case_id ?? '')) return json({ error: 'convene body is exactly { case_id: "T-nnn" }' }, 400);
-    const res0 = await fetch(`${url.replace(/\/$/, '')}/rest/v1/charge_sheets?case_id=eq.${asConvene.case_id}&select=case_id`, { headers: { apikey: key, Authorization: `Bearer ${key}` } });
-    if (((await res0.json()) as unknown[]).length === 0) return json({ error: `unknown case ${asConvene.case_id}` }, 404);
-    return start(url, key, asConvene.case_id!, panel, req, gate.iphash);
+    if ((await catalogue.getSheet(asConvene.case_id!)) === undefined) return json({ error: `unknown case ${asConvene.case_id}` }, 404);
+    return start(asConvene.case_id!, panel, req, gate.iphash);
   }
 
   const v = validateChargeSheet(input);
   if (!v.ok) return json({ rejected: true, failures: v.failures }, 422);
   // Next unused case id, assigned by the system (charge sheet spec 1b).
-  const res = await fetch(`${url}/rest/v1/charge_sheets?select=case_id&order=case_id.desc&limit=1`, { headers: { apikey: key, Authorization: `Bearer ${key}` } });
-  const last = ((await res.json()) as { case_id: string }[])[0]?.case_id ?? 'T-000';
-  const caseId = `T-${String(Number(last.slice(2)) + 1).padStart(3, '0')}`;
-  const sheet = stampChargeSheet(v.sheet, caseId);
-  await fetch(`${url}/rest/v1/charge_sheets`, { method: 'POST', headers: { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ case_id: caseId, body: sheet }) });
+  const caseId = await catalogue.nextCaseId();
+  await catalogue.putSheet(caseId, stampChargeSheet(v.sheet, caseId));
 
-  return start(url, key, caseId, panel, req, gate.iphash);
+  return start(caseId, panel, req, gate.iphash);
 };
 
 // Both limits answer 429 before any write or model call. The IP hash rides on the end of the
 // deliberation id; the hash ties a run to its origin without storing an address. (The per-IP on the suffix.
-async function rateLimit(url: string, key: string, req: Request, panel: 'single' | 'multi'): Promise<{ ok: true; iphash: string } | { ok: false; response: Response }> {
-  const base = url.replace(/\/$/, '');
-  const headers = { apikey: key, Authorization: `Bearer ${key}` };
+async function rateLimit(catalogue: Catalogue, req: Request): Promise<{ ok: true; iphash: string } | { ok: false; response: Response }> {
   // Every deliberation is a paid run (paid only, decision 2026-09-01), so the daily cap counts
   // them all. Correction, 2026-09-02: the cap once counted only multi-model jobs, a filter from
   // the free-single-panel era; after paid-only it let single-panel paid runs escape the cap.
   // (The per-IP cooldown was removed by decision 2026-09-01, as self-limiting.)
   const dayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
-  const day = (await (await fetch(`${base}/rest/v1/jobs?select=deliberation_id&created_at=gt.${dayAgo}`, { headers })).json()) as { deliberation_id: string }[];
-  if (day.length >= 10) return { ok: false, response: json({ error: 'the tribunal is limited to 10 deliberations per 24 hours; try again later' }, 429) };
+  const day = await catalogue.countJobsSince(dayAgo);
+  if (day >= 10) return { ok: false, response: json({ error: 'the tribunal is limited to 10 deliberations per 24 hours; try again later' }, 429) };
   const ip = req.headers.get('x-nf-client-connection-ip') ?? req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
   const iphash = createHash('sha256').update(ip).digest('hex').slice(0, 8);
   return { ok: true, iphash };
 }
 
-async function start(url: string, key: string, caseId: string, panel: 'single' | 'multi', req: Request, iphash: string): Promise<Response> {
+async function start(caseId: string, panel: 'single' | 'multi', req: Request, iphash: string): Promise<Response> {
   const deliberation_id = `d-${caseId}-${Date.now()}-${iphash}`;
-  const store = new SupabaseStore({ url, serviceKey: key, deliberation_id });
-  await store.putJob({ case_id: caseId, status: 'pending', stage: 'advocates', models: modelMap(panel) });
+  const store = makeStore(deliberation_id);
+  // Two fields the Supabase row gets from the database and the file store cannot: created_at is a
+  // column default there (and is stripped from this write by the store's column filter), and
+  // deliberation_id is written by the store itself. The file store writes exactly what it is
+  // given, the daily cap counts created_at, and src/protocol/run.ts resumes an existing row only
+  // when the id on it matches, so the row carries both.
+  await store.putJob({ deliberation_id, case_id: caseId, status: 'pending', stage: 'advocates', created_at: new Date().toISOString(), models: modelMap(panel) });
   // Invoke the background function; it authenticates the shared function secret.
   const base = new URL(req.url).origin;
   await fetch(`${base}/.netlify/functions/tribunal-run-background`, {
@@ -80,4 +80,3 @@ function modelMap(panel: 'single' | 'multi'): Record<string, string> {
   return { ...panels[panel] };
 }
 const json = (b: unknown, status: number) => new Response(JSON.stringify(b, null, 2), { status, headers: { 'Content-Type': 'application/json' } });
-const requireEnv = (k: string): string => { const v = process.env[k]; if (!v) throw new Error(`${k} not set`); return v; };

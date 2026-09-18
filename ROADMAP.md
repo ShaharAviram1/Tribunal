@@ -124,6 +124,15 @@ hidden tab and still missed its viewer, who had gone to the terminal with the ta
 to the browser, unattended in fact. Maintenance ten holds until the page is visible and its window
 focused, and says so in one line while it waits. Record: `docs/06-merge-packs/maintenance-10-pack.md`.
 
+### Maintenance eleven · the move to the owner's host
+
+18 September 2026: the site is https://tribunal.atomworks.dev, one container behind the Caddy
+already on that host (`Dockerfile`, `deploy/docker-compose.yml`), storing deliberations in the file
+store on a persistent volume rather than in Supabase — the flag `TRIBUNAL_PERSISTENT_HOST=1` is
+what makes that store legitimate off a function platform, and `src/store/catalogue.ts` is what
+finally took the docket off PostgREST. Render and Netlify are history; the Supabase cases were not
+migrated, by decision. Described in `ARCHITECTURE.md` § Deploy.
+
 ## Closing items
 
 - **Root `README.md`** — written at the turn-three close.
@@ -133,7 +142,9 @@ focused, and says so in one line while it waits. Record: `docs/06-merge-packs/ma
   the repository root beside `problem.md` and this file.
 - **Known and accepted** — the free Supabase project pauses when idle, so the deployed site can be
   asleep when a reader opens it. The committed runs under `runs/` render from the repository alone
-  with no key and no network, and are the durable evidence. Not fixed by decision, 2 September 2026.
+  with no key and no network, and are the durable evidence. Not fixed by decision, 2 September 2026;
+  overtaken on 18 September 2026 by the move to the owner's host, which neither sleeps nor uses
+  Supabase. The committed runs are still the durable evidence.
 
 ## Where this stands
 

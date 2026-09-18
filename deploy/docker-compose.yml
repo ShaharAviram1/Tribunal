@@ -1,0 +1,30 @@
+# The site on the owner's host, since 2026-09-18: one container, no published port, reached by the
+# Caddy that already runs there over the shared `atomworks` network as tribunal:8888. The store is
+# the file store on a named volume, which is what TRIBUNAL_PERSISTENT_HOST=1 declares to
+# src/functions-env.ts; nothing here needs Supabase.
+#
+# From the repository root on the host:
+#   docker compose --env-file .env -f deploy/docker-compose.yml up -d --build
+services:
+  tribunal:
+    build: ..
+    container_name: tribunal
+    restart: unless-stopped
+    # The secrets, and only the secrets: OPENROUTER_API_KEY, TRIBUNAL_FUNCTION_SECRET,
+    # TRIBUNAL_FILING_ENABLED. See .env.example.
+    env_file: ../.env
+    environment:
+      TRIBUNAL_STORE: file
+      TRIBUNAL_PERSISTENT_HOST: "1"
+      TRIBUNAL_RUNS_DIR: /data/runs
+      PORT: "8888"
+    volumes:
+      - tribunal_runs:/data/runs
+    networks: [atomworks]
+
+volumes:
+  tribunal_runs:
+
+networks:
+  atomworks:
+    external: true

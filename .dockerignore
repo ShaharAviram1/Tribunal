@@ -1,0 +1,12 @@
+# What stays out of the image. runs/ is not here on purpose: the committed deliberations are
+# evidence and the site renders their pages from inside the image (src/store/index.ts chooses the
+# repository's runs/ for an id that exists there, the volume for every other id). fixtures/ stays
+# too: the committed charge sheets seed the docket (src/store/catalogue.ts).
+.git
+.env
+.env.*
+node_modules
+tests
+.netlify
+*.zip
+.DS_Store

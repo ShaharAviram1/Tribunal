@@ -57,20 +57,37 @@ deliberation stopped before the bench, and the page renders each failure as a fa
 
 ## The live site
 
-The site is https://tribunal-skg3.onrender.com, a free Render service running `server/serve.ts`
-since 5 September 2026, when Netlify blocked deploys for exhausted credit; the earlier address,
-https://incomparable-hotteok-4da2cf.netlify.app, still serves the last deploy made before that day.
-A deliberation takes about two minutes from filing to the third opinion. Every panel runs on paid
-models; convening needs no access code, only room under the daily cap.
+The site is https://tribunal.atomworks.dev, since 18 September 2026: one container on the owner's
+own host, built from the `Dockerfile` at this root and described by `deploy/docker-compose.yml`,
+reached by the Caddy already running there over a shared Docker network. It publishes no port of
+its own. A deliberation takes about two minutes from filing to the third opinion. Every panel runs
+on paid models; convening needs no access code, only room under the daily cap.
 
-Deployments sleep: the free Render instance stops after fifteen idle minutes and wakes in under a
-minute, and the free Supabase project pauses when idle, so the site may be slow or unavailable when
-you open it. The committed runs are the durable evidence.
+The store moved with it. There is no database: the deliberations are the file store's directories
+on a persistent volume, which `TRIBUNAL_PERSISTENT_HOST=1` is what declares to
+`src/functions-env.ts` — without that flag a deployed handler still refuses the file store, because
+on a function platform the filesystem vanishes with the invocation. The committed charge sheets in
+`fixtures/charge-sheets/` seed the docket; the volume holds every deliberation convened since.
+Nothing sleeps now, and nothing is migrated: the cases deliberated on the earlier hosts stayed in
+the Supabase project they were written to.
+
+Two addresses are history. https://tribunal-skg3.onrender.com was a free Render service from
+5 September 2026, chosen the day Netlify blocked deploys for exhausted credit, and it slept after
+fifteen idle minutes; https://incomparable-hotteok-4da2cf.netlify.app served the last Netlify
+deploy made before that day. Both configurations, `render.yaml` and `netlify.toml`, stay in the
+repository: neither host changed a handler, and `server/serve.ts` still mirrors the Netlify routing
+claim by claim.
 
 To run it yourself, on the pinned Node with the variables of `.env.example` set:
 
 ```
 npm start
+```
+
+Or as the host runs it, from a clone with `.env` beside this file:
+
+```
+docker compose --env-file .env -f deploy/docker-compose.yml up -d --build
 ```
 
 ## Where things live

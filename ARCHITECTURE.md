@@ -29,8 +29,14 @@ runs and how the parts reach each other.
   - `tribunal-case-page.mts` — serves the case page, rendered by the same renderer the static
     render uses (`src/page/render-case.ts`), with per-seat usage computed from the log rows
     (`src/page/usage.ts`).
-- **Supabase** holds the four tables; the schema is the committed migration
-  `supabase/migrations/0001_tribunal.sql`.
+- **One store, chosen by `TRIBUNAL_STORE`** in `src/store/index.ts`: the file store
+  (`src/store/file-store.ts`), a directory per deliberation, or the Supabase store
+  (`src/store/supabase-store.ts`) over the four tables of the committed migration
+  `supabase/migrations/0001_tribunal.sql`. The deployed site has run on the file store since
+  2026-09-18 (see **Deploy**). Everything that is per case or across deliberations — the charge
+  sheets, the docket, the count the daily cap is measured against — is the same choice again in
+  `src/store/catalogue.ts`; until that file existed the handlers made those as PostgREST calls
+  written inline, which is why the site could not run without Supabase whatever the store was.
 - **OpenRouter** is the single model gateway; one key, every call.
 - **One client module**, `src/client/model-client.ts` with its HTTP layer
   `src/client/openrouter-transport.ts`: the only code that holds the key, the caps, the
@@ -45,7 +51,7 @@ flowchart LR
   P[tribunal-case-page]
   R[tribunal-run-background]
   M[model-client]
-  S[(Supabase)]
+  S[(the store<br/>file · Supabase)]
   O[(OpenRouter)]
   B -->|file / convene| F
   B -->|scenario| I
@@ -62,7 +68,7 @@ flowchart LR
   P --> S
 ```
 
-Arrows point the way requests move; the browser never touches Supabase or OpenRouter, and no
+Arrows point the way requests move; the browser never touches the store or OpenRouter, and no
 function calls a model except through the client module.
 
 ## The request paths
@@ -82,6 +88,15 @@ function calls a model except through the client module.
   same renderer run offline by `scripts/render-static.ts`, with no key in the environment.
 
 ## The database
+
+The deployed site has had no database since 2026-09-18: it runs on the file store, and
+`supabase/migrations/0001_tribunal.sql` stays in the repository as the schema the Supabase store
+expects, still selectable with `TRIBUNAL_STORE=supabase` and still exercised by
+`tests/supabase-store.test.ts` and the both-implementations drills in `tests/store-drills.test.ts`.
+What the file store keeps instead is `<TRIBUNAL_RUNS_DIR>/<deliberation_id>/` — `job.json`,
+`outputs/<role>.json`, `log.jsonl`, the same objects as the rows below — with the charge sheets
+beside them under `cases/` (`src/store/catalogue.ts`). Its claim is read-then-write, documented in
+`src/store/file-store.ts` as the approximation of the atomic rule that the SQL function makes true.
 
 Four tables, all in `supabase/migrations/0001_tribunal.sql`:
 
@@ -163,9 +178,40 @@ key itself, set at the provider, is the one control that survives all of this be
 
 ## Deploy
 
-Two hosts run the same handlers; neither changes them.
+Three hosts have run the same handlers; none of them changed one.
 
-**Render, since 2026-09-05.** `server/serve.ts` is a plain Node server that hosts the five handlers
+**The owner's host, since 2026-09-18.** `tribunal.atomworks.dev` is one container: `Dockerfile` at
+the repository root, `FROM node:24.11.1-slim`, the repository copied in, run as the unprivileged
+`node` user, `CMD ["node", "server/serve.ts"]` — no build and no install step, because the pinned
+Node strips TypeScript natively and `package.json` declares no dependency. Its health check is
+Node's own `fetch` against `/`, the base image carrying neither wget nor curl. The compose file
+`deploy/docker-compose.yml` publishes no port: the service joins the external Docker network `atomworks`, where
+the Caddy already running on that host reaches it as `tribunal:8888`. `.dockerignore` says what
+stays out of the image; `runs/` and `fixtures/` stay in, because the committed deliberations and
+the committed charge sheets are what the site renders and what seeds its docket.
+
+The store is the file store on the named volume `tribunal_runs`, mounted at the `TRIBUNAL_RUNS_DIR`
+the compose file sets. `TRIBUNAL_PERSISTENT_HOST=1`, also set there, is the whole of what makes
+that legitimate: `src/functions-env.ts` accepts `TRIBUNAL_STORE=file` only with that flag, and
+without it a deployed handler refuses the file store in the same words as before, because a
+function platform's filesystem vanishes with the invocation. The flag excuses nothing else — a
+missing `TRIBUNAL_FUNCTION_SECRET` or `OPENROUTER_API_KEY` is still named and still stops the
+handler before any model call (`tests/functions-env.test.ts`). The repository's own `runs/` ships
+inside the image and the volume is somewhere else, so `src/store/index.ts` reads a committed id
+from the image and every other id from the volume; nothing is copied on start, and a committed run
+cannot be written over. A deliberation id reaches a handler from a query string and the file store
+turns it into a path, so the same file refuses an id that is not one path segment. All of this is
+held by `tests/store-select.test.ts`, which drives the case endpoint and the case page through the
+file store with the network blocked. Supabase is not reachable from this host and is not needed by
+it: `.env` there holds `OPENROUTER_API_KEY`, `TRIBUNAL_FUNCTION_SECRET` and
+`TRIBUNAL_FILING_ENABLED` and nothing else. The cases deliberated on the earlier hosts were not
+migrated, by decision.
+
+The difference Render introduced stands here too, for the same reason: nothing re-invokes a
+background function that dies, so a deliberation killed mid-run stays `running` until its heartbeat
+goes stale and the case page reports the stall. A failure shown as a failure, not a substitution.
+
+**Render, 2026-09-05 to 2026-09-18.** `server/serve.ts` is a plain Node server that hosts the five handlers
 on the paths Netlify gave them, and `render.yaml` describes the free web service that runs it with
 `npm start`. The server mirrors `netlify.toml` claim by claim: `public/` as static files with byte
 ranges for the gavel clip, `/.netlify/functions/<name>` for the five names and no other, `/case/<id>`
@@ -176,16 +222,16 @@ Netlify the platform re-invokes a background function that dies, and the claim-a
 mechanism of spec.md part three resumes the job; on Render nothing re-invokes, so a deliberation
 killed mid-run stays `running` until its heartbeat goes stale, and the case page reports the stall
 after four minutes of no advance. That is a failure shown as a failure, not a substitution. The free
-instance sleeps after fifteen idle minutes and wakes in under a minute; a live page polls every five
-seconds, so a run in progress keeps it awake.
+instance slept after fifteen idle minutes and woke in under a minute; a live page polls every five
+seconds, so a run in progress kept it awake. `render.yaml` stays as the record of that host.
 
 **Netlify, until 2026-09-05.** `netlify.toml` publishes `public/` and serves `netlify/functions/`;
 the `/case/*` redirect maps case URLs onto the page function. Deploys stopped when the account's
 credit ran out; the CLI's refusal is recorded in the maintenance-8 pack. The configuration stays
 so the site deploys there again the day credit returns, unchanged.
 
-The Node version is pinned three times, in `.nvmrc`, `netlify.toml`, and `render.yaml`, so local
-and either deploy cannot disagree; the pinned version strips TypeScript natively, so there is no
+The Node version is pinned four times, in `.nvmrc`, `netlify.toml`, `render.yaml`, and the
+`Dockerfile`'s base image, so local and any deploy cannot disagree; the pinned version strips TypeScript natively, so there is no
 build step and no dependency — `package.json` declares none.
 
 `SECRETS_SCAN_OMIT_KEYS` in `netlify.toml` omits `TRIBUNAL_STORE` and `TRIBUNAL_FILING_ENABLED`
