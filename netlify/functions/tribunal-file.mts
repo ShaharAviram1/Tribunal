@@ -65,7 +65,13 @@ async function start(caseId: string, panel: 'single' | 'multi', req: Request, ip
   // deliberation_id is written by the store itself. The file store writes exactly what it is
   // given, the daily cap counts created_at, and src/protocol/run.ts resumes an existing row only
   // when the id on it matches, so the row carries both.
-  await store.putJob({ deliberation_id, case_id: caseId, status: 'pending', stage: 'advocates', created_at: new Date().toISOString(), models: modelMap(panel) });
+  // The columns the database filled in by default on Supabase (supabase/migrations/0001_tribunal.sql)
+  // are written explicitly, so the file store's row has the same shape the runner reads.
+  await store.putJob({
+    deliberation_id, case_id: caseId, status: 'pending', stage: 'advocates', terminal_reason: null,
+    calls: 0, spend_usd: 0, attempts_by_role: {}, completed_roles: [], failed_roles: [],
+    created_at: new Date().toISOString(), models: modelMap(panel),
+  });
   // Invoke the background function; it authenticates the shared function secret.
   const base = new URL(req.url).origin;
   await fetch(`${base}/.netlify/functions/tribunal-run-background`, {

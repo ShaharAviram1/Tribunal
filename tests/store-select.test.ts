@@ -128,3 +128,26 @@ test('the case page renders a committed run by its run-NN id', async () => {
   const bad = await page(new Request('https://x/case?deliberation_id=runs'));
   assert.equal(bad.status, 400);
 });
+
+test('a filed job row on the file store carries the columns the database used to default', async () => {
+  const root = mkdtempSync(join(tmpdir(), 'tribunal-file-row-'));
+  process.env.TRIBUNAL_STORE = 'file';
+  process.env.TRIBUNAL_PERSISTENT_HOST = '1';
+  process.env.TRIBUNAL_RUNS_DIR = root;
+  process.env.TRIBUNAL_FUNCTION_SECRET = 'x';
+  process.env.TRIBUNAL_FILING_ENABLED = 'true';
+  process.env.OPENROUTER_API_KEY = 'unused';
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = (async () => new Response(null, { status: 202 })) as typeof fetch; // the background trigger, not a model call
+  try {
+  const { default: file } = await import('../netlify/functions/tribunal-file.mts');
+  const res = await file(new Request('https://x/file', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ case_id: 'T-001' }) }));
+  const body = await res.json();
+  assert.equal(res.status, 202, JSON.stringify(body));
+  const job = JSON.parse(readFileSync(join(root, body.deliberation_id, 'job.json'), 'utf8'));
+  assert.deepEqual(job.completed_roles, []);
+  assert.deepEqual(job.failed_roles, []);
+  assert.deepEqual(job.attempts_by_role, {});
+  assert.equal(job.calls, 0);
+  } finally { globalThis.fetch = realFetch; }
+});
