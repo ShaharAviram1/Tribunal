@@ -74,7 +74,8 @@ the Supabase project they were written to.
 Two addresses are history. https://tribunal-skg3.onrender.com was a free Render service from
 5 September 2026, chosen the day Netlify blocked deploys for exhausted credit, and it slept after
 fifteen idle minutes; https://incomparable-hotteok-4da2cf.netlify.app served the last Netlify
-deploy made before that day. Both configurations, `render.yaml` and `netlify.toml`, stay in the
+deploy made before that day. Both services, and the Supabase project the
+functions wrote to, were deleted on 19 September 2026. Both configurations, `render.yaml` and `netlify.toml`, stay in the
 repository: neither host changed a handler, and `server/serve.ts` still mirrors the Netlify routing
 claim by claim.
 
